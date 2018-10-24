@@ -1,0 +1,44 @@
+﻿{% extends "header_base.html" %}
+{% block title %}创业实践 - 淮北师范大学{% endblock title %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/m/css/header.css"/>
+<div id="nav">
+    <div class="container css-common-subnav">
+        <ul class="subNav" style="clear: both;">
+{#            <li><a href="/m_guide/">创业指导</a></li>#}
+            <li><a href="/m_education/">创业教育</a></li>
+            <li class='curr'><a href="/m_practice/">创业实践</a></li>
+            <li><a href="/m_elegant/">创业风采</a></li>
+        </ul>
+        <!-- 快捷菜单 -->
+        <!-- 快捷菜单 -->
+        <div class="quickMenu" id="quickMenu">
+        </div>
+        <!-- 快捷菜单完 -->
+        <!-- 快捷菜单完 -->
+    </div>
+</div>
+
+<div class="container cl">
+    <div class="mn z view view2 infoB" id="mn">
+        <div class="xTit mTit">创业实践</div>
+        <div class="newsBox">
+            {% for row in article %}
+                    {% if row.tags_id == 9 %}
+                        <ul class="newsList">
+                            <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
+                            <li class="span1"><a href="/m_practice_content?news_id={{ row.nid }}"
+                                                 target="_blank">{{ row.title }}</a></li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<div style="clear:both;"></div>
+{% endblock content %}
+

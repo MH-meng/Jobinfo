@@ -1,0 +1,172 @@
+﻿{% extends "header_base.html" %}
+{% block title %}淮北师范大学就业信息网{% endblock title %}
+{% block js %}
+    <link rel="stylesheet" type="text/css" href="/static/plugin/bootstrap/css/bootstrap.css"/>
+{% endblock %}
+{% block content %}
+    <style>
+        .search-box input {
+            width: 500px;
+            border: none;
+            border: 1px solid #ccc;
+            outline: none;
+            padding: 5px 10px;
+        }
+
+        .search-box input:focus {
+            border: 1px solid #ccc;
+            box-shadow: none;
+        }
+
+        .b {
+            width: 950px;
+        }
+
+    </style>
+    <div class="container cl">
+        <div class="b z view view2 css-common-view" id="mn">
+            {% for row in invite_infor %}
+                <div class="viewHead">
+                    <h1>{{ row.i_name }}</h1>
+                    <dl class="info">
+                        <dt></dt>
+                    </dl>
+                </div>
+                <ul class="xInfo xInfo-2 cl tInfo-2">
+                    <li>招聘会类型：
+                        {% if row.i_type == '0' %}
+                            <span>校园招聘</span>
+                        {% else %}
+                            <span>社会招聘</span>
+                        {% endif %}
+                    </li>
+                    <li>举办时间：
+                        <span>{{ row.i_data|date:'Y-m-d' }}</span>
+                    </li>
+                    <li>举办城市：<span>{{ row.i_city }}</span></li>
+                    <li>主办方：<span>{{ row.i_sponsor }}</span></li>
+                </ul>
+                <div class="tabs vTab">
+                    <ul class="tabTitle">
+                        <li><a href="#vTab1">详情</a></li>
+                        <li><a href="#vTab2">参展的企业</a></li>
+                    </ul>
+                    <div id="vTab1" class="vContent" style="display: block;">
+                        <p>{{ row.i_content|safe }}</p>
+                    </div>
+                    <ul id="vTab2" class="xInfo" style="display: none; width: 910px">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td class="active">单位名</td>
+                                <td class="warning">单位行业</td>
+                                <td class="danger">招聘职位</td>
+                                <td class="info">月薪</td>
+                                <td class="info">操作</td>
+                            </tr>
+                            {% for i in company_invite %}
+                                {% for z in zhaopin_invite %}
+                                    {% if i.id == z.z_company_id %}
+                                        {% if z.z_nature == True %}
+                                            <tr>
+                                                <td class="active">{{ i.c_name }}</td>
+                                                <td class="warning">{{ i.c_industry }}</td>
+                                                <td class="danger">{{ z.z_position }}</td>
+                                                <td class="info">{{ z.z_salary }}</td>
+                                                <td class="info"><a href="/m_station_content/?pid={{ i.id }}">查看更多</a></td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </table>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script type="text/javascript">
+        function clickdialog(content) {
+            $.dialog({
+                width: 380,
+                height: 100,
+                title: '温馨提示!',
+                fixed: true,
+                resize: false,
+                lock: true,
+                content: content,
+                drag: false
+            });
+        }
+
+        function confirmdialog(jobid) {
+            $.dialog({
+                width: 380,
+                height: 100,
+                title: '温馨提示',
+                fixed: true,
+                resize: false,
+                lock: true,
+                content: '一经投递无法撤回，请确认是否投递',
+                drag: false,
+                cancelVal: '关闭',
+                okVal: '确定',
+                cancel: true,
+                ok: function () {
+                    $.ajax({
+                        type: 'post',
+                        url: '/job/operate',
+                        data: {'jobid': jobid, type: 'apply'},
+                        dataType: "jsonp",
+                        jsonpCallback: 'showDialog',
+                        success: function (data, status) {
+                        }
+                    });
+                    this.time(1);
+                    return false;
+                },
+            });
+        }
+
+        function addFollow(type, id) {
+            var isOauth = 0;
+            var isGuest = 1;
+            if (isOauth && isGuest) {
+                location.href = '/user/login';
+                return;
+            }
+            ajax('/user/follow',
+                {ajax: true, type: type, id: id}
+            );
+        }
+
+        function addFollowAlumna(type, id) {
+            ajax('/alumna/user/follow',
+                {ajax: true, type: type, id: id}
+            );
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            // $('.apply_job').click(function () {
+            //     var jobid=$(this).attr('data-id');
+            //     $.ajax({
+            //         type: 'post',
+            //         url: '/job/operate',
+            //         data: {'jobid':jobid, type: 'apply'},
+            //         dataType: "jsonp",
+            //         jsonpCallback: 'showDialog',
+            //         success: function (data, status) {
+            //         }
+            //     });
+            // });
+            //搜索
+            $("#search_button").click(function () {
+                $("#search_form").submit();
+            });
+        });
+    </script>
+    <div style="clear:both;"></div>
+
+
+{% endblock content %}
+

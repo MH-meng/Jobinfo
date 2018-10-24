@@ -1,0 +1,89 @@
+﻿{% extends "header_base.html" %}
+{% block title %}通知公告 - 淮北师范大学{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/m/css/header.css"/>
+<div id="nav">
+    <div class="container css-common-subnav">
+        <ul class="subNav" style="clear: both;">
+            <li class='curr'><a
+
+                    href="/m_news_tzgg/">通知公告</a></li>
+            <li><a
+
+                    href="/m_news_xwkd/">新闻快递</a></li>
+            <li><a
+
+                    href="/m_news_xygs/">校内公示</a></li>
+        </ul>
+        <!-- 快捷菜单 -->
+        <!-- 快捷菜单 -->
+        <div class="quickMenu" id="quickMenu">
+        </div>
+        <!-- 快捷菜单完 -->
+        <!-- 快捷菜单完 -->
+    </div>
+</div>
+<style>
+    /*返回顶部*/
+    .back-top:hover {
+        background-position: 40px 0px;
+        cursor: pointer;
+    }
+
+    .back-top {
+        position: fixed;
+        right: 0px;
+        bottom: 20%;
+        background: url(images/scrolltop.png);
+        width: 40px;
+        height: 30px;
+        overflow: hidden;
+    }
+</style>
+<div class="container cl">
+    <div class="mn z view view2 infoBox css-common-view" id="mn">
+        <div class="xTit mTit">通知公告 &#187; 文章</div>
+        <div class="ct cl">
+            {% for a in article_infor %}
+                <div class="aTitle">{{ a.title }}</div>
+                <div class="aInfo"><span id="pub_date">{{ a.create_time|date:'Y-m-d' }}</span>
+                    &nbsp;&nbsp;<span></span>&nbsp;&nbsp;<span
+                            id="media_name"></span>
+
+                </div>
+                <div class="aContent">
+                    {{ a.content|safe }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    //backTop
+    var pos = $("#nav ul");
+    if (pos) {
+        left = pos.offset().left + pos.width();
+        $("body").append('<div class="back-top" title="返回顶部"></div>');
+        $(".back-top").css("left", left).hide().click(function () {
+            $('html, body').animate({scrollTop: 0}, 200);
+        });
+        $(document).scroll(function () {
+            if ($(this).scrollTop() < 50) {
+                $(".back-top").hide('slow');
+            } else {
+                $(".back-top").show('slow');
+            }
+        });
+    }
+    $(function () {
+        uParse('.aContent', {
+            rootPath: '/'
+        })
+    });
+</script>
+<div style="clear:both;"></div>
+
+
+{% endblock content %}
+

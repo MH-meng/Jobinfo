@@ -1,0 +1,67 @@
+﻿{% extends "header_base.html" %}
+{% block title %}公司名{% endblock title %}
+
+{% block content %}
+<style>
+    /*返回顶部*/
+    .back-top:hover {
+        background-position: 40px 0px;
+        cursor: pointer;
+    }
+
+    .back-top {
+        position: fixed;
+        right: 0px;
+        bottom: 20%;
+        background: url(/static/images/scrolltop.png);
+        width: 40px;
+        height: 30px;
+        overflow: hidden;
+    }
+</style>
+<div class="container cl">
+    <div class="mn z view view2 infoBox css-common-view" id="mn">
+        <div class="xTit mTit">创业风采 &#187; 文章</div>
+        <div class="ct cl">
+            {% for a in article_infor %}
+                <div class="aTitle">{{ a.title }}</div>
+                <div class="aInfo"><span id="pub_date">{{ a.create_time|date:'Y-m-d' }}</span>
+                    &nbsp;&nbsp;<span></span>&nbsp;&nbsp;<span
+                            id="media_name"></span>
+
+                </div>
+                <div class="aContent">
+                    {{ a.content|safe }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    //backTop
+    var pos = $("#nav ul");
+    if (pos) {
+        left = pos.offset().left + pos.width();
+        $("body").append('<div class="back-top" title="返回顶部"></div>');
+        $(".back-top").css("left", left).hide().click(function () {
+            $('html, body').animate({scrollTop: 0}, 200);
+        });
+        $(document).scroll(function () {
+            if ($(this).scrollTop() < 50) {
+                $(".back-top").hide('slow');
+            } else {
+                $(".back-top").show('slow');
+            }
+        });
+    }
+    $(function () {
+        uParse('.aContent', {
+            rootPath: '/'
+        })
+    });
+</script>
+<div style="clear:both;"></div>
+
+
+{% endblock content %}
+

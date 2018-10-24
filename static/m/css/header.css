@@ -1,0 +1,13 @@
+﻿.subNav li {
+	/*width: 10%*/
+}
+.cuur {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-top: 2px solid #379BE9;
+	display: block;
+	height: 33px;
+	left: 0;
+	position: absolute;
+	top: -1px;
+	width: 100%;
+}

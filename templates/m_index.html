@@ -1,0 +1,487 @@
+﻿{% extends "header_base.html" %}
+{% block title %}淮北师范大学就业信息网{% endblock title %}
+{% block js %}
+        <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.min.css">
+    <style>
+        .float_box {
+            display: inline-block;
+            width: 250px;
+            height: 100px;
+            background-color: skyblue;
+            border-radius: 10px;
+        }
+
+        .float_header {
+            color: black;
+            font-size: 16px;
+            padding-top: 8px;
+            border-bottom: 1px solid grey;
+        }
+
+        .float_title {
+            color: black;
+            font-size: 15px;
+            padding-top: 4px;
+            text-align: left;
+            text-indent: 2em;
+        }
+    </style>
+{% endblock %}
+{% block login %}
+
+    {% if infor.status == True %}
+        {% for row in name %}
+            <div class="login-infor">
+                <li class="" style="width: 170px;">
+                    <a style="font-size: 12px;width: 150px" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{ row.c_name }} <span class="caret"></span></a>
+                    <ul class="dropdown" style="background-color: #a0a7b1;">
+                        <li><a style="color: white" href="/user_center/?cid={{ row.id }}">企业中心</a></li>
+                        <li><a style="color: white" href="/m_logout/">退出</a></li>
+                    </ul>
+                </li>
+
+{#                <p><a href="/user_center/?cid={{ row.id }}">{{ row.c_name }}</a></p>#}
+{#                <p><a href="/m_logout/">退出</a></p>#}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="login">
+            <a href="/m_login/">登录</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/register/">注册</a>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="cl mt10" style="position:relative;">
+        <div class="iSide">
+            <div class="it"><b>学校概述</b></div>
+            <div class="item loginItem">
+                <a href="#" class="img_infor"><img src="/static/m/images/pic1.jpg" alt=""></a>
+                <p class="img_content">淮北师范大学位于全国文明城市、国家园林城市安徽省淮北市，
+                    是一所多科性省属重点大学。1974年建校，时为安徽师范大学淮北分校。
+                    1978年12月经国务院批准，定名为淮北煤炭师范学院。。。。<a href="http://www.chnu.edu.cn/Category_76/index.aspx">[详情]</a>
+                </p>
+            </div>
+        </div>
+        <div class="iCon">
+            <div class="s1">
+                <div class="tabs tab1"><a class="more" href=""></a>
+                    <ul class="tabTitle">
+                        <li><a href="#tabs-11" rel="/m_news_tzgg/">通知公告</a></li>
+                        <li><a href="#tabs-12" rel="/m_news_xwkd/">新闻快递</a></li>
+                        <li><a href="#tabs-13" rel="/m_news_xygs/">校内公示</a></li>
+                    </ul>
+                    <ul id="tabs-11" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 1 %}
+                                <li>
+                                    <a href="/m_news_tzgg_article?news_id={{ wz.nid }}" title="{{ wz.title }}"
+                                       target="_blank">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-12" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 2 %}
+                                <li>
+                                    <a href="/m_news_xwkd_article?news_id={{ wz.nid }}" title="{{ wz.title }}"
+                                       target="_blank">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                    </ul>
+                    <ul id="tabs-13" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 3 %}
+                                <li>
+                                    <a href="/m_news_xygs_article?news_id={{ wz.nid }}" title="{{ wz.title }}"
+                                       target="_blank">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="playBox">
+{#                        <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.min.css">#}
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="/static/m/images/201512090013527524.thumb.jpg" width="353" height="250"/>
+                                <div class="carousel-caption">
+                                    轮播图1
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="/static/m/images/201511132115126396.thumb.jpg" width="353" height="250"/>
+                                <div class="carousel-caption">
+                                    轮播图2
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="/static/m/images/201512090033162784.thumb.jpg" width="353" height="250"/>
+                                <div class="carousel-caption">
+                                    轮播图3
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="/static/m/images/201512090022246061.thumb.jpg" width="353" height="250"/>
+                                <div class="carousel-caption">
+                                    轮播图4
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="/static/m/images/201512090033162784.thumb.jpg" width="353" height="250"/>
+                                <div class="carousel-caption">
+                                    轮播图5
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="" style="clear:both;margin-bottom:10px;">
+        </div>
+        <div class="iSide">
+            <div class="it"><b>就业日历</b></div>
+            <div class="rili_box">
+                <div id="calendar" class="calendar"></div>
+            </div>
+            <div class="item linkpic">
+                <a href="#">
+                    <img src="/static/m/images/201511162123586515.png"/>
+                </a>
+                <a target="_blank" href="http://www.91job.gov.cn/">
+                    <img src="/static/m/images/201511162126578968.jpg"/>
+                </a>
+                <a href="#">
+                    <img src="/static/m/images/201511162105154045.png"/>
+                </a>
+                <a href="#">
+                    <img src="/static/m/images/201404092037505889.jpg"/>
+                </a>
+                <a href="#">
+                    <img src="/static/m/images/201511132149258857.png"/>
+                </a>
+                <a target="_blank" href="http://www.yingjiesheng.com/">
+                    <img src="/static/m/images/201511162251349596.png"/>
+                </a>
+            </div>
+        </div>
+        <div class="iCon">
+            <div class="s2">
+                <div class="tabs tab2"><a class="more" href=""></a>
+                    <ul class="tabTitle">
+                        <li><a href="#tabs-25" rel="/m_teachin/">宣讲会</a></li>
+                        <li><a href="#tabs-23" rel="/m_campus/">招聘公告</a></li>
+                        <li><a href="#tabs-24" rel="/m_jobfair/">招聘会</a></li>
+                        <li><a href="#tabs-26" rel="/m_station/">职位信息</a></li>
+                        <li><a href="#tabs-22" rel="/m_invite/">招考公告</a></li>
+                    </ul>
+                    <ul id="tabs-25" class="tabCon hide">
+                        {% for row in teachin %}
+                            <li>
+                                <span class="pubdate">{{ row.x_time|date:'Y-m-d' }}</span>
+                                <a title="{{ row.x_school }}" class="it2"
+                                   href="/m_teachin_content?pid={{ row.id }}">{{ row.x_school }}</a>
+                                <a href="/m_teachin_content?pid={{ row.id }}">
+                                    {#                                    <font color="#ff0000">{{ row.x_title }}</font>#}
+                                    <span style=" text-shadow:0.5px 0.5px 0.5px #dedede;padding-left:7px;">{{ row.x_title }}</span></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-23" class="tabCon hide">
+                        {% for row in zhaopin %}
+                            {% if row.z_position %}
+                                <li><span class="pubdate">{{ row.z_data|date:'Y-m-d' }}</span>
+                                    <a title="{{ row.z_position }}"
+                                       href="/m_campus_content?pid={{ row.z_company_id }}">{{ row.z_position }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-24" class="tabCon hide">
+                        {% for row in preach_infor %}
+                            <li><span class="pubdate">{{ row.i_data|date:'Y-m-d' }}</span>
+                                <a title="{{ row.i_name }}" class="it2"
+                                   href="/m_jobfair_content?zid={{ row.id }}">{{ row.i_city }}</a><a
+                                        href="/m_jobfair_content?zid={{ row.id }}">{{ row.i_name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-26" class="tabCon hide">
+                        {% for row in zhaopin %}
+                            {% for c in company %}
+                                {% if row.z_company_id == c.id %}
+                                    <li>
+                                        <a title="{{ c.c_name }}" href="/m_station_content?pid={{ c.id }}"
+                                           target="_blank"
+                                           class="css-jobname">{{ c.c_name }}</a>
+                                        <span class="pubdate">{{ c.c_create_time|date:'Y-m-d' }}</span>
+                                        <span class="">
+                            <a target="_blank" href="/m_station_content?pid={{ c.id }}">{{ row.z_position }}</a>,
+                            <a target="_blank" href="/m_station_content?pid={{ c.id }}">月薪{{ row.z_salary }}</a>,
+                        </span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-22" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 4 %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_invite_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="s2 mt10">
+                <div class="tabs tab2"><a class="more" href=""></a>
+                    <ul class="tabTitle">
+                        <li><a href="#tabs-31" rel="/m_policy/">政策法规</a></li>
+                        <li><a href="#tabs-32" rel="/m_obtain/">就业指导</a></li>
+                        {#                        <li><a href="#tabs-33" rel="/m_guide/">创业指导</a></li>#}
+                        <li><a href="#tabs-34" rel="/m_education/">创业教育</a></li>
+                        <li><a href="#tabs-35" rel="/m_practice/">创业实践</a></li>
+                        <li><a href="#tabs-36" rel="/m_elegant/">创业风采</a></li>
+                    </ul>
+                    <ul id="tabs-31" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 5 %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_policy_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-32" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 6 %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_obtain_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {#                    <ul id="tabs-33" class="tabCon hide">#}
+                    {#                        {% for wz in article %}#}
+                    {#                            {% if wz.tags_id == 7 %}#}
+                    {#                                <li>#}
+                    {#                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>#}
+                    {#                                    <a title="{{ wz.title }}"#}
+                    {#                                       href="/m_guide_content?news_id={{ wz.nid }}">{{ wz.title }}</a>#}
+                    {#                                </li>#}
+                    {#                            {% endif %}#}
+                    {#                        {% endfor %}#}
+                    {##}
+                    {#                    </ul>#}
+                    <ul id="tabs-34" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 8 %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_education_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-35" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 9 %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_practice_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <ul id="tabs-36" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags_id == 10 %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_elegant_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for row in float %}
+        {% if row.status == '1' %}
+            <div id='img0' class="img_ad">
+                <div class="ad_content" style="text-align: center;">
+                    <a href="/m_float?news={{ row.nid }}" class="float_box">
+                        <div>
+                            <p class="float_header">{{ row.f_title }}</p>
+                            <p class="float_title">{{ row.f_desc }}</p>
+                        </div>
+                    </a>
+                    <!-- <div class="iadText">江苏师范大学校园招聘流程</div> -->
+                    <div class="ad_close"><a href="javascript:;">关闭</a></div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <script src="/static/plugin/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        var screenWidth = $(window).width();
+        var screenHeight = $(window).height();
+        var xPos = Math.random() * screenWidth;
+        var yPos = Math.random() * screenHeight;
+        var step = 1;
+        var delay = 30;
+        var height = 0;
+        var Hoffset = 0;
+        var Woffset = 0;
+        // var yon = 0;
+        var xon = 0;
+        var pause = true;
+        var interval;
+
+        // imgAd.style.top = yPos;
+        function imgAd() {
+            $('.img_ad').each(function () {
+                $(this).mouseover(function () {
+                    $(this).children().children('.ad_close').css('visibility', 'visible');
+                    if ($(this).attr('pause') == 'true') {
+                        $(this).attr('pause', 'false');
+                    } else {
+                        $(this).attr('pause', 'true');
+                    }
+                }).mouseout(function () {
+                    $(this).children().children('.ad_close').css('visibility', 'hidden');
+                    if ($(this).attr('pause') == 'true') {
+                        $(this).attr('pause', 'false');
+                    } else {
+                        $(this).attr('pause', 'true');
+                    }
+                });
+                start(this, 1, Math.floor(Math.random() * screenWidth), Math.floor(Math.random() * screenHeight));
+            })
+        }
+
+        $('.ad_close').click(function () {
+            // alert('1');
+            $(this).parent().parent('.img_ad').remove();
+        });
+
+        function changePos(imgAd) {
+            imgAd = imgAd;
+            width = $(window).width();
+            height = $(window).height()
+            // height = document.documentElement.clientHeight;
+            // height = $(window).height();
+            // width = document.body.clientWidth;
+            // height = document.body.clientHeight;
+            if ($(imgAd).attr('pause') == 'true') {
+                $(imgAd).css('left', $(imgAd).attr('xPos') + 'px');
+                // console.log($(imgAd).attr('xPos'));
+                $(imgAd).css('top', $(imgAd).attr('yPos') + 'px');
+                if ($(imgAd).attr('yon') == 1)
+                // {yPos = yPos + step;}
+                {
+                    $(imgAd).attr('yPos', $(imgAd).attr('yPos') - -($(imgAd).attr('step')))
+                }
+                else
+                // {yPos = yPos - step;}
+                {
+                    $(imgAd).attr('yPos', $(imgAd).attr('yPos') - $(imgAd).attr('step'))
+                }
+                if ($(imgAd).attr('yPos') < 1)
+                // {yon = 1;yPos = 0;}
+                {
+                    $(imgAd).attr('yon', 1);
+                    $(imgAd).attr('yPos', 1);
+                }
+                if ($(imgAd).attr('yPos') >= (height - $(imgAd).attr('Hoffset')))
+                // {yon = 0;yPos = (height - $(imgAd).attr('Hoffset'));}
+                {
+                    $(imgAd).attr('yon', 0);
+                    $(imgAd).attr('yPos', height - $(imgAd).attr('Hoffset'));
+                }
+                if ($(imgAd).attr('xon') == 1) {
+                    $(imgAd).attr('xPos', $(imgAd).attr('xPos') - -($(imgAd).attr('step')))
+                }
+                else {
+                    $(imgAd).attr('xPos', $(imgAd).attr('xPos') - $(imgAd).attr('step'))
+                }
+                if ($(imgAd).attr('xPos') < 1) {
+                    $(imgAd).attr('xon', 1);
+                    $(imgAd).attr('xPos', 1)
+                }
+                if ($(imgAd).attr('xPos') >= (width - $(imgAd).attr('Woffset'))) {
+                    $(imgAd).attr('xon', 0);
+                    $(imgAd).attr('xPos', width - $(imgAd).attr('Woffset'));
+                }
+            }
+        }
+
+        function start(imgAd, step, xPos, yPos) {
+            // imgAd.visibility = "visible";
+            $(imgAd).attr('step', step);
+            // $(imgAd)[0].offsetHeight = $(imgAd).height;
+            // $(imgAd)[0].offsetWidth = $(imgAd).width;
+            $(imgAd).attr('Hoffset', $(imgAd).height());
+            $(imgAd).attr('Woffset', $(imgAd).width());
+            $(imgAd).attr('yon', 0);
+            $(imgAd).attr('xon', 0);
+            $(imgAd).attr('xPos', xPos);
+            $(imgAd).attr('yPos', yPos);
+            $(imgAd).attr('pause', true);
+            $(imgAd).interval = setInterval(function () {
+                changePos(imgAd)
+            }, delay);
+        }
+
+        imgAd();
+    </script>
+    <div style="clear:both;"></div>
+
+{% endblock content %}
+

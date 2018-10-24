@@ -1,0 +1,303 @@
+﻿{% extends "header_base.html" %}
+{% block title %}岗位 - 淮北师范大学{% endblock title %}
+
+{% block content %}
+
+    <div class="container css-common-subnav">
+        <ul class="subNav">
+            <li><a href="/m_campus/">招聘公告</a></li>
+            <li><a href="/m_jobfair/">招聘会</a></li>
+            <li><a href="/m_teachin/">宣讲会</a></li>
+            <li class="curr"><a href="/m_station/">岗位</a></li>
+            <li><a href="/m_invite/">招考公告</a></li>
+        </ul>
+        <!-- 快捷菜单 -->
+        <!-- 快捷菜单 -->
+        <div class="quickMenu" id="quickMenu">
+        </div>
+        <!-- 快捷菜单完 -->
+        <!-- 快捷菜单完 -->
+    </div>
+    <form name="search" id="search" method="get" action="" class="container">
+        <div class="schBox" style="height:160px;">
+            <div class="schItem keyWordItem wz jobKeyWordItem">
+                <ul class="schTab">
+                    <li class="curr" valuekey="1">职位名</li>
+                    <li valuekey="2">公司名</li>
+                </ul>
+                <div class="schIpt">
+                    <input type="text" name="title" value="" id="keyWord" class="keyWord"/>
+                    <input type="hidden" id="titleType" name="title_type" value="1"/>
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">行业类别</div>
+                <div class="schIpt" id="selector-DataIndustry">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="DataIndustryValue" name="d_industry">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">职能类别</div>
+                <div class="schIpt" id="selector-DataSkill">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="DataSkillValue" name="d_skill">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">选择地区</div>
+                <div class="schIpt" id="selector-DataDistrict">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="cityValue" name="city">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">薪资</div>
+                <div class="schIpt" id="selector-DataSalary">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="d_salary" name="d_salary">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">学历要求</div>
+                <div class="schIpt" id="selector-DataEducation">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="d_education" name="d_education">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">发布时间</div>
+                <div class="schIpt" id="selector-DataTime">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="time" name="time">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">单位性质</div>
+                <div class="schIpt" id="selector-DataNature">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="nature" name="nature">
+                </div>
+            </div>
+            <div class="schItem">
+                <div class="schTit">单位规模</div>
+                <div class="schIpt" id="selector-DataScale">
+                    <i>请选择</i>
+                    <input type="hidden" value="" id="scale" name="scale">
+                </div>
+            </div>
+            <div class="schBtn">
+                <button type="submit" class="btnnor">搜索</button>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="container cl">
+            <div class="mn y b" id="mn">
+                <div class="infoBox">
+
+                    <ul class="infoTit jobInfoTit">
+                        <li class="span1">职位名称</li>
+                        <li class="span2">单位名称</li>
+                        <li class="span3">工作地点</li>
+                        <li class="span3">行业类别</li>
+                        <li class="span4">发布日期</li>
+                    </ul>
+                    {% for row in company_station %}
+                        {% for z in zhaopin_station %}
+                            {% if row.id == z.z_company_id %}
+                                <ul class="infoList">
+                                    <li class="span1"><a href="/m_station_content?pid={{ row.id }}" title="{{ z.z_position }}"
+                                                         target="_blank">{{ z.z_position }}</a></li>
+                                    <li class="span2"><a href="/m_station_content?pid={{ row.id }}">{{ row.c_name }}</a>
+                                    </li>
+                                    <li class="span3">{{ row.c_city }}</li>
+                                    <li class="span3">{{ row.c_industry }}</li>
+                                    <li class="span4">{{ row.c_create_time }}</li>
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            $('#clearCondition').click(function () {
+                clearInput();
+            });
+            $('#sd .jobSdItem ul input').change(function () {
+                if ($('#jobConditionForm').size() > 0) {
+                    if ($(this).attr('type') == 'checkbox' && $(this).val() == 0 && this.checked) {
+                        $(this).parent().siblings().find('input').attr({'disabled': 'disabled', 'checked': false});
+                    } else {
+                        $(this).parent().siblings().find('input').removeAttr('disabled');
+                    }
+                    var values = getVal($(this)),
+                        name = $(this).attr('name').replace('[]', ''),
+                        id = name + 'Condition';
+
+
+                    if ($('#' + id).size() > 0) {
+                        $('#' + id).val(values);
+                        if (values == '')
+                            $('#' + id).remove();
+
+                    } else {
+                        $('#jobConditionForm').append('<input type="hidden" id="' + id + '" name="' + name + '" value="' + values + '" />');
+                    }
+                    document.forms['jobCondition'].submit();
+                } else if ($('#search').size() > 0) {
+                    document.forms['search'].submit();
+                }
+            });
+            $('.jobKeyWordItem .schTab li').click(function () {
+                $('#titleType').val($(this).attr('valuekey'));
+                $('#keyWord').focus();
+            });
+
+
+            $('#selector-DataIndustry').MySelector({
+                js: 'DataIndustry',
+                Max: 1,
+                title: '行业',
+                cacheTime: ''
+            });
+            $('#selector-DataSkill').MySelector({
+                js: {
+                    "230100": "\u9500\u552e\/\u96f6\u552e\/\u5ba2\u6237\u670d\u52a1\u7c7b",
+                    "230200": "\u5e02\u573a\/\u516c\u5173\u7c7b",
+                    "230300": "\u8d38\u6613\/\u91c7\u8d2d\u7c7b",
+                    "230400": "\u8ba1\u7b97\u673a\/\u4e92\u8054\u7f51\/\u901a\u4fe1\u7c7b",
+                    "230500": "\u7535\u6c14\/\u7535\u5b50\/\u7535\u5668\/\u4eea\u5668\/\u4eea\u8868\u7c7b",
+                    "230900": "\u4eba\u529b\u8d44\u6e90\/\u884c\u653f\/\u540e\u52e4\/\u7ecf\u8425\u7ba1\u7406\u7c7b",
+                    "231100": "\u751f\u4ea7\/\u52a0\u5de5\/\u8d28\u91cf\u7ba1\u7406\u7c7b",
+                    "231300": "\u673a\u68b0\u5236\u9020\u7c7b",
+                    "231400": "\u6280\u5de5\u7c7b",
+                    "231500": "\u8d22\u52a1\/\u5ba1\u8ba1\/\u7edf\u8ba1\u7c7b",
+                    "231600": "\u91d1\u878d\/\u4fdd\u9669\u7c7b",
+                    "231700": "\u5efa\u7b51\/\u4ea4\u901a\/\u623f\u5730\u4ea7\/\u88c5\u4fee\/\u7269\u4e1a\u670d\u52a1\u7c7b",
+                    "231800": "\u4ed3\u50a8\/\u7269\u6d41\/\u8fd0\u8f93\u7c7b",
+                    "232100": "\u6559\u80b2\/\u79d1\u7814\/\u54a8\u8be2\/\u6cd5\u5f8b\u7c7b",
+                    "232500": "\u7f8e\u672f\/\u8bbe\u8ba1\/\u521b\u610f\u7c7b",
+                    "232600": "\u7f16\u8f91\/\u6587\u6848\/\u7ffb\u8bd1\/\u4f20\u5a92\u7c7b",
+                    "232700": "\u9152\u5e97\/\u9910\u996e\/\u65c5\u6e38\/\u793e\u4f1a\u670d\u52a1\u7c7b",
+                    "232800": "\u80fd\u6e90\/\u5316\u5de5\/\u73af\u4fdd\u7c7b",
+                    "233100": "\u533b\u7597\/\u536b\u751f\/\u5236\u836f\/\u751f\u7269\u7c7b",
+                    "233500": "\u519c\/\u6797\/\u7267\/\u6e14\u4e1a\u7c7b",
+                    "233600": "\u517c\u804c\/\u4e34\u65f6\/\u57f9\u8bad\u751f\/\u50a8\u5907\u5e72\u90e8",
+                    "239900": "\u5176\u4ed6"
+                },
+                Max: 1,
+                title: '职能'
+            });
+            $('#selector-DataDistrict').MySelector({
+                js: 'DataDistrict',
+                Max: 5,
+                title: '地区',
+                type: 2,
+                cacheTime: ''
+            });
+            $('#selector-DataSalary').MySelector({
+                js: {
+                    "": "--\u8bf7\u9009\u62e9--",
+                    "100": "1500\u4ee5\u4e0b",
+                    "101": "1500-1999",
+                    "102": "2000-2999",
+                    "103": "3000-4499",
+                    "104": "4500-5999",
+                    "105": "6000-7999",
+                    "106": "8000-9999",
+                    "107": "10000-14999",
+                    "108": "15000-19999",
+                    "109": "20000-29999",
+                    "110": "30000-49999",
+                    "111": "50000\u53ca\u4ee5\u4e0a"
+                },
+                Max: 1,
+                title: '薪资',
+                type: 1,
+                cacheTime: ''
+            });
+            $('#selector-DataEducation').MySelector({
+                js: {
+                    "100": "\u5927\u4e13",
+                    "101": "\u672c\u79d1",
+                    "102": "\u7855\u58eb",
+                    "103": "\u535a\u58eb",
+                    "0": "\u4e0d\u9650"
+                },
+                Max: 1,
+                title: '学历',
+                type: 1,
+                cacheTime: ''
+            });
+            $('#selector-DataTime').MySelector({
+                js: {
+                    "0": "\u4e0d\u9650\u65f6\u95f4",
+                    "1": "\u8fd11\u5929",
+                    "3": "\u8fd13\u5929",
+                    "7": "\u8fd11\u5468",
+                    "14": "\u8fd12\u5468",
+                    "30": "\u8fd11\u6708",
+                    "60": "\u8fd12\u6708"
+                },
+                Max: 1,
+                type: 1,
+                title: '发布时间',
+                cacheTime: ''
+            });
+            $('#selector-DataNature').MySelector({
+                js: {
+                    "150018": "\u4e2a\u4f53\u5de5\u5546\u6237",
+                    "150001": "\u56fd\u6709\u53ca\u96c6\u4f53\u4f01\u4e1a",
+                    "150002": "\u6c11\u8425\u4f01\u4e1a",
+                    "150007": "\u56fd\u5bb6\u673a\u5173",
+                    "150005": "\u4e8b\u4e1a\u5355\u4f4d",
+                    "150003": "\u6e2f\u6fb3\u53f0\u53ca\u5916\u8d44\u4f01\u4e1a",
+                    "150006": "\u793e\u4f1a\u56e2\u4f53",
+                    "150013": "\u90e8\u961f"
+                },
+                Max: 5,
+                type: 1,
+                title: '单位性质',
+                cacheTime: ''
+            });
+            $('#selector-DataScale').MySelector({
+                js: {
+                    "100": "\u5c11\u4e8e50\u4eba",
+                    "101": "50-300\u4eba",
+                    "103": "301-1000\u4eba",
+                    "104": "1001\u4eba\u4ee5\u4e0a"
+                },
+                Max: 1,
+                title: '单位规模',
+                cacheTime: ''
+            });
+        });
+
+        function getVal(t) {
+            var T = t.parents('ul'), val = new Array();
+            T.find('input:checked').each(function () {
+                val.push($(this).val());
+            });
+            if (val.length == 0)
+                return '';
+            else
+                return val.join(',');
+
+        }
+
+        function clearInput() {
+            window.location.href = '/job/search/d_category%5B0%5D/0/d_category%5B1%5D/100';
+        }
+
+        function jobConditionForm() {
+            $('#jobConditionForm').html('');
+            $('#jobConditionForm').submit();
+        }
+    </script>
+    <div style="clear:both;"></div>
+{% endblock content %}
+

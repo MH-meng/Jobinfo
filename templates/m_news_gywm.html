@@ -1,0 +1,106 @@
+﻿{% extends "header_base.html" %}
+{% block title %}关于我们 - 淮北师范大学{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/m/css/header.css"/>
+<div id="nav">
+    <div class="container css-common-subnav">
+        <ul class="subNav" style="clear: both;">
+            <li><a href="#">联系方式</a></li>
+        </ul>
+        <!-- 快捷菜单 -->
+        <!-- 快捷菜单 -->
+        <div class="quickMenu" id="quickMenu">
+        </div>
+        <!-- 快捷菜单完 -->
+        <!-- 快捷菜单完 -->
+    </div>
+</div>
+
+
+<style>
+    /*返回顶部*/
+    .back-top:hover {
+        background-position: 40px 0px;
+        cursor: pointer;
+    }
+
+    .back-top {
+        position: fixed;
+        right: 0px;
+        bottom: 20%;
+        background: url(/static/images/scrolltop.png);
+        width: 40px;
+        height: 30px;
+        overflow: hidden;
+    }
+</style>
+<div class="container cl">
+    <div class="mn z view view2 infoBox css-common-view" id="mn">
+        <div class="xTit mTit">联系方式 &#187; 文章</div>
+        <div class="ct cl">
+            <div class="aTitle">联系方式</div>
+            <div class="aInfo"><span id="pub_date">2018年10月15日21:43</span> &nbsp;&nbsp;<span>浏览：4946次</span>&nbsp;&nbsp;<span
+                    id="media_name"></span>
+
+            </div>
+            <div class="aContent">
+                <p>地址：淮北市烈山区沱河东路淮北师范大学（滨湖校区）、安徽省淮北市东山路100号 （老校区）
+                    <br/>电话：
+                    <br/>邮编：235000
+                    <br/>招聘邮箱：
+                </p>
+                <table>
+                    <tbody>
+                    <tr class="firstRow">
+                        <td>地址：淮北市烈山区沱河东路淮北师范大学（滨湖校区）、安徽省淮北市东山路100号 （老校区）</td>
+                        <!--<td></td>-->
+                    </tr>
+                    <tr>
+                        <td>电话：</td>
+                        <!--<td></td>-->
+                    </tr>
+                    <tr>
+                        <td>邮编：235000</td>
+                        <!--<td></td>-->
+                    </tr>
+                    <tr>
+                        <td>招聘邮箱：</td>
+                        <!--<td></td>-->
+                    </tr>
+
+                    </tbody>
+                </table>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //backTop
+    var pos = $("#nav ul");
+    if (pos) {
+        left = pos.offset().left + pos.width();
+        $("body").append('<div class="back-top" title="返回顶部"></div>');
+        $(".back-top").css("left", left).hide().click(function () {
+            $('html, body').animate({scrollTop: 0}, 200);
+        });
+        $(document).scroll(function () {
+            if ($(this).scrollTop() < 50) {
+                $(".back-top").hide('slow');
+            } else {
+                $(".back-top").show('slow');
+            }
+        });
+    }
+    $(function () {
+        uParse('.aContent', {
+            rootPath: '/'
+        })
+    });
+</script>
+<div style="clear:both;"></div>
+
+
+{% endblock content %}
+

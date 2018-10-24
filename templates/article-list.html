@@ -1,0 +1,180 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/static/html5shiv.js"></script>
+<script type="text/javascript" src="/static/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/static/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/fontawesome/css/font-awesome.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!--[if IE 6]>
+<script type="text/javascript" src="/static/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>资讯列表</title>
+</head>
+<body>
+<nav class="breadcrumb" style="padding: 0px 15px;">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 资讯列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+    <button onclick="removeIframe()"  style="float: right; margin: 3px;" class="btn btn-success radius right"> <i class="fa fa-times right" aria-hidden="true"></i></button>
+</nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" data-title="添加资讯" data-href="/article_add/" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a>&nbsp;<a class="btn btn-primary radius" data-title="添加分类" data-href="/article_class/" onclick="Hui_admin_tab(this)" href="javascript:;"> <i class="Hui-iconfont">&#xe600;</i>分类管理</a></span> <span class="r">共有数据：<strong>{{ count }}</strong> 条</span> </div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+			<thead>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="80">序号</th>
+					<th>标题</th>
+					<th>概述</th>
+					<th width="80">分类</th>
+					<th width="120">发布时间</th>
+					<th width="80">状态</th>
+					<th width="120">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+            {% for article in article_list %}
+                        <tr class="text-c">
+                            <td><input type="checkbox" value="" name=""></td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.desc }}</td>
+                            <td>{{ article.tags.title }}</td>
+                            <td>{{ article.create_time|date:"Y-m-d" }}</td>
+                            {% if article.status == "1" %}
+                                <td class="td-status"><span class="label label-success radius">已发布</span></td>
+                                {% elif article.status == "0" %}
+                                    <td class="td-status"><span class="label label-danger radius">已停用</span></td>
+                                {% else %}
+                                    <td class="td-status"><span class="label label-default radius">悬浮</span></td>
+                            {% endif %}
+                            <td class="f-14 td-manage">
+                            <!-- 发布与停用 -->
+                                {% if article.status == "1" %}
+                                    <a style="text-decoration:none" onClick="article_stop(this,'{{ article.pk }}')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe6de;</i></a>
+                                    {% elif article.status == "0"%}
+                                        <a style="text-decoration:none" onClick="article_start(this,'{{ article.pk }}')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>
+                                {% endif %}
+                                <a style="text-decoration:none" class="ml-5" href="/article_edit/{{ article.pk }}" title="编辑">
+                                <i class="Hui-iconfont">&#xe6df;</i></a>
+                                <a style="text-decoration:none" class="ml-5" onclick="article_del(this, '{{ article.pk }}')" href="javascript:;" title="删除">
+                                <i class="Hui-iconfont">&#xe6e2;</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<div class="infomation">{% csrf_token %}</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="/static/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="/static/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="/static/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aoColumnDefs": [
+	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+	  {"orderable":false,"aTargets":[0,7]}// 不参与排序的列
+	]
+});
+
+/*资讯-添加*/
+function article_add(title,url,w,h){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+
+/*资讯-删除*/
+function article_del(obj,id){
+    console.log(obj,id)
+    layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+            url: '/del_article/',
+			type: 'POST',
+			data:{
+			    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                pk:id
+            },
+			success: function(data){
+                $(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000})
+            }
+        })
+    })
+}
+
+/*资讯-下架*/
+function article_stop(obj,id){
+	layer.confirm('确认要停用吗？',function(index){
+	    $.ajax({
+            url: '/article_stop/',
+			type: 'POST',
+			data:{
+			    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                pk:id
+            },
+			success: function(data){
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,'+ data.id+ ')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">已停用</span>');
+                $(obj).remove();
+                layer.msg('已下架!',{icon: 5,time:1000});
+            }
+        })
+    })
+}
+
+
+
+/*资讯-发布*/
+function article_start(obj,id){
+	layer.confirm('确认要发布吗？',function(index) {
+        $.ajax({
+            url: '/article_start/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                pk: id
+            },
+            success: function (data) {
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,'+ data.id+ ')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe6de;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+                $(obj).remove();
+                layer.msg('已发布!', {icon: 6, time: 2000});
+            }
+        })
+    })
+}
+
+</script> 
+</body>
+</html>

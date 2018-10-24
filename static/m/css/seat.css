@@ -1,0 +1,195 @@
+﻿.banner, #playBox, .body {
+    width: 353px;
+    margin: 0px auto;
+    float: right;
+}
+
+#playBox .oUlplay li img {
+    width: 353px;
+}
+
+.banner, .banner img, #playBox {
+    height: 250px;
+    width: 353px;
+}
+
+.banner {
+    position: relative;
+}
+
+.body .tag {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 10px;
+    height: 15px;
+    margin-bottom: 8px;
+}
+
+.body .tag li {
+    line-height: 15px;
+    width: 95px;
+    float: left;
+    vertical-align: middle;
+    position: relative;
+}
+
+.body .tag li .block {
+    display: inline-block;
+    width: 15px;
+    height: 10px;
+    /*margin-right: 10px;*/
+    position: absolute;
+    top: 2px;
+}
+
+.body .tag li .txt {
+    margin-left: 23px;
+    margin-top: 0px;
+}
+
+.body .list {
+    height: 95px;
+    /*margin: 0px auto;*/
+    margin-left: 1%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#divSmallBox {
+    overflow: hidden;
+    *display: inline;
+    *zoom: 1;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+#playBox {
+    margin: 0px auto;
+    background: #333;
+    position: relative;
+    overflow: hidden;
+}
+
+#playBox .oUlplay {
+    width: 99999px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#playBox .oUlplay li {
+    float: left;
+}
+
+#playBox .pre {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: url(../images/l.png) no-repeat;
+    position: absolute;
+    top: 105px;
+    left: 0px;
+    z-index: 10;
+    background-size: 25px;
+}
+
+#playBox .next {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: url(../images/r.png) no-repeat;
+    position: absolute;
+    top: 105px;
+    right: 0px;
+    z-index: 10;
+    background-size: 25px;
+}
+
+#playBox .smalltitle {
+    width: 353px;
+    height: 10px;
+    position: absolute;
+    bottom: 15px;
+    z-index: 10
+}
+
+#playBox .smalltitle ul {
+    margin: 0 auto;
+    text-align: right;
+    padding-right: 12px;
+}
+
+#playBox .smalltitle ul li {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: inline-block;
+    overflow: hidden;
+    *display: inline;
+    *zoom: 1;
+}
+
+#playBox .smalltitle .thistitle {
+    background: #008755;
+}
+
+#playBox .texttitle {
+    z-index: 9;
+    position: absolute;
+    background: #000;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    bottom: 0px;
+    white-space: nowrap;
+    padding-left: 5px;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+
+#playBox .texttitle li {
+    display: none;
+}
+
+#playBox .texttitle .thistitle {
+    display: block;
+    width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#playBox .texttitle a {
+    color: #fff;
+}
+
+.myslide {
+    width: 980px;
+    margin-bottom: 10px;
+    height: 178px
+}
+
+.myslide-titleBg, .myslide-title {
+    display: none
+}
+
+.myslide .myslide-frame a, .myslide a img {
+    width: 980px;
+    height: 178px
+}
+
+.myslide .myslide-button {
+    bottom: 15px;
+    right: 10px;
+}

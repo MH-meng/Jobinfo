@@ -1,0 +1,50 @@
+﻿{% extends "header_base.html" %}
+{% block title %}公司名{% endblock title %}
+
+{% block content %}
+<div class="container cl">
+    <div class="mn z view view2 css-common-view" id="mn">
+        {% for row in teachins %}
+        <div class="viewHead">
+            <h1>{{ row.c_name }}</h1>
+            <dl class="info">
+                <dt><a href="#">{{ row.c_name }}</a></dt>
+            </dl>
+        </div>
+        <ul class="xInfo xInfo-2">
+            <li>单位性质：<span>{{ row.c_nature }}</span></li>
+            <li>单位行业：<span>{{ row.c_industry }}</span></li>
+            <li>单位规模：<span>{{ row.c_scale }}人</span></li>
+        </ul>
+        <ul class="xInfo xInfo-2 cl tInfo-2">
+            <li>宣讲时间：<span>{{ row.x_time|date:'Y-m-d' }}</span></li>
+            <li>宣讲学校：<span>{{ row.x_school }}</span></li>
+            <li>宣讲城市：<span>{{ row.x_city }}</span></li>
+            <li>招聘部门电话：<span>{{ row.c_phone }}</span></li>
+        </ul>
+
+        <div class="tabs vTab">
+            <ul class="tabTitle">
+                <li><a href="#vTab1">宣讲会详情</a></li>
+                <li><a href="#vTab2">单位简介</a></li>
+
+            </ul>
+            <div id="vTab1" class="vContent" style="display: block;">
+                {{ row.x_detail|safe }}
+            </div>
+            <ul id="vTab2" class="xInfo" style="display: none;">
+                <div class="vContent cl">
+                    <div>
+                        {{ row.c_brief|safe }}
+                    </div>
+                </div>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div style="clear:both;"></div>
+
+
+{% endblock content %}
+

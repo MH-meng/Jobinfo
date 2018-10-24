@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+    <link rel="icon" type="image/x-icon" href="/static/bitbug_favicon.ico"/>
+    <meta property="wb:webmaster" content="bde7f8a9153c79cb"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="/static/m/js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/m/css/jui.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/m/css/seat.css"/>
+    <script type="text/javascript" src="/static/m/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/m/js/rili.js"></script>
+
+    <script type="text/javascript" src="/static/m/js/jquery.myslide.js"></script>
+    <script type="text/javascript" src="/static/m/js/jui.min.js"></script>
+    <script type="text/javascript" src="/static/m/js/jquery.artdialog.js"></script>
+    <title>{% block title %}{% endblock title %} </title>
+    <link rel="stylesheet" type="text/css" href="/static/m/css/common.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="css/common_1.css"/> -->
+    <link rel="stylesheet" type="text/css" href="/static/m/css/ujs@blue.css"/>
+
+    <!-- <link rel="stylesheet" type="text/css" href="css/form.css"/> -->
+    <script type="text/javascript" src="/static/m/js/jui.min.js"></script>
+    <script type="text/javascript" src="/static/m/js/jquery.myslide.js"></script>
+    <script type="text/javascript" src="/static/m/js/jquery.jdate.js"></script>
+    <script type="text/javascript" src="/static/m/js/jquery.inputhints.min.js"></script>
+    <script type="text/javascript" src="/static/m/js/j.core.js"></script>
+    <link rel="stylesheet" href="/static/m/css/calendar.css">
+    <style type="text/css">
+        .img_ad {
+            z-index: 10100;
+            left: 0px;
+            width: auto;
+            position: fixed;
+            top: 0px;
+            height: auto;
+            visibility: visible;
+        }
+
+        .ad_close {
+            z-index: 10101;
+            right: 0;
+            top: 0;
+            visibility: hidden;
+            position: absolute;
+            /*background: #ebebeb;*/
+            display: block;
+
+        }
+
+        .ad_close a:hover {
+            background: #ebebeb;
+            color: #ff0000;
+        }
+
+        .ad_content {
+            position: relative;
+        }
+
+        .newsBox, .infoBox {
+            width: 930px;
+            height: 1100px;
+            overflow-y: auto;
+            {#border: 1px solid red;#}
+        }
+
+        .login {
+            color: black;
+            float: right;
+            font-size: 14px;
+            margin-right: 20px;
+            {#border: 1px solid red;#}
+            {#margin-top: 10px;#}
+        }
+
+        .login a {
+            color: black;
+        }
+
+        .login a:hover {
+            color: red;
+        }
+        
+
+        .login-infor a {
+            color: black;
+            font-size: 13px;
+        }
+
+        .login-infor a:hover {
+            color: red;
+        }
+
+    </style>
+    {% block js %}
+
+    {% endblock js %}
+
+</head>
+<body>
+<div class="css-wrapper">
+    <div class="wp">
+        <div class="header">
+            <div id="logo" class="logo"><a href="/">
+                <img src="/static/m/images/4b4c6076d017ff73692f39567d27a7fa.jpg"/>
+            </a></div>
+        </div>
+        <div id="nav1">
+            <!-- 主页-->
+            <ul class="nav1">
+                <li><a href="/" target="_self">主页</a></li>
+                <li><a href="/m_student_link/">学生</a></li>
+                <li><a href="/m_danwei_link/">单位</a></li>
+                <li><a href="/m_teacher_link/">教师</a></li>
+                <li><a href="/m_news_cyzd/">创业指导</a></li>
+                <li><a href="/m_obtain/">就业质量报告</a></li>
+                <li><a href="/m_news_gywm/" target="_self">关于我们</a></li>
+                {% block login %}
+                    <div class="login_box"></div>
+                {% endblock %}
+            </ul>
+            <!-- 2级导航-->
+        </div>
+        <script type="text/javascript" src="/static/m/js/zzsc.js"></script>
+        <script type="text/javascript" src="/static/m/js/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="/static/m/js/jquery.skitter.min.js"></script>
+        <script type="text/javascript" src="/static/m/js/calendar.js"></script>
+        {% block content %}
+
+        {% endblock content %}
+
+        <div class="footer cl">
+            <div class="finfo">
+                <p></p>
+                <p class="copyright "></p>
+                <div style="text-align: center;">版权所有：淮北师范大学 Copyright®2015 皖ICP备15018844号</div>
+                <div style="text-align: center;">地址：安徽省淮北市东山路100号 邮政编码：235000</div>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

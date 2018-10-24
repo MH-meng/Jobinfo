@@ -1,0 +1,105 @@
+﻿.cl:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.cl { zoom: 1; }
+.selector-input {
+	font-size:12px; color:#999;
+	min-height:26px;
+	height:auto !important;
+	height:26px;
+	overflow:visible; cursor:pointer;
+ 	border: 1px solid #ccc;
+ 	float: left;
+ 	width: 254px;
+ 	overflow: hidden;
+ 	padding-left: 5px;
+ 	line-height: 26px;
+ 	padding-right: 10px;
+ }
+.selector-input i { font-style: normal; }
+
+
+
+
+
+
+
+
+
+/*以下不可修改*/
+#selector-wrap { width: 700px; margin: 0 20px 0 auto; }
+#selector-selected-wrap { line-height: 20px; padding-bottom: 10px; border-bottom: 1px solid #ccc; margin-bottom:10px; }
+#selector-selected-wrap dt { float: left; margin-left: -100px; padding-left: 100px;}
+/*#selector-selected-wrap dd {  padding-left:80px;}*/
+#selector-selected-wrap dd span {overflow:hidden; margin-bottom:10px; cursor: pointer; margin-left: 5px; display: inline; height: 18px; text-decoration: none; color: #333; line-height: 18px; background: url(../images/selectedright.gif) no-repeat right top #E9E9E9; float: left; padding-left: 5px; padding-right: 25px; }
+#selector-selected-wrap dd span:hover { background: url(../images/selectedrighthover.gif) no-repeat right top #FFD8B0; color: #f60; }
+
+#selector-options-wrap{
+	height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+#selector-options-wrap #selector-lv1{
+	*zoom:1;
+}
+#selector-options-wrap #selector-lv1{
+	content:" ";
+	display:block;
+	height:0;
+	clear:both;
+}
+
+
+
+#selector-options-wrap .s { cursor: pointer; overflow: hidden; padding: 3px 5px; float: left; width: 150px; display: block; height: 16px; text-decoration: none; color: #333; padding-left: 16px; background: url(../images/listicon.gif) no-repeat 0px -115px; cursor: pointer; }
+#selector-options-wrap .s:hover { color: #3B5998; background-image: url(../images/listicon.gif); background-repeat: no-repeat; background-position: 0px -145px; }
+#selector-options-wrap .click, #selector-options-wrap .click:hover { background: url(../images/listicon.gif) no-repeat 0px -175px; }
+
+
+#selector-lv2 .click, #selector-lv2 .click:hover{ background:none;}
+
+#selector-options-wrap .lv1 { overflow: hidden; padding: 3px 5px; float: left; position: relative; width: 150px; display: block; height: 16px; line-height:16px; text-decoration: none; color: #333; padding-left: 16px; cursor: pointer; }
+#selector-options-wrap .lv1:hover { color: #3B5998; }
+#selector-options-wrap .sel { color: #f90; font-weight: bold; }
+#selector-options-wrap .cur { color: #333; font-weight: normal; background: #EEE; border: 1px solid #f90; border-bottom: 0; position: relative; z-index: 2; }
+#selector-options-wrap .nur { color: #333; font-weight: normal; background: #EEE; border: 1px solid #f90; position: relative; z-index: 2; }
+#selector-options-wrap b { cursor: pointer; display: block; float: left; background: url(../images/listicon.gif) no-repeat 0px -118px; width: 16px; height: 16px; }
+#selector-options-wrap i { cursor: pointer; display: block; height: 16px; font-style: normal; }
+#selector-options-wrap .click b, #selector-options-wrap .click:hover b { cursor: pointer; background: url(../images/listicon.gif) no-repeat 0px -178px; }
+#selector-options-wrap .layer2 { float: left; width: 698px; padding: 10px 0; margin-top: -1px; position: relative; z-index: 1; border: 1px solid #f90; background: #EEE; }
+#selector-options-wrap .layer2none{ display:none;}
+#selector-options-wrap .layer2 span { cursor: pointer; overflow: hidden; padding: 3px 5px; margin-left: 14px; float: left; width: 135px; display: block; height: 16px; line-height:18px; overflow:hidden; text-decoration: none; color: #333; padding-left: 16px; background: url(../images/listicon.gif) no-repeat 0px -115px; cursor: pointer; }
+#selector-options-wrap .layer2 .click, #selector-options-wrap .layer2 .click:hover { background: url(../images/listicon.gif) no-repeat 0px -175px; }
+
+#selector-lv3 h3{font-size:12px;padding-left:10px; color:#1688D9;}
+#selector-lv3 ul { padding:4px 0 10px 0;}
+#selector-lv3 .s{
+width:140px;
+padding: 3px 5px;
+padding-left: 26px;
+background-position: 10px -115px;
+}
+#selector-lv3 .s:hover{
+background-position: 10px -145px;
+}
+#selector-lv3 .click:hover,#selector-lv3 .click{
+background-position: 10px -175px;
+}
+
+#selector-lv3-ex{ padding-top:10px;}
+#selector-lv3-ex .lv1{overflow: hidden; color:#1688D9;
+padding: 3px 5px;
+float: left;
+position: relative; font-weight:bold;
+width: 138px;
+display: block;
+height: 16px;
+line-height: 16px;
+text-decoration: none;
+padding-left: 28px;
+cursor: pointer; background-image: url(../images/listicon.gif);
+background-repeat: no-repeat;
+background-position: 12px -203px; }
+
+
+
+
+

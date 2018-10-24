@@ -1,0 +1,39 @@
+﻿{% extends "header_base.html" %}
+{% block title %}招考公告 - 淮北师范大学{% endblock title %}
+
+{% block content %}
+
+        <div class="container css-common-subnav">
+                <ul class="subNav">
+                    <li><a href="/m_campus/">招聘公告</a></li>
+                    <li><a href="/m_jobfair/">招聘会</a></li>
+                    <li ><a href="/m_teachin/">宣讲会</a></li>
+                    <li><a href="/m_station/">岗位</a></li>
+                    <li class="curr"><a href="/m_invite/">招考公告</a></li>
+                </ul>
+                <!-- 快捷菜单 -->
+                <!-- 快捷菜单 -->
+                <div class="quickMenu" id="quickMenu">
+                </div>
+                <!-- 快捷菜单完 -->
+                <!-- 快捷菜单完 -->
+            </div>
+        <div class="container cl">
+            <div class="mn z view view2 infoB" id="mn">
+                <div class="xTit mTit">招考公告</div>
+                <div class="newsBox">
+                    {% for row in article %}
+                        {% if row.tags_id == 4 %}
+                            <ul class="newsList">
+                                <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
+                                <li class="span1"><a href="/m_invite_content?news_id={{ row.nid }}"
+                                                     target="_blank">{{ row.title }}</a></li>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+{% endblock content %}
+

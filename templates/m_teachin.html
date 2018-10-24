@@ -1,0 +1,80 @@
+﻿{% extends "header_base.html" %}
+{% block title %}宣讲会 - 淮北师范大学{% endblock title %}
+
+{% block content %}
+
+    <div class="container css-common-subnav">
+        <ul class="subNav">
+            <li><a href="/m_campus/">招聘公告</a></li>
+            <li><a href="/m_jobfair/">招聘会</a></li>
+            <li class="curr"><a href="/m_teachin/">宣讲会</a></li>
+            <li><a href="/m_station/">岗位</a></li>
+            <li><a href="/m_invite/">招考公告</a></li>
+        </ul>
+        <!-- 快捷菜单 -->
+        <!-- 快捷菜单 -->
+        <div class="quickMenu" id="quickMenu">
+        </div>
+        <!-- 快捷菜单完 -->
+        <!-- 快捷菜单完 -->
+    </div>
+    <div class="container cl">
+        <div class="mn z view view2" id="mn">
+            <div class="infoBox mt10">
+                <ul class="infoTit teachinList">
+                    <li class="span1">公司名称</li>
+                    <li class="span2">城市</li>
+                    <li class="span5">学校</li>
+{#                    <li class="span5">举办时间</li>#}
+                </ul>
+                <ul class="infoList teachinList">
+                    {% for row in company_teachin %}
+                        {% for t in teachin_teachin %}
+                            {% if row.id == t.x_company_id %}
+                                <li class="span1">
+                                    <a href="/m_teachin_content?pid={{ t.id }}" title="{{ row.c_name }}"
+                                       target="_blank">{{ row.c_name }}</a>
+                                </li>
+                                <li class="span2">{{ t.x_city }}</li>
+                                <li class="span5">{{ t.x_school }}</li>
+                                <li class="span5">{{ t.x_time|date:'Y-m-d' }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#schRange').MySelector({
+                js: ["\u5168\u90e8", "\u6821\u5185\u53d1\u5e03", "\u6821\u5916\u53d1\u5e03"],
+                Max: 1,
+                title: '范围'
+            });
+            $('#schCity').MySelector({
+                js: 'DataDistrict',
+                type: 2,
+                Max: 5,
+                title: '举办城市'
+            });
+            $('#schTime').MySelector({
+                js: {
+                    "0": "\u6240\u6709",
+                    "1": "\u8fd11\u5929",
+                    "3": "\u8fd13\u5929",
+                    "7": "\u8fd11\u5468",
+                    "14": "\u8fd12\u5468",
+                    "30": "\u8fd11\u6708",
+                    "60": "\u8fd12\u6708"
+                },
+                Max: 1,
+                title: '举办时间'
+            });
+
+        });
+    </script>
+    <div style="clear:both;"></div>
+{% endblock content %}
+

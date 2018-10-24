@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>企业中心</title>
+    <link rel="icon" type="image/x-icon" href="/static/bitbug_favicon.ico"/>
+    <link rel="stylesheet" href="/static/m/css/m_student.css">
+    <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.css">
+    <style>
+        .name {
+            width: 100px;
+        {#border: 1px solid red;#}
+        }
+
+        .name_row {
+            width: 200px;
+        {#border: 1px solid rebeccapurple;#}
+        }
+
+        .c_content {
+            text-align: left;
+            width: 750px;
+            height: 400px;
+        }
+
+        .c_content div {
+            box-shadow: 0 0 5px lightgrey;
+            margin: 15px auto;
+            overflow: auto;
+            text-indent: 2em;
+        }
+
+    </style>
+</head>
+<body>
+<div class="m_header"><img src="/static/login/img/preachlogo.jpg" alt="用户中心logo"></div>
+<div class="m_body">
+    <div class="m_leftmenu">
+        <div class="m_menu actions">
+            <i class="fa fa-book" aria-hidden="true"></i>&nbsp;
+            <a href="#">企业中心</a>
+        </div>
+        <div class="m_menu">
+            <i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;
+            <a href="#">完善企业信息</a>
+        </div>
+        <div class="m_menu">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;
+            <a href="#">发布宣讲会</a>
+        </div>
+        <div class="m_menu">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;
+            <a href="#">发布招聘信息</a>
+        </div>
+
+        <div class="m_menu">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;
+            <a href="#">返回首页</a>
+        </div>
+    </div>
+    <div class="m_content">
+        <div class="m m_1 show" style="height: 800px">
+            {% for row in company %}
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <td class="active name">姓名:</td>
+                        <td class="success name_row">{{ row.c_name }}</td>
+                        <td class="active name">账号:</td>
+                        <td class="success name_row">{{ row.c_number }}</td>
+                    </tr>
+                    <tr>
+                        <td class="active name">单位性质:</td>
+                        {% if  c_nature != '' %}
+                            <td class="success name_row">{{ row.c_nature }}</td>
+                        {% else %}
+                            <td class="success name_row">暂无</td>
+                        {% endif %}
+                        <td class="active name">单位行业:</td>
+                        {% if  c_industry != '' %}
+                            <td class="success name_row">{{ row.c_industry }}</td>
+                        {% else %}
+                            <td class="success name_row">暂无</td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td class="active name">单位规模:</td>
+                        {% if  c_scale != 0 %}
+                            <td class="success name_row">{{ row.c_scale }}人</td>
+                        {% else %}
+                            <td class="success name_row">0人</td>
+                        {% endif %}
+
+                        <td class="active name">招聘电话:</td>
+                        {% if  c_phone != 0 %}
+                            <td class="success name_row">{{ row.c_phone }}</td>
+                        {% else %}
+                            <td class="success name_row">暂无</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="active name">联系人:</td>
+                        {% if  c_scale != '' %}
+                            <td class="success name_row">{{ row.c_linkman }}</td>
+                        {% else %}
+                            <td class="success name_row"></td>
+                        {% endif %}
+
+                        <td class="active name">所在城市:</td>
+                        {% if  c_phone != '' %}
+                            <td class="success name_row">{{ row.c_city }}</td>
+                        {% else %}
+                            <td class="success name_row">暂无</td>
+                        {% endif %}
+                    </tr>
+
+                </table>
+                <div class="c_content">
+                    <p class="btn btn-info">单位简介</p>
+                    {% if  c_brief != '' %}
+                        <div>{{ row.c_brief|safe }}</div>
+                    {% else %}
+                        <div>暂无简介</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="m m_2 m_hide">
+            <form action="/user_center/" method="POST" id="fm">
+                {% csrf_token %}
+                {% for row in company %}
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <td class="active name">公司名:</td>
+                            <td class="success name_row">{{ row.c_name }}</td>
+                            <td class="active name">账号:</td>
+                            <td class="success name_row">{{ row.c_number }}</td>
+                            <td class="success name_row" style="display: none">
+                                <input type="text" name="id" value="{{ row.id }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="active name">单位性质:</td>
+                            <td class="success name_row">
+                                <input type="text" name="c_nature" value="{{ row.c_nature }}">&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+
+                            <td class="active name">单位行业:</td>
+                            <td class="success name_row">
+                                <input type="text" name="c_industry" value="{{ row.c_industry }}">&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="active name">所在城市:</td>
+                            <td class="success name_row">
+                                <input type="text" name="c_city" value="{{ row.c_city }}">&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+
+                            <td class="active name">单位规模:</td>
+                            <td class="success name_row">
+                                <input type="text" name="c_scale" value="{{ row.c_scale }}">人
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="active name">招聘电话:</td>
+                            <td class="success name_row">
+                                <input type="text" name="c_phone" value="{{ row.c_phone }}">&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+
+                            <td class="active name">联系人:</td>
+                            <td class="success name_row">
+                                <input type="text" name="c_linkman" value="{{ row.c_linkman }}">&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="c_content">
+                        <p class="btn btn-info">单位简介</p>&nbsp;
+                        <a href="#" class="btn btn-success" id="cbtn">上传</a>
+                        <div class="jianjia">
+                            <textarea name="c_brief" style="height: 250px;width: 730px"
+                                      id="aritile_content">{{ row.c_brief }}</textarea>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </form>
+
+            <script charset="utf-8" src="/static/kindeditor/kindeditor-all-min.js"></script>
+            <script src="/static/kindeditor/themes/default/default.css"></script>
+            <script>
+                KindEditor.ready(function (K) {
+                    console.log('nihao')
+                    window.editor = K.create('#aritile_content', {
+                        uploadJson: "/upload/",
+                        extraFileUploadParams: {
+                            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                        },
+                        filePostName: "upload_img"
+                    });
+
+                    window.editor = K.create('#content', {
+                        uploadJson: "/upload/",
+                        extraFileUploadParams: {
+                            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                        },
+                        filePostName: "upload_img"
+                    });
+
+                    window.editor = K.create('#zcontent', {
+                        uploadJson: "/upload/",
+                        extraFileUploadParams: {
+                            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                        },
+                        filePostName: "upload_img"
+                    });
+
+                    afterBlur:(function () {
+                        this.sync();
+                    });
+                });
+            </script>
+        </div>
+        <div class="m m_3 m_hide">
+            <form action="/user_center_preach/" method="POST" id="xfm">
+                {% csrf_token %}
+                <table class="table table-hover table-bordered">
+                    <tr style="display: none">
+                        <td class="active name">公司ID:</td>
+                        <td class="success name_row">
+                            <input type="text" name="x_company_id" value="{{ cid }}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="active name">宣讲会标题:</td>
+                        <td class="success name_row">
+                            <input type="text" name="x_title">
+                        </td>
+                        <td class="active name">宣讲会时间:</td>
+                        <td class="success name_row">
+                            <input type="date" name="x_time">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="active name">宣讲会学校:</td>
+                        <td class="success name_row">
+                            <input type="text" name="x_school">
+                        </td>
+                        <td class="active name">宣讲会城市:</td>
+                        <td class="success name_row">
+                            <input type="text" name="x_city">
+                        </td>
+                    </tr>
+                </table>
+                <div class="c_content">
+                    <p class="btn btn-info">宣讲会详情</p>&nbsp;
+                    <a href="#" class="btn btn-success" id="xbtn">发布</a>
+                    <div style="text-indent: 0 ">
+                        <textarea style="width: 728px;height: 280px;overflow: auto;text-indent: 2em; "
+                                  id="content" name="x_detail"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="m m_4 m_hide">
+            <form action="/user_center_zhaopin/" method="POST" id="zfm">
+                {% csrf_token %}
+                <table class="table table-hover table-bordered">
+
+                    <tr style="display: none">
+                        <td class="active name">公司ID:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_company_id" value="{{ cid }}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="active name">招聘职位:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_position">
+                        </td>
+                        <td class="active name">招聘人数:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_number">人
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td class="active name">月薪:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_salary">
+                        </td>
+                        <td class="active name">学历要求:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_education">&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="active name">岗位要求:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_experience">
+                        </td>
+                        <td class="active name">面试时间:</td>
+                        <td class="success name_row">
+                            <input type="date" name="z_data">&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="active name">面试地点:</td>
+                        <td class="success name_row">
+                            <input type="text" name="z_city">
+                        </td>
+                        <td class="active name">简历投递邮箱:</td>
+                        <td class="success name_row">
+                            <input type="email" name="z_email">&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="active name">招聘类型:</td>
+                        <td class="success name_row">
+                            <input type="radio" name="z_nature" value="0" checked> 校园招聘
+                            <input type="radio" name="z_nature" value="1"> 社会招聘
+                        </td>
+                    </tr>
+                </table>
+                <div class="c_content" style="height: 250px;">
+                    <p class="btn btn-info">招聘会详情</p>&nbsp;
+                    <a href="#" class="btn btn-success" id="zbtn">发布</a>
+                    <div style="text-indent: 0 ">
+                       <textarea style="width: 728px;height: 200px;overflow: auto;text-indent: 2em; "
+                                 id="zcontent" name="z_detail"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="m m_5 m_hide">
+            <p>
+                <a href="/" class="btn btn-success">返回首页</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="/static/plugin/jquery-3.1.1.js"></script>
+<script src="/static/plugin/bootstrap/js/bootstrap.js"></script>
+<script charset="utf-8" src="/static/kindeditor/kindeditor-all-min.js"></script>
+
+<script>
+    $(function () {
+        {#bindkindediter();#}
+        bindEvaluteConfirm();
+        bindpreachConfirm();
+        bindzhaopinConfirm();
+        bindEvent();
+        bindmenu();
+
+    });
+
+    {#富文本编辑器#}
+
+
+    {#完善信息#}
+
+    function bindEvaluteConfirm() {
+        $('#cbtn').click(function () {
+            var portData = {};
+            $('#fm').find('input,textarea').each(function () {
+                var v = $(this).val();
+                var n = $(this).attr('name');
+                if (n == 'c_brief') {
+                    var article_content = $(document.getElementsByTagName("iframe")[0].contentWindow.document.body).html();
+                    portData[n] = article_content;
+                } else {
+                    portData[n] = v;
+                }
+
+            });
+
+            $.ajax({
+                url: '/user_center/',
+                type: 'POST',
+                dataType: 'JSON',
+                data: portData,
+                success: function (arg) {
+                    if (arg.status) {
+                        alert(arg.inf);
+                        window.location.reload();
+                    }
+                    else {
+                        alert(arg.inf);
+                    }
+                }
+            })
+
+        })
+
+    }
+
+    {#宣讲会#}
+
+    function bindpreachConfirm() {
+        $('#xbtn').click(function () {
+            var portData = {};
+            $('#xfm').find('input,textarea').each(function () {
+                var v = $(this).val();
+                var n = $(this).attr('name');
+                if (n == 'x_detail') {
+                    var acontent = $(document.getElementsByTagName("iframe")[1].contentWindow.document.body).html();
+                    portData[n] = acontent;
+                } else {
+                    portData[n] = v;
+                }
+            });
+            console.log(portData);
+            $.ajax({
+                url: '/user_center_preach/',
+                type: 'POST',
+                dataType: 'JSON',
+                data: portData,
+                success: function (arg) {
+                    if (arg.status) {
+                        alert(arg.inf);
+                        window.location.reload();
+                    }
+                    else {
+                        alert(arg.inf);
+                    }
+                }
+            })
+
+        })
+
+    }
+
+    {#招聘#}
+
+    function bindzhaopinConfirm() {
+        $('#zbtn').click(function () {
+            var portData = {};
+            $('#zfm').find('input,textarea').each(function () {
+                var v = $(this).val();
+                var n = $(this).attr('name');
+                console.log(v);
+                if (n == 'z_nature') {
+                    if ($(this).prop('checked')) {
+                        portData[n] = v;
+                    }
+                } else if (n == 'z_detail') {
+                    var acontent = $(document.getElementsByTagName("iframe")[2].contentWindow.document.body).html();
+                    portData[n] = acontent;
+                } else {
+                    portData[n] = v;
+                }
+            });
+            $.ajax({
+                url: '/user_center_zhaopin/',
+                type: 'POST',
+                dataType: 'JSON',
+                data: portData,
+                success: function (arg) {
+                    if (arg.status) {
+                        alert(arg.inf);
+                        window.location.reload();
+                    }
+                    else {
+                        alert(arg.inf);
+                    }
+
+                }
+            });
+
+        })
+
+    }
+
+    function bindmenu() {
+        $('.m_menu').click(function () {
+            $(this).addClass('actions');
+            $(this).siblings().removeClass('actions');
+        });
+    }
+
+    function bindEvent() {
+        $('.m_leftmenu div').click(function () {
+            $(".m_content").children().eq($(this).index()).addClass("show").siblings().removeClass("show");
+
+            $(".m_content").children().eq($(this).index()).removeClass("m_hide").siblings().addClass("m_hide");
+
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

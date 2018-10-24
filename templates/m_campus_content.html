@@ -1,0 +1,67 @@
+﻿{% extends "header_base.html" %}
+{% block title %}淮北师范大学就业信息网{% endblock title %}
+
+{% block content %}
+<style>
+    .vContent.cl a {
+        color: #379BE9;
+    }
+</style>
+<div class="container cl">
+    <div class="mn z view view2 css-common-view" id="mn">
+        {% for row in companys %}
+        <div class="viewHead">
+            <h1>{{ row.c_name }}</h1>
+            <dl class="info">
+                <dt><a target="_blank" href="#">{{ row.c_name }}</a></dt>
+            </dl>
+        </div>
+        <ul class="xInfo">
+            <li>单位性质：<span>{{ row.c_nature }}</span></li>
+            <!-- <li>联系人：<span></span></li> -->
+            <li>单位行业：<span>{{ row.c_industry }}</span></li>
+            <!-- <li>联系电话：<span></span></li> -->
+            <li>单位规模：<span>{{ row.c_scale }}人以上</span></li>
+            <!-- <li>电子邮箱：<span></span></li> -->
+        </ul>
+        <ul class="xInfo xInfo-2 cl">
+            <li>工作城市：<span>{{ row.c_city }}</span></li>
+            <li>招聘日期：<span>{{ row.z_data|date:'Y-m-d' }}</span></li>
+            <li>招聘职位名称：<span>{{ row.z_position }}</span></li>
+            <li>招聘人数：<span>{{ row.z_number }}人</span></li>
+            <li>月薪：<span>{{ row.z_salary }}</span></li>
+            <li>面试时间：<span>{{ row.z_data|date:'Y-m-d' }}</span></li>
+            <li>投递邮箱：<span>{{ row.z_email }}</span></li>
+        </ul>
+        <div class="tabs vTab">
+            <ul class="tabTitle">
+                <li><a href="#vTab2">详情</a></li>
+            </ul>
+            <div id="vTab2" class="vContent" style="display: block;">
+                <p>{{ row.z_detail|safe }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.apply_job').click(function () {
+            var jobid = $(this).attr('data-id');
+            $.ajax({
+                type: 'post',
+                url: '/job/operate',
+                data: {'jobid': jobid, type: 'apply'},
+                dataType: "jsonp",
+                jsonpCallback: 'showDialog',
+                success: function (data, status) {
+                }
+            });
+        });
+    });
+</script>
+<div style="clear:both;"></div>
+
+
+{% endblock content %}
+

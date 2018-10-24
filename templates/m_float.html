@@ -1,0 +1,41 @@
+﻿{% extends "header_base.html" %}
+{% block title %}淮北师范大学就业信息网{% endblock title %}
+
+{% block content %}
+<div class="container cl">
+    <div class="mn z view view2 css-common-view" id="mn">
+        {% for row in float_infor %}
+        <div class="viewHead">
+            <h1>{{ row.a_title }}</h1>
+            <dl class="info">
+                <dt><a href="#">{{ row.f_title }}</a></dt>
+                <dt style="float: right;margin-right: 32px">
+                    <p>{{ row.create_time|date:'Y-m-d' }}</p>
+                </dt>
+            </dl>
+        </div>
+        <ul class="xInfo xInfo-2">
+            <li>简介：<span>{{ row.f_desc }}</span></li>
+{#            <li>创建时间：<span>{{ row.create_time|date:'Y-m-d' }}</span></li>#}
+        </ul>
+        <ul class="xInfo xInfo-2 cl tInfo-2">
+            <li>文章描述：<span>{{ row.a_desc|safe }}</span></li>
+        </ul>
+
+        <div class="tabs vTab">
+            <ul class="tabTitle">
+                <li><a href="#vTab1">文章详情</a></li>
+            </ul>
+            <div id="vTab1" class="vContent" style="display: block;">
+                <p>{{ row.content|safe }}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div style="clear:both;"></div>
+
+
+{% endblock content %}
+

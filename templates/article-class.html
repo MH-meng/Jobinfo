@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+<script type="text/javascript" src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/css3pie/2.0beta1/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/static/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/fontawesome/css/font-awesome.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!--[if IE 7]>
+<link href="http://www.bootcss.com/p/font-awesome/assets/css/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<title>分类管理</title>
+</head>
+<body>
+<nav class="Hui-breadcrumb"><i class="icon-home"></i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 分类管理     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+    <button onclick="removeIframe()"  style="float: right; margin: 3px;" class="btn btn-success radius right"> <i class="fa fa-times right" aria-hidden="true"></i></button>
+</nav>
+<div class="pd-20 text-c">
+  <form class="Huiform" action="/" method="post">
+    <input type="hidden" id="hid_ccid" value="">
+    <input class="input-text" style="width:250px" type="text" name="article_tags" id="article_tags" placeholder="输入分类" ><button type="button" class="btn btn-success" id="" name="" onClick="article_class_add();"><i class="icon-plus"></i> 添加</button>
+  </form>
+  <div class="article-class-list cl mt-20">
+    <table class="table table-border table-bordered table-hover table-bg">
+      <thead>
+        <tr class="text-c">
+          <th width="25"><input type="checkbox" name="" value=""></th>
+          <th width="80">序号</th>
+          <th>分类名称</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for tags in tags_list %}
+          <tr class="text-c">
+          <td><input type="checkbox" name="" value=""></td>
+          <td>{{ forloop.counter }}</td>
+          <td class="text-l">&nbsp;{{ tags.title }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="infomation">{% csrf_token %}</div>
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/static/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/laypage/1.2/laypage.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F080836300300be57b7f34f4b3e97d911' type='text/javascript'%3E%3C/script%3E"));
+
+
+function article_class_add() {
+    //$("tbody").append("<tr><td>1231231</td></tr>");
+    var article_tags = $("#article_tags").val();
+    if (article_tags == ""){
+        layer.msg('内容不能为空!!', {icon: 5, time: 1000});
+    }else{
+        $.ajax({
+        url: "/article_class_add/",
+        type: "post",
+        data: {
+            article_tags: article_tags,
+            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+        },
+        success:function (data) {
+            //alert(data.tags_count);
+            //console.log(data.status);
+            if(data.status == 1){
+                layer.msg('已添加!', {icon: 6, time: 2000});
+               // $("tbody").append("<tr><td>tianjiachenggongle</td></tr>");
+                var html =  "<tr class='text-c'><td><input type='checkbox' name='' value=''></td><td>"+data.tags_ccount +"</td> <td class='text-l'>&nbsp;"+ data.tags_title +"</td> <td class='f-14'> <a style='text-decoration:none' class='ml-5' onclick='article_class_edit('资讯编辑','/article_class_add/',"+ data.nid +")' href='javascript:;' title='编辑'>   <i class='Hui-iconfont'>&#xe6df;</i></a><a style='text-decoration:none' class='ml-5' onclick='article_class_del(this, "+ data.nid+")' href='javascript:;' title='删除'><i class=Hui-iconfont>&#xe6e2;</i> </a></td></tr>"
+
+                $("tbody").append(html);
+            }else {
+                layer.msg(data.msg, {icon: 5, time: 2000});
+            }
+        }
+    })
+    }
+}
+
+
+</script>
+</body>
+</html>
