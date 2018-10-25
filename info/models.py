@@ -44,7 +44,7 @@ class Article(models.Model):
     status = models.CharField(max_length=1)  # 状态 0表示下架 1 表示提交 2表示浮动
     content = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)  # 创建时间
-    tags = models.ForeignKey(to="Tag",to_field="nid")
+    tags = models.ForeignKey(to="Tag", to_field="nid", null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = "文章表"
