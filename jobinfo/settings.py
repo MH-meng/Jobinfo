@@ -80,9 +80,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',   # 数据库引擎
         'NAME': 'hbnujobinfo',       # 你要存储数据的库名，事先要创建之
         'USER': 'root',         # 数据库用户名
-        'PASSWORD': '123123',     # 密码
-        # 'HOST': '115.159.33.73',    # 主机
-        'HOST': "localhost",    # 主机
+         'PASSWORD': '123',  # 密码
+         'HOST': '115.159.33.73',  # 主机
+         # 'HOST': "localhost",    # 主机
         'PORT': '3306',         # 数据库使用的端口
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
