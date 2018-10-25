@@ -61,18 +61,31 @@
                                 <td class="warning">单位行业</td>
                                 <td class="danger">招聘职位</td>
                                 <td class="info">月薪</td>
+                                <td class="active">招聘类型</td>
                                 <td class="info">操作</td>
                             </tr>
                             {% for i in company_invite %}
                                 {% for z in zhaopin_invite %}
                                     {% if i.id == z.z_company_id %}
-                                        {% if z.z_nature == True %}
+                                        {% if z.z_nature == "0" %}
                                             <tr>
                                                 <td class="active">{{ i.c_name }}</td>
                                                 <td class="warning">{{ i.c_industry }}</td>
                                                 <td class="danger">{{ z.z_position }}</td>
                                                 <td class="info">{{ z.z_salary }}</td>
-                                                <td class="info"><a href="/m_station_content/?pid={{ i.id }}">查看更多</a></td>
+                                                <td class="active">校园招聘</td>
+                                                <td class="info"><a href="/m_campus_content/?pid={{ i.id }}">查看更多</a>
+                                                </td>
+                                            </tr>
+                                        {% elif z.z_nature == "1" %}
+                                            <tr>
+                                                <td class="active">{{ i.c_name }}</td>
+                                                <td class="warning">{{ i.c_industry }}</td>
+                                                <td class="danger">{{ z.z_position }}</td>
+                                                <td class="info">{{ z.z_salary }}</td>
+                                                <td class="active">社会招聘</td>
+                                                <td class="info"><a href="/m_campus_content/?pid={{ i.id }}">查看更多</a>
+                                                </td>
                                             </tr>
                                         {% endif %}
                                     {% endif %}
