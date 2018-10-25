@@ -48,7 +48,7 @@ def logout(request):
 
 #首页
 def index(request):
-    print(request.user.is_authenticated())
+    # print(request.user.is_authenticated())
     if request.user.is_authenticated():
         return render(request, 'index.html')
     else:
@@ -74,8 +74,8 @@ def article_list(request):
 def add_article(request):
     tags_list = models.Tag.objects.all()
     if request.method == "POST":
-        print(request.POST)
-        print("-" * 120)
+        # print(request.POST)
+        # print("-" * 120)
         title = request.POST.get("title")
         desc = request.POST.get("desc")
         tags = request.POST.get("tags")
@@ -168,7 +168,7 @@ def article_start(request):
 #文章编辑
 def article_edit(request, id):
     if request.method == "POST":
-        print(id)
+        # print(id)
         title = request.POST.get("title")
         desc = request.POST.get("desc")
         tags = request.POST.get("tags")
@@ -245,7 +245,7 @@ def float_list(request):
 def float_edit(request,id):
     # print(id)
     if request.method == "POST":
-        print(id)
+        # print(id)
         article_title = request.POST.get("article_title")
         article_desc = request.POST.get("article_desc")
         float_title = request.POST.get("float_title")
@@ -400,7 +400,7 @@ def m_index(request):
         zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:10]
         article = models.Article.objects.filter().all().order_by('-nid')[:8]
         float = models.Float.objects.all().order_by('-create_time')[:2]
-        print(float)
+        # print(float)
         return render(request, 'm_index.html', {
             'infor':infor,
             'company':company,
@@ -429,7 +429,7 @@ def m_login(request):
             c_number = obj_form.cleaned_data['number']
             c_pwd = obj_form.cleaned_data['pwd']
             c_ret = models.Conpanys.objects.filter(c_number=c_number,c_pwd=c_pwd).count()
-            print('c_ret',c_ret)
+            # print('c_ret',c_ret)
             if c_ret:
                 infor['status'] = True
                 request.session['is_login1'] = True
@@ -711,7 +711,7 @@ def m_jobfair_content(request):
         invite_infor = models.Invite.objects.filter(id=zid).values()
         company_invite = models.Conpanys.objects.filter().all()
         zhaopin_invite = models.Zhaopin.objects.filter().values()
-        print(zhaopin_invite)
+        # print(zhaopin_invite)
         return render(request,'m_jobfair_content.html',{
             'invite_infor':invite_infor,
             'company_invite':company_invite,
@@ -824,7 +824,7 @@ def m_logout(request):
 import os
 from jobinfo import settings
 def upload(request):
-    print(request.FILES)
+    # print(request.FILES)
     obj = request.FILES.get("upload_img")
     path = os.path.join(settings.MEDIA_ROOT, 'add_article_img', obj.name)
 
