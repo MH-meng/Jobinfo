@@ -21,13 +21,34 @@
             text-align: left;
             width: 750px;
             height: 400px;
+
         }
 
-        .c_content div {
-            box-shadow: 0 0 5px lightgrey;
+        .content_brief{
             margin: 15px auto;
+            padding:10px;
+            width: 750px;
+            height: 320px;
             overflow: auto;
-            text-indent: 2em;
+            box-shadow: 0 0 5px lightgrey;
+        }
+
+        .jianjia1{
+            margin: 15px auto;
+            width: 750px;
+            height: 300px;
+        }
+
+        .jianjia2{
+            margin: 15px auto;
+            width: 750px;
+            height: 375px;
+        }
+        .jianjia3{
+            margin: 15px auto;
+            width: 750px;
+            height: 240px;
+            {#border: 1px solid red;#}
         }
 
     </style>
@@ -82,7 +103,6 @@
                             <td class="success name_row">暂无</td>
                         {% endif %}
                     </tr>
-
                     <tr>
                         <td class="active name">单位规模:</td>
                         {% if  c_scale != 0 %}
@@ -113,14 +133,13 @@
                             <td class="success name_row">暂无</td>
                         {% endif %}
                     </tr>
-
                 </table>
                 <div class="c_content">
                     <p class="btn btn-info">单位简介</p>
                     {% if  c_brief != '' %}
-                        <div>{{ row.c_brief|safe }}</div>
+                        <div class="content_brief">{{ row.c_brief|safe }}</div>
                     {% else %}
-                        <div>暂无简介</div>
+                        <div class="content_brief">暂无简介</div>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -176,8 +195,8 @@
                     <div class="c_content">
                         <p class="btn btn-info">单位简介</p>&nbsp;
                         <a href="#" class="btn btn-success" id="cbtn">上传</a>
-                        <div class="jianjia">
-                            <textarea name="c_brief" style="height: 250px;width: 730px"
+                        <div class="jianjia jianjia1">
+                            <textarea name="c_brief" style="height: 300px;width: 750px"
                                       id="aritile_content">{{ row.c_brief }}</textarea>
                         </div>
 
@@ -256,8 +275,8 @@
                 <div class="c_content">
                     <p class="btn btn-info">宣讲会详情</p>&nbsp;
                     <a href="#" class="btn btn-success" id="xbtn">发布</a>
-                    <div style="text-indent: 0 ">
-                        <textarea style="width: 728px;height: 280px;overflow: auto;text-indent: 2em; "
+                    <div style="text-indent: 0 " class="jianjia2">
+                        <textarea style="width: 750px;height: 375px;overflow: auto;text-indent: 2em; "
                                   id="content" name="x_detail"></textarea>
                     </div>
                 </div>
@@ -328,8 +347,8 @@
                 <div class="c_content" style="height: 250px;">
                     <p class="btn btn-info">招聘会详情</p>&nbsp;
                     <a href="#" class="btn btn-success" id="zbtn">发布</a>
-                    <div style="text-indent: 0 ">
-                       <textarea style="width: 728px;height: 200px;overflow: auto;text-indent: 2em; "
+                    <div style="text-indent: 0" class="jianjia3">
+                       <textarea style="width: 750px;height: 240px;overflow: auto;text-indent: 2em; "
                                  id="zcontent" name="z_detail"></textarea>
                     </div>
                 </div>
