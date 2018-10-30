@@ -48,7 +48,7 @@ def logout(request):
 
 #首页
 def index(request):
-    # print(request.user.is_authenticated())
+    print(request.user.is_authenticated())
     if request.user.is_authenticated():
         return render(request, 'index.html')
     else:
@@ -450,6 +450,7 @@ def register(request):
         return render(request, 'register.html', {'obj_form':obj_form})
     else:
         obj_form = StudentRegisterForm(request.POST)
+        info = {'status': None}
         # 是否全部验证成功
         if obj_form.is_valid():
             # 用户提交的数据
@@ -458,14 +459,18 @@ def register(request):
             c_pwd = obj_form.cleaned_data['pwd']
             times = time.localtime()
             c_create_time = time.strftime('%Y-%m-%d',times)
-
-            models.Conpanys.objects.create(
-                c_name=c_name,
-                c_number=c_number,
-                c_pwd=c_pwd,
-                c_create_time = c_create_time
-            )
-            return redirect('/success/')
+            count = models.Conpanys.objects.filter(c_number=c_number).count()
+            if count == 0:
+                models.Conpanys.objects.create(
+                    c_name=c_name,
+                    c_number=c_number,
+                    c_pwd=c_pwd,
+                    c_create_time=c_create_time
+                )
+                return redirect('/success/')
+            else:
+                info['status'] = '账号已存在，无需重新注册，请返回登录界面！'
+                return render(request, 'register.html', {'obj_form': obj_form, 'info': info})
         else:
             return render(request, 'register.html', {'obj_form': obj_form})
 def success(request):
@@ -516,6 +521,7 @@ def user_center_preach(request):
         x_city = request.POST.get('x_city')
         x_school = request.POST.get('x_school')
         x_detail = request.POST.get('x_detail')
+        # print(x_detail)
         models.Teachin.objects.filter().create(
             x_title=x_title,
             x_time=x_time,

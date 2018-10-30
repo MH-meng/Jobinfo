@@ -208,7 +208,6 @@
             <script src="/static/kindeditor/themes/default/default.css"></script>
             <script>
                 KindEditor.ready(function (K) {
-                    console.log('nihao')
                     window.editor = K.create('#aritile_content', {
                         uploadJson: "/upload/",
                         extraFileUploadParams: {
@@ -432,7 +431,7 @@
                     portData[n] = v;
                 }
             });
-            console.log(portData);
+            {#console.log(portData);#}
             $.ajax({
                 url: '/user_center_preach/',
                 type: 'POST',
@@ -461,7 +460,7 @@
             $('#zfm').find('input,textarea').each(function () {
                 var v = $(this).val();
                 var n = $(this).attr('name');
-                console.log(v);
+                {#console.log(v);#}
                 if (n == 'z_nature') {
                     if ($(this).prop('checked')) {
                         portData[n] = v;
