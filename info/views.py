@@ -48,7 +48,7 @@ def logout(request):
 
 #首页
 def index(request):
-    print(request.user.is_authenticated())
+    # print(request.user.is_authenticated())
     if request.user.is_authenticated():
         return render(request, 'index.html')
     else:
