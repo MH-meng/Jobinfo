@@ -39,7 +39,7 @@ class Article(models.Model):
     文章
     """
     nid = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=50)  # 文章标题
+    title = models.CharField(max_length=100)  # 文章标题
     desc = models.CharField(max_length=255)  # 文章描述
     status = models.CharField(max_length=1)  # 状态 0表示下架 1 表示提交 2表示浮动
     content = models.TextField()

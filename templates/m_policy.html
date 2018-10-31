@@ -24,7 +24,7 @@
                 <div class="xTit mTit">政策法规</div>
                 <div class="newsBox">
                     {% for row in article %}
-                        {% if row.tags_id == 5 %}
+                        {% if wz.tags.title == '政策法规' %}
                             <ul class="newsList">
                                 <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
                                 <li class="span1"><a href="/m_policy_content?news_id={{ row.nid }}"

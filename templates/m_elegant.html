@@ -25,7 +25,7 @@
             <div class="xTit mTit">创业风采</div>
             <div class="newsBox">
                 {% for row in article %}
-                    {% if row.tags_id == 10 %}
+                    {% if wz.tags.title == '创业风采' %}
                         <ul class="newsList">
                             <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
                             <li class="span1"><a href="/m_practice_content?news_id={{ row.nid }}"

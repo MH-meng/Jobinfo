@@ -400,7 +400,7 @@ def m_index(request):
         zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:10]
         article = models.Article.objects.filter().all().order_by('-nid')[:8]
         float = models.Float.objects.all().order_by('-create_time')[:2]
-        # print(float)
+
         return render(request, 'm_index.html', {
             'infor':infor,
             'company':company,
@@ -410,9 +410,6 @@ def m_index(request):
             'article':article,
             'float':float,
         })
-
-    # return render(request,'m_index.html')
-
 
 #登录
 def m_login(request):
