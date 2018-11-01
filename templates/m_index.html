@@ -216,6 +216,7 @@
                     </ul>
                     <ul id="tabs-25" class="tabCon hide">
                         {% for row in teachin %}
+                            {% if row.x_status == '1' %}
                             <li>
                                 <span class="pubdate">{{ row.x_time|date:'Y-m-d' }}</span>
                                 <a title="{{ row.x_school }}" class="it2"
@@ -224,6 +225,7 @@
                                     {#                                    <font color="#ff0000">{{ row.x_title }}</font>#}
                                     <span style=" text-shadow:0.5px 0.5px 0.5px #dedede;padding-left:7px;">{{ row.x_title }}</span></a>
                             </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                     <ul id="tabs-23" class="tabCon hide">
