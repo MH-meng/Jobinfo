@@ -112,7 +112,7 @@
                                     </li>
                                     <li class="span3">{{ row.c_city }}</li>
                                     <li class="span3">{{ row.c_industry }}</li>
-                                    <li class="span4">{{ row.c_create_time }}</li>
+                                    <li class="span4">{{ row.c_create_time|date:'Y-m-d h:d' }}</li>
                                 </ul>
                             {% endif %}
                         {% endfor %}
