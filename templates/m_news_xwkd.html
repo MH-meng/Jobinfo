@@ -25,7 +25,7 @@
                 <div class="xTit mTit">新闻快递</div>
                 <div class="newsBox">
                     {% for row in article %}
-                        {% if wz.tags.title == '新闻快递' %}
+                        {% if row.tags_id == 2 %}
                             <ul class="newsList">
                                 <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
                                 <li class="span1"><a href="/m_news_tzgg_article?news_id={{ row.nid }}"
