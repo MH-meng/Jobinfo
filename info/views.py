@@ -373,11 +373,10 @@ def teachin_edit(request, id):
 
         from bs4 import BeautifulSoup
         bs = BeautifulSoup(detail, 'html.parser')
-        x_company = models.Teachin.objects.filter(id=id).values("x_company_id")
-        print(x_company, type(x_company))
+
         models.Teachin.objects.filter(id=id).update(x_title=title, x_time=i_time, x_city=city, x_school=school,
                                                     x_detail=str(bs))
-        # print(name, city, i_type, i_data, sponsor, content)
+
         ret["msg"] = "修改成功，已发布！"
         ret["link"] = "/Teachin_list/"
         return JsonResponse(ret)
