@@ -39,7 +39,7 @@ class Article(models.Model):
     文章
     """
     nid = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=50)  # 文章标题
+    title = models.CharField(max_length=100)  # 文章标题
     desc = models.CharField(max_length=255)  # 文章描述
     status = models.CharField(max_length=1)  # 状态 0表示下架 1 表示提交 2表示浮动
     content = models.TextField()
@@ -120,6 +120,7 @@ class Teachin(models.Model):
     x_city = models.CharField(verbose_name='宣讲城市',max_length=36, blank=True, null=True)
     x_school = models.CharField(verbose_name='宣讲学校',max_length=36, blank=True, null=True)
     x_detail = models.TextField(verbose_name='宣讲会详情', blank=True, null=True)
+    x_status = models.CharField(max_length=1, verbose_name='宣讲会状态', default="0")  # 0表示待审核 1表示审核通过 2表示审核未通过
     x_company = models.ForeignKey(Conpanys, null=True, blank=True, on_delete=models.SET_NULL)
     class Meta:
         verbose_name_plural = '宣讲会表'

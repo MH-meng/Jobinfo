@@ -47,6 +47,13 @@ urlpatterns = [
     url(r'^del_invite/$', views.del_invite),
     url(r'^invite_edit/(\d+)/', views.invite_edit),
 
+    # 宣讲会相关
+    url(r'^Teachin_list/$', views.Teachin_list),
+    url(r'^teachin_stop/$', views.teachin_stop),
+    url(r'^teachin_start/$', views.teachin_start),
+    url(r'^teachin_del/$', views.teachin_del),
+    url(r'^teachin_edit/(\d+)/', views.teachin_edit),
+
 
     #孟浩
 url(r'^$',views.m_index),
