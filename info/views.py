@@ -181,7 +181,7 @@ def article_edit(request, id):
                 tag.decompose()
         tag_obj = models.Tag.objects.filter(title=tags).first()
         article_obj = models.Article.objects.filter(nid=id).update(title=title, desc=desc, status=1, content=str(bs),
-                                                    tags_id=tag_obj.nid)
+                                                                   tags_id=tag_obj.pk)
         ret = {}
         ret["msg"] = "提交成功，已发布！！"
         ret["link"] = "/article_list/"
@@ -361,13 +361,73 @@ def invite_edit(request, id):
     return render(request, 'invite-edit.html', locals())
 
 
+# 宣讲会编辑
+def teachin_edit(request, id):
+    ret = {}
+    if request.method == "POST":
+        title = request.POST.get("title")
+        city = request.POST.get("city")
+        school = request.POST.get("school")
+        i_time = request.POST.get("i_time")
+        detail = request.POST.get("detail")
+
+        from bs4 import BeautifulSoup
+        bs = BeautifulSoup(detail, 'html.parser')
+
+        models.Teachin.objects.filter(id=id).update(x_title=title, x_time=i_time, x_city=city, x_school=school,
+                                                    x_detail=str(bs))
+
+        ret["msg"] = "修改成功，已发布！"
+        ret["link"] = "/Teachin_list/"
+        return JsonResponse(ret)
 
 
-#孟浩
+    else:
+        teachin_obj = models.Teachin.objects.filter(id=id).first()
+
+    return render(request, 'teachin_edit.html', locals())
 
 
+# 宣讲会列表
+def Teachin_list(request):
+    count = models.Teachin.objects.count()
+    teachin_list = models.Teachin.objects.all()
+    return render(request, 'Theachin-list.html', locals())
 
 
+# 宣讲会审核通过
+def teachin_start(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        # print("id", id)
+        models.Teachin.objects.filter(id=id).update(x_status=1)
+        ret = {}
+        ret["id"] = id
+        return JsonResponse(ret)
+
+
+# 宣讲会审核未通过
+def teachin_stop(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        print("id", id)
+        models.Teachin.objects.filter(id=id).update(x_status=2)
+        ret = {}
+        ret["id"] = id
+        return JsonResponse(ret)
+
+
+# 宣讲会删除
+def teachin_del(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        models.Teachin.objects.filter(id=id).delete()
+        ret = {}
+        ret["id"] = id
+        return JsonResponse(ret)
+
+
+# 孟浩
 # 首页
 def m_index(request):
     infor = {'status':True}
@@ -565,6 +625,7 @@ def user_center_zhaopin(request):
         show_inf['inf'] = '发布招聘信息成功'
         res = json.dumps(show_inf)
         return HttpResponse(res)
+
 
 
 # 学生
