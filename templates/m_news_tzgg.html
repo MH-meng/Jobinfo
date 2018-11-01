@@ -32,7 +32,7 @@
 
                 <div class="newsBox">
                     {% for row in article %}
-                        {% if row.tags_id == 1 %}
+                        {% if wz.tags.title == '通知公告' %}
                             <ul class="newsList">
                                 <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
                                 <li class="span1"><a href="/m_news_tzgg_article?news_id={{ row.nid }}"
