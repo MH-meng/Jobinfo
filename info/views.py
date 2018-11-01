@@ -839,7 +839,8 @@ def m_guide_content(request):
 # 创业教育
 def m_education(request):
     article = models.Article.objects.filter().values()
-    return render(request,'m_education.html',locals())
+    print(article)
+    return render(request, 'm_education.html', {'article': article})
 # 创业教育-内容
 def m_education_content(request):
     if request.method == 'GET':
