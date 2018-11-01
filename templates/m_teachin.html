@@ -30,14 +30,16 @@
                 <ul class="infoList teachinList">
                     {% for row in company_teachin %}
                         {% for t in teachin_teachin %}
-                            {% if row.id == t.x_company_id %}
-                                <li class="span1">
-                                    <a href="/m_teachin_content?pid={{ t.id }}" title="{{ row.c_name }}"
-                                       target="_blank">{{ row.c_name }}</a>
-                                </li>
-                                <li class="span2">{{ t.x_city }}</li>
-                                <li class="span5">{{ t.x_school }}</li>
-                                <li class="span5">{{ t.x_time|date:'Y-m-d' }}</li>
+                            {% if t.x_status == '1' %}
+                                {% if row.id == t.x_company_id %}
+                                    <li class="span1">
+                                        <a href="/m_teachin_content?pid={{ t.id }}" title="{{ row.c_name }}"
+                                           target="_blank">{{ row.c_name }}</a>
+                                    </li>
+                                    <li class="span2">{{ t.x_city }}</li>
+                                    <li class="span5">{{ t.x_school }}</li>
+                                    <li class="span5">{{ t.x_time|date:'Y-m-d' }}</li>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endfor %}

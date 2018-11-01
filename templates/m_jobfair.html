@@ -22,7 +22,7 @@
             <div class="mn z view view2" id="mn">
                 <div class="infoBox mt10 b" id="mCon">
                     <ul class="infoTit jobfairList">
-                        <li class="span1">招聘会名称</li>
+                        <li class="span" style="width: 300px;margin-left: 10px">招聘会名称</li>
                         <li class="span2">举办城市</li>
                         <li class="span3">主办方</li>
                         <li class="span4">招聘会类型</li>
@@ -31,10 +31,9 @@
 
                     <ul class="infoList jobfairList">
                         {% for row in preach_infor %}
-                        <li class="span1">
+                            <li class="span" style="width: 300px;margin-left: 10px">
                             <a href="/m_jobfair_content?zid={{ row.id }}"
-                               title="{{ row.i_name }}" target="_blank">
-                                <font>{{ row.i_name }}</font></a>
+                               title="{{ row.i_name }}" target="_blank">{{ row.i_name }}</a>
                         </li>
                         <li class="span2">{{ row.i_city }}</li>
                         <li class="span3">{{ row.i_sponsor }}</li>
