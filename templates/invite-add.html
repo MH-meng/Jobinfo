@@ -101,7 +101,7 @@
 <script>
     KindEditor.ready(function (K) {
         window.editor = K.create('#i_content', {
-            uploadJson: "/upload/",
+            uploadJson: "/invite_upload/",
             extraFileUploadParams: {
                 csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
             },
@@ -128,12 +128,6 @@
         var i_sponsor = $("#i_sponsor").val();
         var i_type = $("#i_type option:selected").val();
         var i_content = $(document.getElementsByTagName("iframe")[0].contentWindow.document.body).html();
-        {#console.log(i_name);#}
-        {#console.log(i_data);#}
-        {#console.log(i_city);#}
-        {#console.log(i_sponsor);#}
-        {#console.log(i_type);#}
-        {#console.log(i_content);#}
         if(i_content == "" || i_city == "" || i_sponsor == "" || i_name == "" || i_data == "" ){
             layer.msg("内容不能为空!",{icon:5,time:3000});
         }else {

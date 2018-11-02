@@ -104,13 +104,9 @@ url(r'^$',views.m_index),
     url(r'^m_float/$',views.m_float),
     url(r'^m_logout/$',views.m_logout),
 
-
-
-
-
-
-
-    url(r'^upload/', views.upload),
+    url(r'^ariticle_upload/', views.ariticle_upload),
+    url(r'^float_upload/', views.float_upload),
+    url(r'^invite_upload/', views.invite_upload),
 
     # media 相关的路由设置
     url(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}),
