@@ -37,7 +37,8 @@
                     <a style="font-size: 12px;width: 150px;color: black" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">{{ row.c_name }} <span class="caret"></span></a>
                     <ul class="dropdown" style="background-color: #a0a7b1;">
-                        <li><a style="color: white" href="/user_center/?cid={{ row.id }}">企业中心</a></li>
+                        <li><a style="color: white" href="/company/c_index/?cid={{ row.id }}">企业中心</a></li>
+                        {#                        <li><a style="color: white" href="/user_center/?cid={{ row.id }}">企业中心</a></li>#}
                         <li><a style="color: white" href="/m_logout/">退出</a></li>
                     </ul>
                 </li>
@@ -96,7 +97,6 @@
                                 </li>
                             {% endif %}
                         {% endfor %}
-
                     </ul>
                     <ul id="tabs-13" class="tabCon hide">
                         {% for wz in article %}
@@ -361,7 +361,7 @@
     </div>
 
     {% for row in float %}
-        {% if row.status == '1' %}
+        {#        {% if row.status == '1' %}#}
             <div id='img0' class="img_ad">
                 <div class="ad_content" style="text-align: center;">
                     <a href="/m_float?news={{ row.nid }}" class="float_box">
@@ -374,7 +374,7 @@
                     <div class="ad_close"><a href="javascript:;">关闭</a></div>
                 </div>
             </div>
-        {% endif %}
+        {#        {% endif %}#}
     {% endfor %}
     <script src="/static/plugin/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">

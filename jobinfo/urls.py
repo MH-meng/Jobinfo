@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from info import views
 from django.views.static import serve
@@ -60,9 +60,6 @@ url(r'^$',views.m_index),
     url(r'^m_login/$',views.m_login),
     url(r'^register/$',views.register),
     url(r'^success/$', views.success),
-    url(r'^user_center/$', views.user_center),
-    url(r'^user_center_preach/$', views.user_center_preach),
-    url(r'^user_center_zhaopin/$', views.user_center_zhaopin),
 
     url(r'^m_student_link/$',views.m_student_link),
     url(r'^m_danwei_link/$',views.m_danwei_link),
@@ -104,15 +101,11 @@ url(r'^$',views.m_index),
     url(r'^m_float/$',views.m_float),
     url(r'^m_logout/$',views.m_logout),
 
-
-
-
-
-
-
     url(r'^upload/', views.upload),
 
     # media 相关的路由设置
     url(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}),
     #
+
+    url(r'^company/', include('companyadmin.urls')),
 ]

@@ -95,17 +95,23 @@ class Invite(models.Model):
 
 class Conpanys(models.Model):
     """企业"""
-    c_name = models.CharField(verbose_name='企业名', max_length=64)
+    c_name = models.CharField(verbose_name='公司名称', max_length=64)
     c_number = models.CharField(verbose_name='账号', max_length=11)
-    c_pwd = models.IntegerField(verbose_name='密码')
-    c_nature = models.CharField(verbose_name='单位性质', max_length=64, blank=True, null=True)
-    c_city = models.CharField(verbose_name='所在城市', max_length=36, blank=True, null=True)
-    c_industry = models.CharField(verbose_name='单位行业', max_length=64, blank=True, null=True)
-    c_scale = models.IntegerField(verbose_name='单位规模', blank=True, null=True,default=0)
-    c_brief = models.TextField(verbose_name='单位简介', max_length=1000, blank=True, null=True)
-    c_phone = models.CharField(verbose_name='招聘电话', max_length=11, blank=True, null=True)
-    c_linkman = models.CharField(verbose_name='联系人', max_length=12, blank=True, null=True)
+    c_pwd = models.CharField(max_length=64, verbose_name='密码')
+    c_nature = models.CharField(verbose_name='企业性质', max_length=64, blank=True, null=True)
+    c_city = models.CharField(verbose_name='所在地区', max_length=36, blank=True, null=True)
+    c_industry = models.CharField(verbose_name='所属行业', max_length=64, blank=True, null=True)
+    c_scale = models.IntegerField(verbose_name='企业规模', blank=True, null=True, default=0)
+    c_phone = models.CharField(verbose_name='电话', max_length=11, blank=True, null=True)
+    c_linkman = models.CharField(verbose_name='法人代表', max_length=12, blank=True, null=True)
     c_create_time = models.DateTimeField(verbose_name='创建时间', blank=True, null=True)
+    c_type = models.CharField(verbose_name='企业类型', max_length=64, blank=True, null=True)
+    c_site = models.CharField(verbose_name='详细地址', max_length=64, blank=True, null=True)
+    c_time = models.CharField(verbose_name='注册时间', max_length=64, blank=True, null=True)
+    c_capital = models.CharField(verbose_name='注册资本', max_length=64, blank=True, null=True)
+    c_manage = models.CharField(verbose_name='经营范围', max_length=255, blank=True, null=True)
+    c_business = models.CharField(verbose_name='营业执照', max_length=100, blank=True, null=True)
+    c_brief = models.TextField(verbose_name='企业简介', max_length=1000, blank=True, null=True)
     class Meta:
         verbose_name_plural = '企业表'
 

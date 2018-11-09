@@ -435,12 +435,12 @@ def m_index(request):
         infor['status'] = True
         number = request.session.get('number', None)
         name = models.Conpanys.objects.filter(c_number=number).values()
-        preach = models.Invite.objects.filter().all().order_by('-id')[:10]
-        company = models.Conpanys.objects.filter().all().order_by('-id')[:10]
-        teachin = models.Teachin.objects.filter().all().order_by('-id')[:10]
-        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:10]
+        preach = models.Invite.objects.filter().all().order_by('-id')[:9]
+        company = models.Conpanys.objects.filter().all().order_by('-id')[:9]
+        teachin = models.Teachin.objects.filter().all().order_by('-id')[:9]
+        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:9]
         article = models.Article.objects.filter().all().order_by('-nid')[:8]
-        float = models.Float.objects.all().order_by('-create_time')[:2]
+        float = models.Float.objects.filter(status='1').values().order_by('-create_time')[:2]
         return render(request, 'm_index.html', {
             'number': number,
             'name': name,
@@ -454,10 +454,10 @@ def m_index(request):
         })
     else:
         infor['status'] = False
-        preach = models.Invite.objects.filter().all().order_by('-id')[:10]
-        company = models.Conpanys.objects.filter().all().order_by('-id')[:10]
-        teachin = models.Teachin.objects.filter().all().order_by('-id')[:10]
-        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:10]
+        preach = models.Invite.objects.filter().all().order_by('-id')[:9]
+        company = models.Conpanys.objects.filter().all().order_by('-id')[:9]
+        teachin = models.Teachin.objects.filter().all().order_by('-id')[:9]
+        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:9]
         article = models.Article.objects.filter().all().order_by('-nid')[:8]
         float = models.Float.objects.all().order_by('-create_time')[:2]
 
@@ -498,6 +498,7 @@ def m_login(request):
                 return render(request, 'm_login.html', {'obj_form': obj_form})
         else:
             return render(request, 'm_login.html', {'obj_form': obj_form})
+
 # 注册
 import time
 def register(request):
@@ -514,6 +515,7 @@ def register(request):
             c_name = obj_form.cleaned_data['name']
             c_number = obj_form.cleaned_data['number']
             c_pwd = obj_form.cleaned_data['pwd']
+
             times = time.localtime()
             c_create_time = time.strftime('%Y-%m-%d',times)
             count = models.Conpanys.objects.filter(c_number=c_number).count()
@@ -530,103 +532,11 @@ def register(request):
                 return render(request, 'register.html', {'obj_form': obj_form, 'info': info})
         else:
             return render(request, 'register.html', {'obj_form': obj_form})
+
+
+# 注册成功
 def success(request):
     return render(request,'succes.html')
-
-import json
-def user_center(request):
-    if request.method == "GET":
-        cid = request.GET.get('cid')
-        company = models.Conpanys.objects.filter(id=cid).values()
-        teachin = models.Teachin.objects.filter(x_company_id=cid).values()
-        return render(request,'user_center.html',{
-            'company':company,
-            'teachin':teachin,
-            'cid':cid
-        })
-    else:
-        show_inf = {'status': True, 'inf': None}
-        id = request.POST.get('id')
-        c_nature = request.POST.get('c_nature')
-        c_industry = request.POST.get('c_industry')
-        c_scale = request.POST.get('c_scale')
-        c_city = request.POST.get('c_city')
-        c_linkman = request.POST.get('c_linkman')
-        c_phone = request.POST.get('c_phone')
-        c_brief = request.POST.get('c_brief')
-        models.Conpanys.objects.filter(id=id).update(
-            c_nature=c_nature,
-            c_industry=c_industry,
-            c_scale=c_scale,
-            c_phone=c_phone,
-            c_brief=c_brief,
-            c_city=c_city,
-            c_linkman=c_linkman,
-        )
-        show_inf['inf']='完善信息成功'
-        res = json.dumps(show_inf)
-        return HttpResponse(res)
-
-def user_center_preach(request):
-    if request.method == "POST":
-        show_inf = {'status': True, 'inf': None}
-
-        # 宣讲会
-        x_company_id = request.POST.get('x_company_id')
-        x_title = request.POST.get('x_title')
-        x_time = request.POST.get('x_time')
-        x_city = request.POST.get('x_city')
-        x_school = request.POST.get('x_school')
-        x_detail = request.POST.get('x_detail')
-        # print(x_detail)
-        models.Teachin.objects.filter().create(
-            x_title=x_title,
-            x_time=x_time,
-            x_city=x_city,
-            x_school=x_school,
-            x_detail=x_detail,
-            x_company_id=x_company_id,
-        )
-
-        show_inf['inf'] = '发布宣讲会信息成功'
-        res = json.dumps(show_inf)
-        return HttpResponse(res)
-
-def user_center_zhaopin(request):
-    if request.method == "POST":
-        show_inf = {'status': True, 'inf': None}
-
-        # 招聘会
-        z_company_id = request.POST.get('z_company_id')
-        z_position = request.POST.get('z_position')
-        z_number = request.POST.get('z_number')
-        z_salary = request.POST.get('z_salary')
-        z_education = request.POST.get('z_education')
-        z_experience = request.POST.get('z_experience')
-        z_nature = request.POST.get('z_nature')
-        z_data = request.POST.get('z_data')
-        z_city = request.POST.get('z_city')
-        z_email = request.POST.get('z_email')
-        z_detail = request.POST.get('z_detail')
-        models.Zhaopin.objects.filter().create(
-            z_position=z_position,
-            z_number=z_number,
-            z_education=z_education,
-            z_experience=z_experience,
-            z_nature=z_nature,
-            z_data=z_data,
-            z_email=z_email,
-            z_city=z_city,
-            z_detail=z_detail,
-            z_salary=z_salary,
-            z_company_id=z_company_id,
-        )
-
-        show_inf['inf'] = '发布招聘信息成功'
-        res = json.dumps(show_inf)
-        return HttpResponse(res)
-
-
 
 # 学生
 def m_student_link(request):
@@ -831,6 +741,7 @@ def m_obtain_content(request):
 #     article = models.Article.objects.filter().values()
 #     return render(request,'m_guide.html',locals())
 # 创业指导-内容
+
 def m_guide_content(request):
     if request.method == 'GET':
         nid = request.GET.get('news_id')
