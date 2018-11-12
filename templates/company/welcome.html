@@ -1,0 +1,128 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+    <title>我的桌面</title>
+
+    <style>
+        .brief {
+            background-color: #5bc0de;
+            width: 80px;
+            height: 30px;
+            margin-top: 20px;
+            line-height: 30px;
+            border-radius: 5px;
+            color: black;
+            text-align: center;
+        }
+
+        .brief_content {
+            box-shadow: 0 0 5px lightgrey;
+            text-indent: 2em;
+            padding: 3px 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <p class="f-20 text-success">欢迎使用企业.admin <span class="f-14">v1.1.1</span></p>
+    {% for row in company_name %}
+        <table class="table table-border table-bordered table-bg mt-20">
+            <thead>
+            <tr>
+                <th colspan="2" scope="col">企业信息</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th width="30%">企业名称</th>
+                <td><span id="lbServerName">{{ row.c_name }}</span></td>
+            </tr>
+            <tr>
+                <td>企业类型</td>
+                <td>{{ row.c_type }}</td>
+            </tr>
+            <tr>
+                <td>所在地区</td>
+                <td>{{ row.c_city }}</td>
+            </tr>
+            <tr>
+                <td>所属行业</td>
+                <td>{{ row.c_industry }}</td>
+            </tr>
+            <tr>
+                <td>法定代表人</td>
+                <td>{{ row.c_linkman }}</td>
+            </tr>
+            <tr>
+                <td>电话</td>
+                <td>{{ row.c_phone }}</td>
+            </tr>
+            <tr>
+                <td>企业规模</td>
+                <td>{{ row.c_scale }}人</td>
+            </tr>
+            <tr>
+                <td>企业性质</td>
+                <td>{{ row.c_nature }}</td>
+            </tr>
+            <tr>
+                <td>详细地址</td>
+                <td>{{ row.c_site }}</td>
+            </tr>
+            <tr>
+                <td>注册时间</td>
+                <td>{{ row.c_time }}</td>
+            </tr>
+            <tr>
+                <td>注册资本</td>
+                <td>{{ row.c_capital }}</td>
+            </tr>
+            <tr>
+                <td>经营范围</td>
+                <td>{{ row.c_manage }}</td>
+            </tr>
+            <tr>
+                <td>营业执照</td>
+                <td>
+                    {% if row.c_business %}
+                        <img width="300px" height="200px" src="{{ row.c_business }}" alt="营业执照">
+                    {% else %}
+                        暂无营业执照
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <p class="brief">企业简介: </p>
+            <div class="brief_content">{{ row.c_brief|safe }}</div>
+        </div>
+    {% endfor %}
+</div>
+<footer class="footer mt-20">
+
+</footer>
+<script type="text/javascript" src="/static/company/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/company/static/h-ui/js/H-ui.min.js"></script>
+
+</body>
+</html>

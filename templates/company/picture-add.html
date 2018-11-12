@@ -1,0 +1,369 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+    <title>完善信息</title>
+    <link href="/static/company/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .img_box {
+            margin-bottom: 30px;
+            border: 1px solid lightgrey;
+            height: 150px;
+            line-height: 150px;
+            width: 820px;
+            margin-left: 20px;
+        }
+
+        #save {
+            float: left;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .imgbtn {
+            display: inline-block;
+            width: 700px;
+            height: 150px;
+            text-align: center;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="page-container">
+    <form class="form form-horizontal" id="cfm" method="POST">
+        {% for row in company_list %}
+            {% csrf_token %}
+            <div class="row cl" style="display: none">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>公司ID：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{{ row.id }}" placeholder="" id=""
+                           name="id">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>公司名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_name %}
+                        <input disabled type="text" class="input-text" value="{{ row.c_name }}" placeholder="" id=""
+                               name="c_name">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_name">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">企业类型：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if row.c_type %}
+                        <input type="text" class="input-text" value="{{ row.c_type }}" placeholder="" id=""
+                               name="c_type">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_type">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">所在地区：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_city %}
+                        <input type="text" class="input-text" value="{{ row.c_city }}" placeholder="" id=""
+                               name="c_city">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_city">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">所属行业：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_industry %}
+                        <input type="text" class="input-text" value="{{ row.c_industry }}" placeholder="" id=""
+                               name="c_industry">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_industry">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">法定代表人：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_linkman %}
+                        <input type="text" class="input-text" value="{{ row.c_linkman }}" placeholder="" id=""
+                               name="c_linkman">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_linkman">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">详细地址：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_site %}
+                        <input type="text" class="input-text" value="{{ row.c_site }}" placeholder="" id=""
+                               name="c_site">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_site">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">注册时间：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_time %}
+                        <input type="date" class="input-text" value="{{ row.c_time }}" placeholder="" id=""
+                               name="c_time">
+                    {% else %}
+                        <input type="date" class="input-text" value="" placeholder="" id="" name="c_time">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">注册资本：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_capital %}
+                        <input type="text" class="input-text" value="{{ row.c_capital }}" placeholder="" id=""
+                               name="c_capital">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_capital">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">经营范围：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_manage %}
+                        <textarea id="teachin_content" name="c_manage"
+                                  style="width: 820px;height: 150px;overflow: auto;text-indent: 2em;">{{ row.c_manage }}</textarea>
+                    {% else %}
+                        <textarea id="teachin_content" name="c_manage"
+                                  style="width: 820px;height: 150px;overflow: auto;text-indent: 2em;"></textarea>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">电话：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_phone %}
+                        <input type="text" class="input-text" value="{{ row.c_phone }}" placeholder="" id=""
+                               name="c_phone">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_phone">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">企业规模（人）：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_scale %}
+                        <input type="text" class="input-text" value="{{ row.c_scale }}" placeholder="" id=""
+                               name="c_scale">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_scale">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">企业性质：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_industry %}
+                        <input type="text" class="input-text" value="{{ row.c_nature }}" placeholder="" id=""
+                               name="c_nature">
+                    {% else %}
+                        <input type="text" class="input-text" value="" placeholder="" id="" name="c_nature">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">企业简介：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    {% if  row.c_brief %}
+                        <textarea id="c_brief" name="c_brief"
+                                  style="width: 820px;height: 400px;overflow: auto;text-indent: 2em;">{{ row.c_brief|safe }}</textarea>
+                    {% else %}
+                        <textarea id="c_brief" name="c_brief"
+                                  style="width: 820px;height: 400px;overflow: auto;text-indent: 2em;"></textarea>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">营业执照：</label>
+                <div class="formControls col-xs-8 col-sm-9 img_box">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <input type="text" style="display: none"
+                               class="input-text" value="{{ row.id }}" id="id"
+                               name="id">
+                        <label for="id_avatar" class="imgbtn">
+                            <img style="margin-left: 32px;width: 100px;height: 100px;" id="avatar-img"
+                                 src="{{ row.c_business }}" alt="">
+                        </label>
+                        <input accept="image/*" type="file" name="avatar" id="id_avatar" style="display: none">
+                        <input type="button" class="btn btn-success" id="save" value="点击上传图片">
+                    </form>
+                </div>
+            </div>
+
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <span class="btn btn-primary radius" id="cbtn"><i class="Hui-iconfont">&#xe632;</i> 上传</span>
+                    <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                </div>
+            </div>
+        {% endfor %}
+    </form>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/company/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/company/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/company/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/company/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/company/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/company/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/company/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/company/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/company/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script charset="utf-8" src="/static/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="/static/login/js/jQuery.js"></script>
+<script src="/static/kindeditor/themes/default/default.css"></script>
+<script type="text/javascript">
+    $(function () {
+        bindConfirm();
+        bindpreachConfirm();
+        {#bindarticle();#}
+        uploadIfrme();
+        reloadIframe1();
+    });
+
+    function uploadIfrme() {
+        // 找到头像的input标签绑定change事件
+        $("#id_avatar").change(function () {
+            // 1. 创建一个读取文件的对象
+            var fileReader = new FileReader();
+            // 取到当前选中的头像文件
+            // console.log(this.files[0]);
+            // 读取你选中的那个文件
+            fileReader.readAsDataURL(this.files[0]);  // 读取文件是需要时间的
+            fileReader.onload = function () {
+                // 2. 等上一步读完文件之后才 把图片加载到img标签中
+                $("#avatar-img").attr("src", fileReader.result);
+            };
+        });
+    }
+
+    function reloadIframe1() {
+        $("#save").click(function () {
+            var formData = new FormData();
+            formData.append("id", id = $("#id").val());
+            formData.append("avatar", $("#id_avatar")[0].files[0]);
+            formData.append("csrfmiddlewaretoken", $("[name='csrfmiddlewaretoken']").val());
+            console.log(formData);
+            $.ajax({
+                url: '/company/confirm_center/',
+                type: "POST",
+                processData: false,
+                contentType: false,
+                dataType: 'JSON',
+                data: formData,
+                success: function (arg) {
+                    console.log(arg);
+                    if (arg.status) {
+                        {#alert(arg.msg)#}
+                        layer.msg(arg.msg, {icon: 6, time: 2000});
+                    } else {
+                        {#alert(arg.msg)#}
+                        layer.msg(arg.msg, {icon: 5, time: 2000});
+                    }
+                }
+            })
+        });
+    }
+
+
+    function bindConfirm() {
+        KindEditor.ready(function (K) {
+            window.editor = K.create('#c_brief', {
+                uploadJson: "/upload/",
+                extraFileUploadParams: {
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                },
+                filePostName: "upload_img"
+            });
+
+            afterBlur:(function () {
+                this.sync();
+            });
+        });
+    }
+
+
+    function bindpreachConfirm() {
+
+        $('#cbtn').click(function () {
+            var portData = {};
+            $('#cfm').find('input,textarea').each(function () {
+                var v = $(this).val();
+                var n = $(this).attr('name');
+                if (n == 'c_brief') {
+                    var acontent = $(document.getElementsByTagName("iframe")[0].contentWindow.document.body).html();
+                    portData[n] = acontent;
+                    console.log(acontent)
+                } else {
+                    portData[n] = v;
+                }
+
+            });
+
+            {#console.log(portData);#}
+            $.ajax({
+                url: '/company/c_perfect/',
+                type: 'POST',
+                dataType: 'JSON',
+                data: portData,
+                success: function (arg) {
+                    if (arg.status) {
+                        {#alert(arg.inf);#}
+                        layer.msg(arg.mession, {icon: 6, time: 2000});
+                        setTimeout(function () {
+                            location.href = arg.link;
+                        }, 2000);
+                    } else {
+                        layer.msg(arg.mession, {icon: 5, time: 2000});
+                    }
+                }
+            });
+        });
+    }
+
+</script>
+</body>
+</html>
