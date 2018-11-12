@@ -86,7 +86,7 @@ function article_class_add() {
         type: "post",
         data: {
             article_tags: article_tags,
-            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
         success:function (data) {
             //alert(data.tags_count);
