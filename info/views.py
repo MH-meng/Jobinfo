@@ -792,24 +792,71 @@ def m_logout(request):
     return redirect('/')
 
 
-
-
-
-
-#文件上传
+# 文章 文件上传
 import os
 from jobinfo import settings
-def upload(request):
-    # print(request.FILES)
+
+
+def ariticle_upload(request):
     obj = request.FILES.get("upload_img")
-    path = os.path.join(settings.MEDIA_ROOT, 'add_article_img', obj.name)
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_article_file', obj.name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_article_img', obj.name)
 
     with open(path,"wb") as f:
         for line in obj:
             f.write(line)
 
+    print()
     res ={
         "error":0,
-        "url":"/media/add_article_img/"+obj.name
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + obj.name
     }
+
+    return HttpResponse(json.dumps(res))
+
+
+# 浮动内容 文件上传
+def float_upload(request):
+    obj = request.FILES.get("upload_img")
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_float_file', obj.name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_float_img', obj.name)
+
+    with open(path, "wb") as f:
+        for line in obj:
+            f.write(line)
+
+    print()
+    res = {
+        "error": 0,
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + obj.name
+    }
+
+    return HttpResponse(json.dumps(res))
+
+
+# 招聘会 文件上传
+def invite_upload(request):
+    obj = request.FILES.get("upload_img")
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_invite_file', obj.name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_invite_img', obj.name)
+
+    with open(path, "wb") as f:
+        for line in obj:
+            f.write(line)
+
+    print()
+    res = {
+        "error": 0,
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + obj.name
+    }
+
     return HttpResponse(json.dumps(res))
