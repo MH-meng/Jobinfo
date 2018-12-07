@@ -1063,7 +1063,8 @@ def teachin_upload(request):
 # 友情连接
 def blogroll_list(request):
     blogroll_list = models.BlogrollImage.objects.values().order_by('-f_create_time')
-    return render(request, 'blogroll_list.html', {'blogroll_list': blogroll_list})
+    count = models.BlogrollImage.objects.all().count()
+    return render(request, 'blogroll_list.html', {'blogroll_list': blogroll_list, 'count': count})
 
 
 def create_uuid():
@@ -1144,7 +1145,8 @@ def del_blogroll(request):
 # 图片新闻
 def news_list(request):
     news_list = models.NewsArticle.objects.values().order_by('-create_time')
-    return render(request, 'news_list.html', {'news_list': news_list})
+    count = models.NewsArticle.objects.all().count()
+    return render(request, 'news_list.html', {'news_list': news_list, 'count': count})
 
 
 # 添加新闻
@@ -1333,17 +1335,19 @@ def CheckCode(request):
     return HttpResponse(mstream.getvalue())
 
 
-def Login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('pwd')
+# 企业管理
+def business_administration(request):
+    company_list = models.Conpanys.objects.filter().values().order_by('-c_create_time')
+    count = models.Conpanys.objects.all().count()
+    return render(
+        request,
+        'business_administration.html',
+        {'company_list': company_list, 'count': count})
 
-        check_code = request.POST.get('checkcode')
-        # 从session中获取验证码
-        session_code = request.session["CheckCode"]
-        if check_code.strip().lower() != session_code.lower():
-            return HttpResponse('验证码不匹配')
-        else:
-            return HttpResponse('验证码正确')
 
-    return render_to_response('login.html', {'error': "", 'username': '', 'pwd': ''})
+# 企业详情
+def business_detail(request):
+    if request.method == "GET":
+        id = request.GET.get('companr-id')
+        company_list = models.Conpanys.objects.filter(id=id).values()
+        return render(request, 'business_detail.html', {'company_list': company_list})

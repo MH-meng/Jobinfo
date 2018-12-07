@@ -22,12 +22,12 @@ def c_teachin(request):
     cid = request.GET.get('cid')
     teachin_list = models.Teachin.objects.filter(x_company_id=cid).values().order_by('-id')
     teachin_count = models.Teachin.objects.filter(x_company_id=cid).count()
-    # print(teachin_count)
     return render(request, 'company/article-list.html',
                   {
                       'teachin_list': teachin_list,
                       'cid': cid,
-                      'teachin_count': teachin_count
+                      'teachin_count': teachin_count,
+
                   })
 
 

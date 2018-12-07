@@ -140,12 +140,15 @@ urlpatterns = [
     url(r'^edit_news_img/$', views.edit_news_img),
     url(r'^news_detail/$', views.news_detail),
 
+    # 企业管理
+    url(r'^business_administration/$', views.business_administration),
+    url(r'^business_detail/$', views.business_detail),
+
 
     # media 相关的路由设置
     url(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}),
 
     # 验证码
-    url(r'^Login/$', views.Login),
     url(r'^checkcode/$', views.CheckCode),
 
 ]

@@ -48,7 +48,7 @@
             {% for row in news_list %}
                 <tr class="text-c">
                     <td><input type="checkbox" value="" name=""></td>
-                    <td>{{ row.id }}</td>
+                    <td>{{ forloop.counter }}</td>
                     <td>{{ row.title }}</td>
                     <td>{{ row.image_url }}</td>
                     <td>{{ row.create_time|date:"Y-m-d" }}</td>
