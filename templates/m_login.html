@@ -29,15 +29,18 @@
         <div class="back_content">
             <form action="/m_login/" method="POST" novalidate>
                 {% csrf_token %}
-                <p>{{ obj_form.number.label }}{{ obj_form.number }}{{ obj_form.errors.number }}</p>
-                <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}{{ obj_form.errors.pwd.0 }}</p>
-                <p>{{ obj_form.types.label }}{{ obj_form.types }}{{ obj_form.errors.types.0 }}</p>
+                <p>{{ obj_form.number.label }}{{ obj_form.number }} <span
+                        style="color: red;font-size: 12px">{{ obj_form.errors.number }}</span></p>
+                <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}<span
+                        style="color: red;font-size: 12px">{{ obj_form.errors.pwd.0 }}</span></p>
+                <p>{{ obj_form.types.label }}{{ obj_form.types }}<span
+                        style="color: red;font-size: 12px">{{ obj_form.errors.types.0 }}</span></p>
 
                 <p>验证码：<input type="text" name='checkcode'/> <img onclick='ChangeCode();' id='imgCode' src='/checkcode/'
                                                                   title='点击更新'/></p>
 
-                <p style="color: red">{{ obj_form.error_class }}</p>
-                <p style="color: red">{{ error_ver }}</p>
+                <p style="color: red;font-size: 12px">{{ obj_form.error_class }}</p>
+                <p style="color: red;font-size: 12px">{{ error_ver }}</p>
                 <p>
                     <input type="submit" class="btn btn-default" id="login" value="登录"></input>
                     <input type="submit" class="btn btn-default" id="register" value="注册"></input>

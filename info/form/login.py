@@ -11,7 +11,8 @@ class StudentForm(forms.Form):
             'required': '*用户账户不能为空',
             'invalid': '*用户输入格式错误，必须为数字',
         },
-        widget=widgets.TextInput(attrs={'class': 'form-control','id':'exampleInputEmail1'}),  # 定制HTML插件, attrs 设置属性
+        widget=widgets.TextInput(attrs={'class': 'form-control color', 'id': 'exampleInputEmail1'}),
+        # 定制HTML插件, attrs 设置属性
     )
     pwd = fields.CharField(
         label="密码：",
@@ -19,6 +20,6 @@ class StudentForm(forms.Form):
         error_messages={
             'required': '*密码不能为空',
         },
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'exampleInputPassword1'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control color', 'id': 'exampleInputPassword1'})
 
     )
