@@ -503,23 +503,40 @@ def m_login(request):
             c_number = obj_form.cleaned_data['number']
             c_pwd = obj_form.cleaned_data['pwd']
             c_ret = models.Conpanys.objects.filter(c_number=c_number,c_pwd=c_pwd).count()
+            check_code = request.POST.get('checkcode')
+            # 从session中获取验证码
+            session_code = request.session["CheckCode"]
 
-            if c_ret:
-                infor['status'] = True
-                request.session['is_login1'] = True
-                request.session['number'] = c_number
-                check_code = request.POST.get('checkcode')
-                # 从session中获取验证码
-                session_code = request.session["CheckCode"]
-                if check_code.strip().lower() != session_code.lower():
-                    error_ver = "验证码错误，请重新输入。。。。"
-                    return render(request, 'm_login.html', {'obj_form': obj_form, 'error_ver': error_ver})
-                else:
-                    return redirect('/')
-            else:
+            if c_ret == 0:
                 infor['status'] = False
                 obj_form.error_class = "用户账号或密码错误，请重新输入。。。。"
                 return render(request, 'm_login.html', {'obj_form': obj_form})
+            elif check_code.strip().lower() != session_code.lower():
+                infor['status'] = False
+                error_ver = "验证码错误，请重新输入。。。。"
+                return render(request, 'm_login.html', {'obj_form': obj_form, 'error_ver': error_ver})
+            else:
+                request.session['is_login1'] = True
+                request.session['number'] = c_number
+                infor['status'] = True
+                return redirect('/')
+
+            # if c_ret:
+            #     request.session['is_login1'] = True
+            #     request.session['number'] = c_number
+            #     check_code = request.POST.get('checkcode')
+            #     # 从session中获取验证码
+            #     session_code = request.session["CheckCode"]
+            #     if check_code.strip().lower() != session_code.lower():
+            #         infor['status'] = False
+            #         error_ver = "验证码错误，请重新输入。。。。"
+            #         return render(request, 'm_login.html', {'obj_form': obj_form, 'error_ver': error_ver})
+            #     else:
+            #         return redirect('/')
+            # else:
+            #     infor['status'] = False
+            #     obj_form.error_class = "用户账号或密码错误，请重新输入。。。。"
+            #     return render(request, 'm_login.html', {'obj_form': obj_form})
         else:
             return render(request, 'm_login.html', {'obj_form': obj_form})
 
