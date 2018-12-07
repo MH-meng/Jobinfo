@@ -143,7 +143,7 @@
     function bindConfirm() {
         KindEditor.ready(function (K) {
             window.editor = K.create('#z_detail', {
-                uploadJson: "/upload/",
+                uploadJson: "/company/upload/",
                 extraFileUploadParams: {
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
                 },

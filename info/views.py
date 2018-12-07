@@ -6,10 +6,20 @@ from info.form.login import StudentForm
 from info.form.register import StudentRegisterForm
 from django.db.models import Count
 import json
+import uuid
 
-# Create your views here.
+from info.Helper import Checkcode
+import io
+
 
 #登陆
+
+
+def create_uuid():
+    s_uuid = str(uuid.uuid1())
+    l_uuid = s_uuid.split('-')
+    uid = ''.join(l_uuid)
+    return uid
 
 
 #登陆
@@ -435,12 +445,14 @@ def m_index(request):
         infor['status'] = True
         number = request.session.get('number', None)
         name = models.Conpanys.objects.filter(c_number=number).values()
-        preach = models.Invite.objects.filter().all().order_by('-id')[:9]
-        company = models.Conpanys.objects.filter().all().order_by('-id')[:9]
-        teachin = models.Teachin.objects.filter().all().order_by('-id')[:9]
-        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:9]
-        article = models.Article.objects.filter().all().order_by('-nid')[:8]
+        preach = models.Invite.objects.filter().all().order_by('-id')
+        company = models.Conpanys.objects.filter().all().order_by('-id')
+        teachin = models.Teachin.objects.filter().all().order_by('-id')
+        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')
+        article = models.Article.objects.filter().all().order_by('-nid')
+        blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
         float = models.Float.objects.filter(status='1').values().order_by('-create_time')[:2]
+        news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
         return render(request, 'm_index.html', {
             'number': number,
             'name': name,
@@ -451,16 +463,19 @@ def m_index(request):
             'zhaopin': zhaopin,
             'article': article,
             'float': float,
+            'blogroll': blogroll,
+            'news_list': news_list,
         })
     else:
         infor['status'] = False
-        preach = models.Invite.objects.filter().all().order_by('-id')[:9]
-        company = models.Conpanys.objects.filter().all().order_by('-id')[:9]
-        teachin = models.Teachin.objects.filter().all().order_by('-id')[:9]
-        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')[:9]
-        article = models.Article.objects.filter().all().order_by('-nid')[:8]
+        preach = models.Invite.objects.filter().all().order_by('-id')
+        company = models.Conpanys.objects.filter().all().order_by('-id')
+        teachin = models.Teachin.objects.filter().all().order_by('-id')
+        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')
+        article = models.Article.objects.filter().all().order_by('-nid')
         float = models.Float.objects.all().order_by('-create_time')[:2]
-
+        blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
+        news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
         return render(request, 'm_index.html', {
             'infor':infor,
             'company':company,
@@ -469,6 +484,8 @@ def m_index(request):
             'zhaopin':zhaopin,
             'article':article,
             'float':float,
+            'blogroll': blogroll,
+            'news_list': news_list,
         })
 
 #登录
@@ -486,12 +503,19 @@ def m_login(request):
             c_number = obj_form.cleaned_data['number']
             c_pwd = obj_form.cleaned_data['pwd']
             c_ret = models.Conpanys.objects.filter(c_number=c_number,c_pwd=c_pwd).count()
-            # print('c_ret',c_ret)
+
             if c_ret:
                 infor['status'] = True
                 request.session['is_login1'] = True
                 request.session['number'] = c_number
-                return redirect('/')
+                check_code = request.POST.get('checkcode')
+                # 从session中获取验证码
+                session_code = request.session["CheckCode"]
+                if check_code.strip().lower() != session_code.lower():
+                    error_ver = "验证码错误，请重新输入。。。。"
+                    return render(request, 'm_login.html', {'obj_form': obj_form, 'error_ver': error_ver})
+                else:
+                    return redirect('/')
             else:
                 infor['status'] = False
                 obj_form.error_class = "用户账号或密码错误，请重新输入。。。。"
@@ -500,38 +524,77 @@ def m_login(request):
             return render(request, 'm_login.html', {'obj_form': obj_form})
 
 # 注册
-import time
-def register(request):
-    if request.method == "GET":
-        # 创建一个HTML
-        obj_form = StudentRegisterForm()
-        return render(request, 'register.html', {'obj_form':obj_form})
+def m_register(request):
+    if request.method == 'GET':
+        return render(request, 'm_register.html')
     else:
-        obj_form = StudentRegisterForm(request.POST)
-        info = {'status': None}
-        # 是否全部验证成功
-        if obj_form.is_valid():
-            # 用户提交的数据
-            c_name = obj_form.cleaned_data['name']
-            c_number = obj_form.cleaned_data['number']
-            c_pwd = obj_form.cleaned_data['pwd']
+        info = {'status': True, 'mession': None}
+        c_name = request.POST.get('username')
+        c_number = request.POST.get('number')
+        c_pwd = request.POST.get('password')
+        c_linkman = request.POST.get('c_linkman')
+        c_phone = request.POST.get('phone')
+        c_nature = request.POST.get('c_nature')
+        c_city = request.POST.get('c_city')
+        c_industry = request.POST.get('c_industry')
+        if c_name and c_number and c_pwd and c_linkman and c_phone:
+            company_count = models.Conpanys.objects.filter(c_number=c_number).count()
+            if company_count:
+                info['status'] = False
+                info['mession'] = '账号已存在，无需重新注册，请返回登录界面！'
+                return render(request, 'register.html', {'info': info})
+            else:
+                info['status'] = True
+                info['mession'] = '注册成功，请返回登录界面！'
+                info['link'] = '/m_login/'
 
-            times = time.localtime()
-            c_create_time = time.strftime('%Y-%m-%d',times)
-            count = models.Conpanys.objects.filter(c_number=c_number).count()
-            if count == 0:
-                models.Conpanys.objects.create(
+                models.Conpanys.objects.filter().create(
                     c_name=c_name,
                     c_number=c_number,
                     c_pwd=c_pwd,
-                    c_create_time=c_create_time
+                    c_linkman=c_linkman,
+                    c_phone=c_phone,
+                    c_nature=c_nature,
+                    c_city=c_city,
+                    c_industry=c_industry,
                 )
-                return redirect('/success/')
-            else:
-                info['status'] = '账号已存在，无需重新注册，请返回登录界面！'
-                return render(request, 'register.html', {'obj_form': obj_form, 'info': info})
         else:
-            return render(request, 'register.html', {'obj_form': obj_form})
+            info['status'] = False
+            info['mession'] = '请填写完整的信息！'
+        return JsonResponse(info)
+
+
+# def register(request):
+#     if request.method == "GET":
+#         # 创建一个HTML
+#         obj_form = StudentRegisterForm()
+#         return render(request, 'register.html', {'obj_form':obj_form})
+#     else:
+#         obj_form = StudentRegisterForm(request.POST)
+#         info = {'status': None}
+#         # 是否全部验证成功
+#         if obj_form.is_valid():
+#             # 用户提交的数据
+#             c_name = obj_form.cleaned_data['name']
+#             c_number = obj_form.cleaned_data['number']
+#             c_pwd = obj_form.cleaned_data['pwd']
+#
+#             times = time.localtime()
+#             c_create_time = time.strftime('%Y-%m-%d',times)
+#             count = models.Conpanys.objects.filter(c_number=c_number).count()
+#             if count == 0:
+#                 models.Conpanys.objects.create(
+#                     c_name=c_name,
+#                     c_number=c_number,
+#                     c_pwd=c_pwd,
+#                     c_create_time=c_create_time
+#                 )
+#                 return redirect('/success/')
+#             else:
+#                 info['status'] = '账号已存在，无需重新注册，请返回登录界面！'
+#                 return render(request, 'register.html', {'obj_form': obj_form, 'info': info})
+#         else:
+#             return render(request, 'register.html', {'obj_form': obj_form})
 
 
 # 注册成功
@@ -737,11 +800,11 @@ def m_obtain_content(request):
         article_infor = models.Article.objects.filter(nid=nid).values()
         return render(request,'m_obtain_content.html',locals())
 # # 创业指导
-# def m_guide(request):
-#     article = models.Article.objects.filter().values()
-#     return render(request,'m_guide.html',locals())
-# 创业指导-内容
+def m_guide(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_guide.html', locals())
 
+# 创业指导-内容
 def m_guide_content(request):
     if request.method == 'GET':
         nid = request.GET.get('news_id')
@@ -779,6 +842,97 @@ def m_elegant_content(request):
         article_infor = models.Article.objects.filter(nid=nid).values()
         return render(request,'m_elegant_content.html',locals())
 
+
+# 资料下载
+def m_download(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_downloads.html', locals())
+
+
+# 资料下载-内容
+def m_download_content(request):
+    if request.method == 'GET':
+        nid = request.GET.get('news_id')
+        article_infor = models.Article.objects.filter(nid=nid).values()
+        return render(request, 'm_download_content.html', locals())
+
+
+# 生源状况
+def m_enroliment(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_enroliment.html', locals())
+
+
+# 生源状况详情
+def m_enroliment_content(request):
+    nid = request.GET.get('news_id')
+    article_infor = models.Article.objects.filter(nid=nid).values()
+    return render(request, 'm_enroliment_content.html', locals())
+
+
+# 就业质量报告
+def m_quality(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_quality.html', locals())
+
+
+def m_quality_content(request):
+    nid = request.GET.get('news_id')
+    article_infor = models.Article.objects.filter(nid=nid).values()
+    return render(request, 'm_quality_content.html', locals())
+
+
+# 实习就业
+def m_intership(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_intership.html', locals())
+
+
+# 实习就业详情
+def m_intership_content(request):
+    nid = request.GET.get('news_id')
+    article_infor = models.Article.objects.filter(nid=nid).values()
+    return render(request, 'm_intership_content.html', locals())
+
+
+# 调查统计
+def m_survey(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_survey.html', locals())
+
+
+# 调查统计详情
+def m_survey_content(request):
+    nid = request.GET.get('news_id')
+    article_infor = models.Article.objects.filter(nid=nid).values()
+    return render(request, 'm_survey_content.html', locals())
+
+
+# 校友风采
+def m_alumnus(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_alumnus.html', locals())
+
+
+# 校友风采详情
+def m_alumnus_content(request):
+    nid = request.GET.get('news_id')
+    article_infor = models.Article.objects.filter(nid=nid).values()
+    return render(request, 'm_alumnus_content.html', locals())
+
+
+# 创业服务
+def m_incubation(request):
+    article = models.Article.objects.filter().values()
+    return render(request, 'm_incubation.html', locals())
+
+
+# 创业服务详情
+def m_incubation_content(request):
+    nid = request.GET.get('news_id')
+    article_infor = models.Article.objects.filter(nid=nid).values()
+    return render(request, 'm_incubation_content.html', locals())
+
 # 浮动框
 def m_float(request):
     nid = request.GET.get('news')
@@ -796,14 +950,15 @@ def m_logout(request):
 import os
 from jobinfo import settings
 
-
 def ariticle_upload(request):
     obj = request.FILES.get("upload_img")
+    avatar_uid = create_uuid()
+    avatar_img_name = avatar_uid + "." + obj.name.split(".")[1]
     flag = ".doc" in obj.name
     if flag:
-        path = os.path.join(settings.MEDIA_ROOT, 'add_article_file', obj.name)
+        path = os.path.join(settings.MEDIA_ROOT, 'add_article_file', avatar_img_name)
     else:
-        path = os.path.join(settings.MEDIA_ROOT, 'add_article_img', obj.name)
+        path = os.path.join(settings.MEDIA_ROOT, 'add_article_img', avatar_img_name)
 
     with open(path,"wb") as f:
         for line in obj:
@@ -812,7 +967,7 @@ def ariticle_upload(request):
     print()
     res ={
         "error":0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + obj.name
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
@@ -821,11 +976,13 @@ def ariticle_upload(request):
 # 浮动内容 文件上传
 def float_upload(request):
     obj = request.FILES.get("upload_img")
+    avatar_uid = create_uuid()
+    avatar_img_name = avatar_uid + "." + obj.name.split(".")[1]
     flag = ".doc" in obj.name
     if flag:
-        path = os.path.join(settings.MEDIA_ROOT, 'add_float_file', obj.name)
+        path = os.path.join(settings.MEDIA_ROOT, 'add_float_file', avatar_img_name)
     else:
-        path = os.path.join(settings.MEDIA_ROOT, 'add_float_img', obj.name)
+        path = os.path.join(settings.MEDIA_ROOT, 'add_float_img', avatar_img_name)
 
     with open(path, "wb") as f:
         for line in obj:
@@ -834,7 +991,7 @@ def float_upload(request):
     print()
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + obj.name
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
@@ -843,11 +1000,230 @@ def float_upload(request):
 # 招聘会 文件上传
 def invite_upload(request):
     obj = request.FILES.get("upload_img")
+    avatar_uid = create_uuid()
+    avatar_img_name = avatar_uid + "." + obj.name.split(".")[1]
     flag = ".doc" in obj.name
     if flag:
-        path = os.path.join(settings.MEDIA_ROOT, 'add_invite_file', obj.name)
+        path = os.path.join(settings.MEDIA_ROOT, 'add_invite_file', avatar_img_name)
     else:
-        path = os.path.join(settings.MEDIA_ROOT, 'add_invite_img', obj.name)
+        path = os.path.join(settings.MEDIA_ROOT, 'add_invite_img', avatar_img_name)
+
+    with open(path, "wb") as f:
+        for line in obj:
+            f.write(line)
+
+    res = {
+        "error": 0,
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+    }
+
+    return HttpResponse(json.dumps(res))
+
+
+# 宣讲会 文件上传
+def teachin_upload(request):
+    obj = request.FILES.get("upload_img")
+    avatar_uid = create_uuid()
+    avatar_img_name = avatar_uid + "." + obj.name.split(".")[1]
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_teachin_file', avatar_img_name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_teachin_img', avatar_img_name)
+
+    with open(path, "wb") as f:
+        for line in obj:
+            f.write(line)
+
+    res = {
+        "error": 0,
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+    }
+
+    return HttpResponse(json.dumps(res))
+
+
+# 友情连接
+def blogroll_list(request):
+    blogroll_list = models.BlogrollImage.objects.values().order_by('-f_create_time')
+    return render(request, 'blogroll_list.html', {'blogroll_list': blogroll_list})
+
+
+def create_uuid():
+    import uuid
+    s_uuid = str(uuid.uuid1())
+    l_uuid = s_uuid.split('-')
+    uid = ''.join(l_uuid)
+    return uid
+
+
+from jobinfo import settings
+
+
+# 友情链接添加
+def blogroll_add(request):
+    if request.method == 'GET':
+        return render(request, 'blogroll_add.html')
+
+    else:
+        ret = {}
+        name = request.POST.get('name')
+        parse_url = request.POST.get('parse_url')
+        img_id = request.POST.get('img_id')
+        if name and parse_url and img_id:
+            models.BlogrollImage.objects.filter(f_code_img=img_id).update(
+                f_name=name,
+                f_parse_url=parse_url
+            )
+            ret["status"] = True
+            ret["msg"] = "添加成功！"
+            ret["link"] = "/blogroll_list/"
+        else:
+            ret["status"] = False
+            ret["msg"] = "添加失败！"
+
+        return JsonResponse(ret)
+
+
+# 友情链接上传图片
+def upload_img(request):
+    if request.method == "POST":
+        ret = {}
+        id = request.POST.get("id")
+        avatar_img = request.FILES.get("avatar")
+        avatar_uid = create_uuid()
+        ret['img_id'] = avatar_uid
+        if avatar_img:
+            avatar_img_name = avatar_uid + "." + avatar_img.name.split(".")[1]
+            path = os.path.join(settings.MEDIA_ROOT, 'slideshow', avatar_img_name)
+            with open(path, "wb") as f:
+                for line in avatar_img:
+                    f.write(line)
+
+            avatar_url = "http://" + request.get_host() + "/media/slideshow/" + avatar_img_name
+            models.BlogrollImage.objects.create(
+                f_image_url=avatar_url,
+                f_code_img=avatar_uid
+            )
+            ret["status"] = True
+            ret["msg"] = "上传成功！"
+        else:
+            ret["status"] = False
+            ret["msg"] = "上传失败！"
+
+        return JsonResponse(ret)
+
+
+# 友情链接删除
+def del_blogroll(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        models.BlogrollImage.objects.filter(id=id).delete()
+        ret = {}
+        ret["status"] = 1
+        return JsonResponse(ret)
+
+
+# 图片新闻
+def news_list(request):
+    news_list = models.NewsArticle.objects.values().order_by('-create_time')
+    return render(request, 'news_list.html', {'news_list': news_list})
+
+
+# 添加新闻
+def news_add(request):
+    if request.method == 'GET':
+        return render(request, 'news_add.html')
+
+    else:
+        ret = {}
+        img_id = request.POST.get('img_id')
+        title = request.POST.get('title')
+        article_content = request.POST.get('article_content')
+
+        print('img_id', img_id)
+        print('title', title)
+        print('article_content', article_content)
+
+        if title and article_content and img_id:
+            models.NewsArticle.objects.filter(image_url=img_id).update(
+                title=title,
+                content=article_content
+            )
+            ret["status"] = True
+            ret["msg"] = "添加成功！"
+            ret["link"] = "/news_list/"
+        else:
+            ret["status"] = False
+            ret["msg"] = "添加失败！"
+
+        return JsonResponse(ret)
+
+
+# 新闻图片上传
+def upload_news_img(request):
+    if request.method == "POST":
+        ret = {}
+        avatar_img = request.FILES.get("avatar")
+        avatar_uid = create_uuid()
+        if avatar_img:
+            avatar_img_name = avatar_uid + "." + avatar_img.name.split(".")[1]
+            path = os.path.join(settings.MEDIA_ROOT, 'newsimage', avatar_img_name)
+            with open(path, "wb") as f:
+                for line in avatar_img:
+                    f.write(line)
+
+            avatar_url = "http://" + request.get_host() + "/media/newsimage/" + avatar_img_name
+            models.NewsArticle.objects.create(
+                image_url=avatar_url,
+            )
+            ret["status"] = True
+            ret["msg"] = "上传成功！"
+            ret['img_id'] = avatar_url
+        else:
+            ret["status"] = False
+            ret["msg"] = "上传失败！"
+
+        return JsonResponse(ret)
+
+
+# 新闻图片删除
+def del_news(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        models.NewsArticle.objects.filter(id=id).delete()
+        ret = {}
+        ret["status"] = 1
+        return JsonResponse(ret)
+
+
+def news_start(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        models.NewsArticle.objects.filter(id=id).update(status='1')
+        ret = {}
+        ret["id"] = id
+        return JsonResponse(ret)
+
+
+def news_stop(request):
+    if request.method == "POST":
+        id = request.POST.get("pk")
+        models.NewsArticle.objects.filter(id=id).update(status='2')
+        ret = {}
+        ret["id"] = id
+        return JsonResponse(ret)
+
+
+def news_upload(request):
+    obj = request.FILES.get("upload_img")
+    avatar_uid = create_uuid()
+    avatar_img_name = avatar_uid + "." + obj.name.split(".")[1]
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_new_file', avatar_img_name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_new_img', avatar_img_name)
 
     with open(path, "wb") as f:
         for line in obj:
@@ -856,7 +1232,101 @@ def invite_upload(request):
     print()
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + obj.name
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
+
+
+def news_edit(request):
+    if request.method == 'POST':
+        ret = {}
+        img_id = request.POST.get('img_id')
+        title = request.POST.get('title')
+        article_content = request.POST.get('article_content')
+
+        print('img_id', img_id)
+        print('title', title)
+        print('article_content', article_content)
+
+        if title and article_content and img_id:
+            models.NewsArticle.objects.filter(image_url=img_id).update(
+                title=title,
+                content=article_content
+            )
+            ret["status"] = True
+            ret["msg"] = "修改成功！"
+            ret["link"] = "/news_list/"
+        else:
+            ret["status"] = False
+            ret["msg"] = "修改失败！"
+
+        return JsonResponse(ret)
+
+    else:
+        id = request.GET.get('id')
+        news_obj = models.NewsArticle.objects.filter(id=id).values()
+
+        return render(request, 'news_edit.html', locals())
+
+
+def edit_news_img(request):
+    if request.method == "POST":
+        ret = {}
+        id = request.POST.get('id')
+        avatar_img = request.FILES.get("avatar")
+        avatar_uid = create_uuid()
+        if avatar_img:
+            avatar_img_name = avatar_uid + "." + avatar_img.name.split(".")[1]
+            path = os.path.join(settings.MEDIA_ROOT, 'newsimage', avatar_img_name)
+            with open(path, "wb") as f:
+                for line in avatar_img:
+                    f.write(line)
+
+            avatar_url = "http://" + request.get_host() + "/media/newsimage/" + avatar_img_name
+            models.NewsArticle.objects.filter(id=id).update(
+                image_url=avatar_url,
+            )
+            ret["status"] = True
+            ret["msg"] = "上传成功！"
+            ret['img_id'] = avatar_url
+        else:
+            ret["status"] = False
+            ret["msg"] = "上传失败！"
+
+        return JsonResponse(ret)
+
+
+def news_detail(request):
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        print(id)
+        news = models.NewsArticle.objects.filter(id=id).values()
+        return render(request, 'news_detail.html', {'news': news})
+
+
+# 验证码
+def CheckCode(request):
+    mstream = io.BytesIO()
+    validate_code = Checkcode.create_validate_code()
+    img = validate_code[0]
+    img.save(mstream, "GIF")
+    # 将验证码保存到session
+    request.session["CheckCode"] = validate_code[1]
+    return HttpResponse(mstream.getvalue())
+
+
+def Login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('pwd')
+
+        check_code = request.POST.get('checkcode')
+        # 从session中获取验证码
+        session_code = request.session["CheckCode"]
+        if check_code.strip().lower() != session_code.lower():
+            return HttpResponse('验证码不匹配')
+        else:
+            return HttpResponse('验证码正确')
+
+    return render_to_response('login.html', {'error': "", 'username': '', 'pwd': ''})

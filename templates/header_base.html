@@ -75,7 +75,7 @@
         }
 
         .login a {
-            color: black;
+            color: white;
         }
 
         .login a:hover {
@@ -92,6 +92,12 @@
             color: red;
         }
 
+        .box {
+            height: 35px;
+            line-height: 35px;
+            background-color: #0e90d2;
+        }
+
     </style>
     {% block js %}
 
@@ -99,26 +105,31 @@
 
 </head>
 <body>
+
 <div class="css-wrapper">
     <div class="wp">
+        <div class="box">
+            {% block login %}
+                <div class="login_box"></div>
+            {% endblock %}
+        </div>
         <div class="header">
-            <div id="logo" class="logo"><a href="/">
-                <img src="/static/m/images/4b4c6076d017ff73692f39567d27a7fa.jpg"/>
-            </a></div>
+            <img src="/static/m/images/logo.png" alt="">
+            <div class="header_title">就业信息网</div>
         </div>
         <div id="nav1">
             <!-- 主页-->
             <ul class="nav1">
                 <li><a href="/" target="_self">主页</a></li>
-                <li><a href="/m_student_link/">学生</a></li>
-                <li><a href="/m_danwei_link/">单位</a></li>
-                <li><a href="/m_teacher_link/">教师</a></li>
-                <li><a href="/m_news_cyzd/">创业指导</a></li>
-                <li><a href="/m_obtain/">就业质量报告</a></li>
-                <li><a href="/m_news_gywm/" target="_self">关于我们</a></li>
-                {% block login %}
-                    <div class="login_box"></div>
-                {% endblock %}
+                <li><a href="/m_news_gywm/">部门简介</a></li>
+                <li><a href="/m_policy/">政策法规</a></li>
+                <li><a href="/m_enroliment/">生源状况</a></li>
+                <li><a href="/m_campus/">网上求职</a></li>
+                <li><a href="/m_quality/">就业质量报告</a></li>
+                <li><a href="/m_intership/" target="_self">实习就业</a></li>
+                <li><a href="/m_survey/" target="_self">调查统计</a></li>
+                <li><a href="/m_alumnus/" target="_self">校友风采</a></li>
+                <li><a href="/m_incubation/" target="_self">创业服务</a></li>
             </ul>
             <!-- 2级导航-->
         </div>

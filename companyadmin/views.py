@@ -311,20 +311,30 @@ from jobinfo import settings
 
 
 def confirm_center(request):
-    if request.method != "GET":
+    if request.method == "POST":
         ret = {}
         id = request.POST.get("id")
         avatar_img = request.FILES.get("avatar")
         if avatar_img:
             avatar_uid = create_uuid()
             avatar_img_name = avatar_uid + "." + avatar_img.name.split(".")[1]
-            file_path = os.path.join('static/images/', avatar_img_name)
-            f = open(file_path, 'wb')
-            for line in avatar_img.chunks():
-                f.write(line)
-            f.close()
 
-            avatar_url = "http://" + request.get_host() + "/static/images/" + avatar_img_name
+            # file_path = os.path.join('static/images/', avatar_img_name)
+            # f = open(file_path, 'wb')
+            # for line in avatar_img.chunks():
+            #     f.write(line)
+            # f.close()
+            #
+            # avatar_url = "http://" + request.get_host() + "/static/images/" + avatar_img_name
+
+            path = os.path.join(settings.MEDIA_ROOT, 'avatars', avatar_img_name)
+            with open(path, "wb") as f:
+                for line in avatar_img:
+                    f.write(line)
+
+            avatar_url = "http://" + request.get_host() + "/media/avatars/" + avatar_img_name
+
+            # print(avatar_url)
 
             models.Conpanys.objects.filter(id=id).update(
                 c_business=avatar_url
@@ -371,3 +381,25 @@ def c_password(request):
 
         res = json.dumps(info)
         return HttpResponse(res)
+
+
+def upload(request):
+    obj = request.FILES.get("upload_img")
+    avatar_uid = create_uuid()
+    avatar_img_name = avatar_uid + "." + obj.name.split(".")[1]
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_company_file', avatar_img_name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_company_img', avatar_img_name)
+
+    with open(path, "wb") as f:
+        for line in obj:
+            f.write(line)
+
+    res = {
+        "error": 0,
+        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+    }
+
+    return HttpResponse(json.dumps(res))

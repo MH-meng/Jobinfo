@@ -1,14 +1,16 @@
 ﻿{% extends "header_base.html" %}
 {% block title %}淮北师范大学就业信息网{% endblock title %}
 {% block js %}
-        <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/m/css/seat.css">
+    <link rel="stylesheet" href="/static/slideshow/css/reset.css">
+    <link rel="stylesheet" href="/static/slideshow/css/style.css">
     <style>
         .float_box {
             display: inline-block;
             width: 250px;
             height: 100px;
-            background-color: rgb(55, 155, 233);
+        {#background-color: #DD1144;#} background-image: url(/static/111.jpg);
             border-radius: 5px;
         }
 
@@ -25,51 +27,159 @@
             padding-top: 4px;
             text-align: left;
             text-indent: 2em;
+            font-family: "MicroSoft YaHei";
+        }
+
+        .blogroll {
+            height: 160px;
+            width: 980px;
+            box-shadow: 0 0 5px grey;
+            margin-bottom: 30px;
+            margin-top: 10px;
+            background-color: lightgrey;
+        }
+
+        .blogroll-title {
+            height: 31px;
+            line-height: 31px;
+            background-color: whitesmoke;
+        }
+
+        .blogroll-link {
+            height: 110px;
+            margin-top: 5px;
+        }
+
+        .blogroll-link .link {
+            float: left;
+            width: 190px;
+            height: 55px;
+            border: 1px solid gainsboro;
+            margin: 3px 3px;
+        }
+
+        .blogroll-link .link:hover {
+            box-shadow: 0 0 5px dimgrey;
+        }
+
+        .slideshow {
+            height: 267px;
+            width: 265px;
+        }
+
+        .responsive {
+            height: 267px;
+            width: 265px;
         }
     </style>
 {% endblock %}
-{% block login %}
 
+{% block login %}
     {% if infor.status == True %}
         {% for row in name %}
-            <div class="login-infor">
-                <li class="" style="width: 170px;">
-                    <a style="font-size: 12px;width: 150px;color: black" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">{{ row.c_name }} <span class="caret"></span></a>
-                    <ul class="dropdown" style="background-color: #a0a7b1;">
-                        <li><a style="color: white" href="/company/c_index/?cid={{ row.id }}">企业中心</a></li>
-                        {#                        <li><a style="color: white" href="/user_center/?cid={{ row.id }}">企业中心</a></li>#}
-                        <li><a style="color: white" href="/m_logout/">退出</a></li>
-                    </ul>
-                </li>
-
-{#                <p><a href="/user_center/?cid={{ row.id }}">{{ row.c_name }}</a></p>#}
-{#                <p><a href="/m_logout/">退出</a></p>#}
-            </div>
+            <span class="login">
+                <a href="/company/c_index/?cid={{ row.id }}">{{ row.c_name }}</a>&nbsp;&nbsp;|&nbsp;
+&nbsp;                <a href="/m_logout/">退出</a>
+            </span>
         {% endfor %}
+
     {% else %}
         <div class="login">
-            <a href="/m_login/">登录</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/register/">注册</a>
+            <a href="/m_login/">登录</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/m_register/">注册</a>
         </div>
     {% endif %}
 
 {% endblock %}
 
 {% block content %}
-    <div class="cl mt10" style="position:relative;">
-        <div class="iSide">
-            <div class="it"><b>学校概述</b></div>
-            <div class="item loginItem">
-                <a href="#" class="img_infor"><img src="/static/m/images/pic1.jpg" alt=""></a>
-                <p class="img_content">淮北师范大学位于全国文明城市、国家园林城市安徽省淮北市，
-                    是一所多科性省属重点大学。1974年建校，时为安徽师范大学淮北分校。
-                    1978年12月经国务院批准，定名为淮北煤炭师范学院。。。。<a href="http://www.chnu.edu.cn/Category_76/index.aspx">[详情]</a>
-                </p>
+    {#    巨幕轮播图#}
+    <div>
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="/static/m/slide/l1.jpg" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/static/m/slide/l2.jpg" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/static/m/slide/l3.jpg" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/static/m/slide/l4.jpg" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/static/m/slide/l5.jpg" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
             </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <div class="iCon">
-            <div class="s1" style="height: 280px">
-                <div class="tabs tab1" style="height: 100%"><a class="more" href=""></a>
+    </div>
+    <div class="cl mt10" style="position:relative;">
+        <div class="" style="clear:both;margin-bottom:10px;">
+        </div>
+        <div class="iSide">
+            {#            图片新闻#}
+            <div class="iSi">
+                <div class="it"><b>最新资讯</b></div>
+                <div class="slideshow">
+                    <div id="slider">
+                        <ul class="slides clearfix">
+                            {% for row in news_list %}
+                                <li>
+                                    <a href="/news_detail?id={{ row.id }}" title="{{ row.title }}">
+                                        <img class="responsive" src="{{ row.image_url }}" width="265" height="265">
+                                    </a>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="controls">
+                            <li><img src="/static/slideshow/img/prev.png" alt="previous"></li>
+                            <li><img src="/static/slideshow/img/next.png" alt="next"></li>
+                        </ul>
+                        <ul class="pagination">
+                            <li class="active"></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {#            新闻一#}
+            <div class="s1">
+                <div class="tabs tab1"><a class="more" href=""></a>
                     <ul class="tabTitle">
                         <li><a href="#tabs-11" rel="/m_news_tzgg/">通知公告</a></li>
                         <li><a href="#tabs-12" rel="/m_news_xwkd/">新闻快递</a></li>
@@ -78,14 +188,12 @@
                     <ul id="tabs-11" class="tabCon hide">
                         {% for wz in article %}
                             {#                            {% if wz.tags_id == 1 %}#}
-                            {#                        {% for t in tags %}#}
                             {% if wz.tags.title == '通知公告' %}
                                 <li>
                                     <a href="/m_news_tzgg_article?news_id={{ wz.nid }}" title="{{ wz.title }}"
                                        target="_blank">{{ wz.title }}</a>
                                 </li>
                             {% endif %}
-                            {#                        {% endfor %}#}
                         {% endfor %}
                     </ul>
                     <ul id="tabs-12" class="tabCon hide">
@@ -109,122 +217,30 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div id="playBox" style="height: 280px;">
-{#                        <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.min.css">#}
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="5"></li>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="item active">
-                                <img src="/static/m/images/201512090013527524.thumb.jpg" style="height: 280px"
-                                     alt="轮播图">
-                                {#                                <div class="carousel-caption">#}
-                                {#                                    轮播图1#}
-                                {#                                </div>#}
-                            </div>
-                            <div class="item">
-                                <img src="/static/m/images/201512090013527524.thumb.jpg" style="height: 280px"
-                                     alt="轮播图">
-                                {#                                <div class="carousel-caption">#}
-                                {#                                    轮播图2#}
-                                {#                                </div>#}
-                            </div>
-                            <div class="item">
-                                <img src="/static/m/images/201512090013527524.thumb.jpg" style="height: 280px"
-                                     alt="轮播图">
-                                {#                                <div class="carousel-caption">#}
-                                {#                                    轮播图3#}
-                                {#                                </div>#}
-                            </div>
-                            <div class="item">
-                                <img src="/static/m/images/201512090013527524.thumb.jpg" style="height: 280px"
-                                     alt="轮播图">
-                                {#                                <div class="carousel-caption">#}
-                                {#                                    轮播图4#}
-                                {#                                </div>#}
-                            </div>
-                            <div class="item">
-                                <img src="/static/m/images/201512090033162784.thumb.jpg" style="height: 280px"
-                                     alt="轮播图">
-                                {#                                <div class="carousel-caption">#}
-                                {#                                    轮播图5#}
-                                {#                                </div>#}
-                            </div>
-
-                        </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
-                           data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
-                           data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-
-                    </div>
-
-                </div>
             </div>
         </div>
-        <div class="" style="clear:both;margin-bottom:10px;">
-        </div>
-        <div class="iSide">
-
-
-            <div class="item linkpic">
-                <a href="#">
-                    <img src="/static/m/images/201511162123586515.png"/>
-                </a>
-                <a target="_blank" href="http://www.91job.gov.cn/">
-                    <img src="/static/m/images/201511162126578968.jpg"/>
-                </a>
-                <a href="#">
-                    <img src="/static/m/images/201511162105154045.png"/>
-                </a>
-                <a href="#">
-                    <img src="/static/m/images/201404092037505889.jpg"/>
-                </a>
-                <a href="#">
-                    <img src="/static/m/images/201511132149258857.png"/>
-                </a>
-                <a target="_blank" href="http://www.yingjiesheng.com/">
-                    <img src="/static/m/images/201511162251349596.png"/>
-                </a>
-            </div>
-        </div>
+        {#        新闻二#}
         <div class="iCon">
-            <div class="s2">
+            <div class="s2" style="margin-bottom: 15px">
                 <div class="tabs tab2"><a class="more" href=""></a>
                     <ul class="tabTitle">
-                        <li><a href="#tabs-25" rel="/m_teachin/">宣讲会</a></li>
+                        <li><a href="#tabs-25" rel="/m_teachin/">校园宣讲会</a></li>
                         <li><a href="#tabs-23" rel="/m_campus/">招聘公告</a></li>
                         <li><a href="#tabs-24" rel="/m_jobfair/">招聘会</a></li>
                         <li><a href="#tabs-26" rel="/m_station/">职位信息</a></li>
                         <li><a href="#tabs-22" rel="/m_invite/">招考公告</a></li>
+                        <li><a href="#tabs-21" rel="/m_invite/">资料下载</a></li>
                     </ul>
                     <ul id="tabs-25" class="tabCon hide">
                         {% for row in teachin %}
                             {% if row.x_status == '1' %}
-                            <li>
-                                <span class="pubdate">{{ row.x_time|date:'Y-m-d' }}</span>
-                                <a title="{{ row.x_school }}" class="it2"
-                                   href="/m_teachin_content?pid={{ row.id }}">{{ row.x_school }}</a>
-                                <a href="/m_teachin_content?pid={{ row.id }}">
-                                    {#                                    <font color="#ff0000">{{ row.x_title }}</font>#}
-                                    <span style=" text-shadow:0.5px 0.5px 0.5px #dedede;padding-left:7px;">{{ row.x_title }}</span></a>
-                            </li>
+                                <li>
+                                    <span class="pubdate">{{ row.x_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ row.x_school }}" class="it2"
+                                       href="/m_teachin_content?pid={{ row.id }}">{{ row.x_school }}</a>
+                                    <a href="/m_teachin_content?pid={{ row.id }}">
+                                        <span style=" text-shadow:0.5px 0.5px 0.5px #dedede;padding-left:7px;">{{ row.x_title }}</span></a>
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -276,6 +292,17 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
+                    <ul id="tabs-21" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags.title == '资料下载' %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_download_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             <div class="s2 mt10">
@@ -283,7 +310,7 @@
                     <ul class="tabTitle">
                         <li><a href="#tabs-31" rel="/m_policy/">政策法规</a></li>
                         <li><a href="#tabs-32" rel="/m_obtain/">就业指导</a></li>
-                        {#                        <li><a href="#tabs-33" rel="/m_guide/">创业指导</a></li>#}
+                        <li><a href="#tabs-33" rel="/m_guide/">创业指导</a></li>
                         <li><a href="#tabs-34" rel="/m_education/">创业教育</a></li>
                         <li><a href="#tabs-35" rel="/m_practice/">创业实践</a></li>
                         <li><a href="#tabs-36" rel="/m_elegant/">创业风采</a></li>
@@ -310,18 +337,17 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-                    {#                    <ul id="tabs-33" class="tabCon hide">#}
-                    {#                        {% for wz in article %}#}
-                    {#                            {% if wz.tags_id == 7 %}#}
-                    {#                                <li>#}
-                    {#                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>#}
-                    {#                                    <a title="{{ wz.title }}"#}
-                    {#                                       href="/m_guide_content?news_id={{ wz.nid }}">{{ wz.title }}</a>#}
-                    {#                                </li>#}
-                    {#                            {% endif %}#}
-                    {#                        {% endfor %}#}
-                    {##}
-                    {#                    </ul>#}
+                    <ul id="tabs-33" class="tabCon hide">
+                        {% for wz in article %}
+                            {% if wz.tags.title == '创业指导' %}
+                                <li>
+                                    <span class="pubdate">{{ wz.create_time|date:'Y-m-d' }}</span>
+                                    <a title="{{ wz.title }}"
+                                       href="/m_guide_content?news_id={{ wz.nid }}">{{ wz.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                     <ul id="tabs-34" class="tabCon hide">
                         {% for wz in article %}
                             {% if wz.tags.title == '创业教育' %}
@@ -358,10 +384,48 @@
                 </div>
             </div>
         </div>
+        {#        新闻三#}
+        <div class="box_item">
+            <div class=" linkpic">
+                <a href="#">
+                    <img src="/static/m/images/201511162123586515.png"/>
+                </a>
+                <a target="_blank" href="http://www.91job.gov.cn/">
+                    <img src="/static/m/images/201511162126578968.jpg"/>
+                </a>
+                <a href="#">
+                    <img src="/static/m/images/201511162105154045.png"/>
+                </a>
+                <a href="#">
+                    <img src="/static/m/images/201511132149258857.png"/>
+                </a>
+                <a target="_blank" href="http://www.yingjiesheng.com/">
+                    <img src="/static/m/images/201511162251349596.png"/>
+                </a>
+            </div>
+        </div>
+    </div>
+    {#    友情链接#}
+    <div class="blogroll">
+        <div class="blogroll-title">
+            <span>
+                <img src="/static/login/img/timg.jpg" height="30" alt="">
+            </span>
+            <span class="blogroll-title-title">友情链接</span>
+        </div>
+        <div class="blogroll-link">
+            {% for row in blogroll %}
+                <div class="link">
+                    <a href="{{ row.f_parse_url }}" title="{{ row.f_name }}">
+                        <img src="{{ row.f_image_url }}" height="55" width="190" alt="{{ row.f_name }}">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
     {% for row in float %}
-        {#        {% if row.status == '1' %}#}
+        {% if row.status == '1' %}
             <div id='img0' class="img_ad">
                 <div class="ad_content" style="text-align: center;">
                     <a href="/m_float?news={{ row.nid }}" class="float_box">
@@ -370,13 +434,29 @@
                             <p class="float_title">{{ row.f_desc }}</p>
                         </div>
                     </a>
-                    <!-- <div class="iadText">江苏师范大学校园招聘流程</div> -->
                     <div class="ad_close"><a href="javascript:;">关闭</a></div>
                 </div>
             </div>
-        {#        {% endif %}#}
+        {% endif %}
     {% endfor %}
+
     <script src="/static/plugin/bootstrap/js/bootstrap.js"></script>
+
+    <script src="/static/slideshow/dist/easySlider.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#slider").easySlider({
+                slideSpeed: 500,
+                paginationSpacing: "15px",
+                paginationDiameter: "12px",
+                paginationPositionFromBottom: "20px",
+                slidesClass: ".slides",
+                controlsClass: ".controls",
+                paginationClass: ".pagination"
+            });
+        });
+    </script>
+
     <script type="text/javascript">
         var screenWidth = $(window).width();
         var screenHeight = $(window).height();

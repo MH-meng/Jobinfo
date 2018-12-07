@@ -108,7 +108,7 @@
     function bindConfirm() {
         KindEditor.ready(function (K) {
             window.editor = K.create('#teachin_content', {
-                uploadJson: "/upload/",
+                uploadJson: "/company/upload/",
                 extraFileUploadParams: {
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
                 },

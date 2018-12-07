@@ -1014,6 +1014,7 @@
 
 .nav1 {
     background: #379be9;
+    /*background-color: red;*/
 }
 
 .nav1 li {
@@ -1022,6 +1023,7 @@
 
 .nav1 li a:hover {
     background: #56abee;
+    color: red;
 }
 
 .it .curr {

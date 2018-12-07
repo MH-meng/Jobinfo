@@ -13,7 +13,7 @@ class StudentForm(forms.Form):
         },
         widget=widgets.TextInput(attrs={'class': 'form-control','id':'exampleInputEmail1'}),  # 定制HTML插件, attrs 设置属性
     )
-    pwd = fields.IntegerField(
+    pwd = fields.CharField(
         label="密码：",
         required=True,
         error_messages={

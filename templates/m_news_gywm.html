@@ -1,105 +1,176 @@
 ﻿{% extends "header_base.html" %}
-{% block title %}关于我们 - 淮北师范大学{% endblock title %}
+{% block title %}部门简介{% endblock title %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="/static/m/css/header.css"/>
-<div id="nav">
-    <div class="container css-common-subnav">
-        <ul class="subNav" style="clear: both;">
-            <li><a href="#">联系方式</a></li>
-        </ul>
-        <!-- 快捷菜单 -->
-        <!-- 快捷菜单 -->
-        <div class="quickMenu" id="quickMenu">
-        </div>
-        <!-- 快捷菜单完 -->
-        <!-- 快捷菜单完 -->
-    </div>
-</div>
-
-
-<style>
-    /*返回顶部*/
-    .back-top:hover {
-        background-position: 40px 0px;
-        cursor: pointer;
-    }
-
-    .back-top {
-        position: fixed;
-        right: 0px;
-        bottom: 20%;
-        background: url(/static/images/scrolltop.png);
-        width: 40px;
-        height: 30px;
-        overflow: hidden;
-    }
-</style>
-<div class="container cl">
-    <div class="mn z view view2 infoBox css-common-view" id="mn">
-        <div class="xTit mTit">联系方式 &#187; 文章</div>
-        <div class="ct cl">
-            <div class="aTitle">联系方式</div>
-            <div class="aInfo"><span id="pub_date">2018年10月15日21:43</span> &nbsp;&nbsp;<span>浏览：4946次</span>&nbsp;&nbsp;<span
-                    id="media_name"></span>
-
+    <link rel="stylesheet" type="text/css" href="/static/m/css/header.css"/>
+    <div id="nav">
+        <div class="container css-common-subnav">
+            <ul class="subNav" style="clear: both;">
+                <li><a href="#">部门简介</a></li>
+            </ul>
+            <!-- 快捷菜单 -->
+            <!-- 快捷菜单 -->
+            <div class="quickMenu" id="quickMenu">
             </div>
-            <div class="aContent">
-                <p>地址：淮北市烈山区沱河东路淮北师范大学（滨湖校区）、安徽省淮北市东山路100号 （老校区）
-                    <br/>电话：
-                    <br/>邮编：235000
-                    <br/>招聘邮箱：
-                </p>
-                <table>
-                    <tbody>
-                    <tr class="firstRow">
-                        <td>地址：淮北市烈山区沱河东路淮北师范大学（滨湖校区）、安徽省淮北市东山路100号 （老校区）</td>
-                        <!--<td></td>-->
-                    </tr>
-                    <tr>
-                        <td>电话：</td>
-                        <!--<td></td>-->
-                    </tr>
-                    <tr>
-                        <td>邮编：235000</td>
-                        <!--<td></td>-->
-                    </tr>
-                    <tr>
-                        <td>招聘邮箱：</td>
-                        <!--<td></td>-->
-                    </tr>
-
-                    </tbody>
-                </table>
-                <p></p>
-            </div>
+            <!-- 快捷菜单完 -->
+            <!-- 快捷菜单完 -->
         </div>
     </div>
-</div>
-<script>
-    //backTop
-    var pos = $("#nav ul");
-    if (pos) {
-        left = pos.offset().left + pos.width();
-        $("body").append('<div class="back-top" title="返回顶部"></div>');
-        $(".back-top").css("left", left).hide().click(function () {
-            $('html, body').animate({scrollTop: 0}, 200);
+
+
+    <style>
+        /*返回顶部*/
+        .back-top:hover {
+            background-position: 40px 0px;
+            cursor: pointer;
+        }
+
+        .back-top {
+            position: fixed;
+            right: 0px;
+            bottom: 20%;
+            background: url(/static/images/scrolltop.png);
+            width: 40px;
+            height: 30px;
+            overflow: hidden;
+        }
+    </style>
+    <div class="container cl">
+        <div class="mn z view view2 infoBox css-common-view" id="mn">
+            <div class="xTit mTit">部门简介</div>
+            <div class="ct cl">
+                <div class="aInfo"></div>
+                <div class="aContent">
+                    <div id="sccontent">
+                        <div class="clear"></div>
+                        <p style="TEXT-ALIGN: center; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="center"><b><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 15pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">就业指导中心工作职能<span
+                                lang="EN-US"><!--?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /--><o:p></o:p></span></span></b>
+                        </p>
+                        <p style="TEXT-ALIGN: center; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="center"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 16pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">&nbsp; &nbsp;根据国家政策、市场需求和学校办学实际，遵循“强化能力，服务基层，促进教改”的工作理念，促进学生创新精神和就业创业能力的提高，促进毕业生充分就业，促进招生、培养、就业协调发展。主要工作职责<span
+                                lang="EN-US">:<o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">一、</span><span
+                                style="font-family: 宋体; font-size: 12pt;">实施就业创业工作目标责任制，指导和组织院系开展就业创业工作；</span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">二、以面向基层就业为导向，加强毕业生教育，开好就业创业指导课；<span
+                                lang="EN-US"><o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">三、收集发布就业信息，开拓就业市场，建立就业基地；<span
+                                lang="EN-US"><o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US">&nbsp; &nbsp;四</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">、以信息化带动全程化，以专门化引领全员化，完善就业创业工作服务体系；<span
+                                lang="EN-US"><o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">五、加强就业创业管理，做好毕业生离校派遣工作；<span
+                                lang="EN-US"><o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">六、协同有关部门做好校友联络工作，利用校友资源为学校发展服务；<span
+                                lang="EN-US"><o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">七、完成校领导交办的其它工作。<span
+                                lang="EN-US">&nbsp;<o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US">&nbsp;&nbsp;&nbsp;<b style="mso-bidi-font-weight: normal"> <o:p></o:p></b></span>
+                        </p>
+                        <p style="TEXT-ALIGN: center; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="center"><b><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 15pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">部门工作人员及联系方式</span></b><b
+                                style="mso-bidi-font-weight: normal"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 15pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US"><o:p></o:p></span></b></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><b style="mso-bidi-font-weight: normal"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US">&nbsp;<o:p></o:p></span></b></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">就业指导中心主任：*******<span
+                                lang="EN-US">&nbsp;&nbsp; <o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">就业指导中心副主任：*******<span
+                                lang="EN-US">&nbsp;&nbsp;<o:p></o:p></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US">&nbsp; &nbsp;就业指导科</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">科长：*******</span>
+                        </p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="font-family: 宋体; font-size: 12pt;">办公地点：*******<span
+                                lang="EN-US"></span></span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="font-family: 宋体; font-size: 16px;">&nbsp; &nbsp;</span><span
+                                style="font-family: 宋体; font-size: 12pt;">联系电话：<span lang="EN-US">0556</span>—<span
+                                lang="EN-US">*******</span>（传真）</span></p>
+                        <p style="TEXT-ALIGN: left; LINE-HEIGHT: 24pt; mso-line-height-rule: exactly; mso-pagination: widow-orphan"
+                           class="MsoNormal" align="left"><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"
+                                lang="EN-US">&nbsp; &nbsp;E-mial</span><span
+                                style="FONT-FAMILY: 宋体; COLOR: black; FONT-SIZE: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">：<span
+                                lang="EN-US"><a href="mailto:aqjyzd@aqtc.edu.cn"><span
+                                style="COLOR: black">*******</span></a><o:p></o:p></span></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //backTop
+        var pos = $("#nav ul");
+        if (pos) {
+            left = pos.offset().left + pos.width();
+            $("body").append('<div class="back-top" title="返回顶部"></div>');
+            $(".back-top").css("left", left).hide().click(function () {
+                $('html, body').animate({scrollTop: 0}, 200);
+            });
+            $(document).scroll(function () {
+                if ($(this).scrollTop() < 50) {
+                    $(".back-top").hide('slow');
+                } else {
+                    $(".back-top").show('slow');
+                }
+            });
+        }
+        $(function () {
+            uParse('.aContent', {
+                rootPath: '/'
+            })
         });
-        $(document).scroll(function () {
-            if ($(this).scrollTop() < 50) {
-                $(".back-top").hide('slow');
-            } else {
-                $(".back-top").show('slow');
-            }
-        });
-    }
-    $(function () {
-        uParse('.aContent', {
-            rootPath: '/'
-        })
-    });
-</script>
-<div style="clear:both;"></div>
+    </script>
+    <div style="clear:both;"></div>
 
 
 {% endblock content %}

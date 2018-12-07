@@ -155,3 +155,31 @@ class Zhaopin(models.Model):
 
     def __str__(self):
         return self.z_position
+
+
+class NewsArticle(models.Model):
+    """
+    新闻文章
+    """
+    title = models.CharField(max_length=100)  # 文章标题
+    image_url = models.CharField(max_length=255)  # 图片链接
+    status = models.CharField(max_length=2, default='0')  # 状态 0表待审核 1 表示提交 2表示下架
+    content = models.TextField()
+    create_time = models.DateTimeField(auto_now_add=True)  # 创建时间
+
+    class Meta:
+        verbose_name = "新闻文章表"
+
+    def __str__(self):
+        return self.title
+
+
+class BlogrollImage(models.Model):
+    """
+    友情链接
+    """
+    f_name = models.CharField(max_length=100, null=True, blank=True)
+    f_image_url = models.CharField(max_length=255, null=True, blank=True)
+    f_parse_url = models.CharField(max_length=255, null=True, blank=True)
+    f_create_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    f_code_img = models.CharField(max_length=120, null=True, blank=True)

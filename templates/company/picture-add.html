@@ -211,7 +211,6 @@
                 <div class="formControls col-xs-8 col-sm-9 img_box">
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-
                         <input type="text" style="display: none"
                                class="input-text" value="{{ row.id }}" id="id"
                                name="id">
@@ -253,15 +252,14 @@
 <script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
 <script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script charset="utf-8" src="/static/kindeditor/kindeditor-all-min.js"></script>
-<script charset="utf-8" src="/static/login/js/jQuery.js"></script>
 <script src="/static/kindeditor/themes/default/default.css"></script>
 <script type="text/javascript">
     $(function () {
+        uploadIfrme();
+        reloadIframe1();
         bindConfirm();
         bindpreachConfirm();
         {#bindarticle();#}
-        uploadIfrme();
-        reloadIframe1();
     });
 
     function uploadIfrme() {
@@ -286,7 +284,7 @@
             formData.append("id", id = $("#id").val());
             formData.append("avatar", $("#id_avatar")[0].files[0]);
             formData.append("csrfmiddlewaretoken", $("[name='csrfmiddlewaretoken']").val());
-            console.log(formData);
+
             $.ajax({
                 url: '/company/confirm_center/',
                 type: "POST",
@@ -312,7 +310,7 @@
     function bindConfirm() {
         KindEditor.ready(function (K) {
             window.editor = K.create('#c_brief', {
-                uploadJson: "/upload/",
+                uploadJson: "/company/upload/",
                 extraFileUploadParams: {
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
                 },

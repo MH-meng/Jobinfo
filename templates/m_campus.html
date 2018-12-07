@@ -10,6 +10,7 @@
             <li><a href="/m_teachin/">宣讲会</a></li>
             <li><a href="/m_station/">岗位</a></li>
             <li><a href="/m_invite/">招考公告</a></li>
+            <li><a href="/m_download/">资料下载</a></li>
         </ul>
         <!-- 快捷菜单 -->
         <!-- 快捷菜单 -->
@@ -22,8 +23,8 @@
         <div class="mn z view view2" id="mn">
             <div class="infoBox mt10">
                 <ul class="infoTit">
-                    <li class="span7" style="width:300px">招聘公司</li>
-                    <li class="span2" style="width:260px">招聘职位</li>
+                    <li class="span7" style="width:280px">招聘公司</li>
+                    <li class="span2" style="width:240px">招聘职位</li>
                     <li class="span1" style="width:240px">工作城市</li>
                     <li class="span4" style="width:100px">面试时间</li>
                 </ul>
@@ -32,10 +33,10 @@
                     {% for row in company_teachin %}
                         {% for z in zhaopin_teachin %}
                             {% if row.id == z.z_company_id %}
-                                <li class="span7" style="width:300px"><a href="/m_campus_content?pid={{ row.id }}"
+                                <li class="span7" style="width:280px"><a href="/m_campus_content?pid={{ row.id }}"
                                                                          target="_blank">{{ row.c_name }}</a>
                                 </li>
-                                <li class="span2" style="width:260px">{{ z.z_position }}</li>
+                                <li class="span2" style="width:240px">{{ z.z_position }}</li>
                                 <li class="span1" style="width:240px">{{ row.c_city }}</li>
                                 <li class="span4" style="width:100px">{{ z.z_data|date:'Y-m-d h:d' }}</li>
                             {% endif %}

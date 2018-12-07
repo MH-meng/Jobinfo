@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from info import views
 from django.views.static import serve
@@ -56,19 +56,29 @@ urlpatterns = [
 
 
     #孟浩
-url(r'^$',views.m_index),
+    url(r'^$', views.m_index),
     url(r'^m_login/$',views.m_login),
-    url(r'^register/$',views.register),
+    url(r'^m_register/$', views.m_register),
     url(r'^success/$', views.success),
-    url(r'^user_center/$', views.user_center),
-    url(r'^user_center_preach/$', views.user_center_preach),
-    url(r'^user_center_zhaopin/$', views.user_center_zhaopin),
-
+    url(r'^company/', include('companyadmin.urls')),
     url(r'^m_student_link/$',views.m_student_link),
     url(r'^m_danwei_link/$',views.m_danwei_link),
     url(r'^m_teacher_link/$',views.m_teacher_link),
     url(r'^m_news_cyzd/$',views.m_news_cyzd),
     url(r'^m_news_gywm/$',views.m_news_gywm),
+
+    url(r'^m_enroliment/$', views.m_enroliment),
+    url(r'^m_enroliment_content/$', views.m_enroliment_content),
+    url(r'^m_quality/$', views.m_quality),
+    url(r'^m_quality_content/$', views.m_quality_content),
+    url(r'^m_intership/$', views.m_intership),
+    url(r'^m_intership_content/$', views.m_intership_content),
+    url(r'^m_survey/$', views.m_survey),
+    url(r'^m_survey_content/$', views.m_survey_content),
+    url(r'^m_alumnus/$', views.m_alumnus),
+    url(r'^m_alumnus_content/$', views.m_alumnus_content),
+    url(r'^m_incubation/$', views.m_incubation),
+    url(r'^m_incubation_content/$', views.m_incubation_content),
 
     url(r'^m_news_tzgg/$',views.m_news_tzgg),
     url(r'^m_news_tzgg_article/$',views.m_news_tzgg_article),
@@ -93,7 +103,7 @@ url(r'^$',views.m_index),
     url(r'^m_obtain/$',views.m_obtain),
     url(r'^m_obtain_content/$',views.m_obtain_content),
 
-    # url(r'^m_guide/$',views.m_guide),
+    url(r'^m_guide/$', views.m_guide),
     url(r'^m_guide_content/$',views.m_guide_content),
     url(r'^m_education/$',views.m_education),
     url(r'^m_education_content/$',views.m_education_content),
@@ -103,16 +113,39 @@ url(r'^$',views.m_index),
     url(r'^m_elegant_content/$',views.m_elegant_content),
     url(r'^m_float/$',views.m_float),
     url(r'^m_logout/$',views.m_logout),
+    url(r'^m_download/$', views.m_download),
+    url(r'^m_download_content/$', views.m_download_content),
 
+    url(r'^ariticle_upload/', views.ariticle_upload),
+    url(r'^float_upload/', views.float_upload),
+    url(r'^invite_upload/', views.invite_upload),
+    url(r'^invite_upload/', views.invite_upload),
+    url(r'^teachin_upload/', views.teachin_upload),
 
+    # 友情链接
+    url(r'^blogroll_list/$', views.blogroll_list),
+    url(r'^blogroll_add/$', views.blogroll_add),
+    url(r'^upload_img/$', views.upload_img),
+    url(r'^del_blogroll/$', views.del_blogroll),
 
+    # 图片新闻
+    url(r'^news_list/$', views.news_list),
+    url(r'^news_add/$', views.news_add),
+    url(r'^upload_news_img/$', views.upload_news_img),
+    url(r'^del_news/$', views.del_news),
+    url(r'^news_start/$', views.news_start),
+    url(r'^news_stop/$', views.news_stop),
+    url(r'^news_upload/$', views.news_upload),
+    url(r'^news_edit/$', views.news_edit),
+    url(r'^edit_news_img/$', views.edit_news_img),
+    url(r'^news_detail/$', views.news_detail),
 
-
-
-
-    url(r'^upload/', views.upload),
 
     # media 相关的路由设置
     url(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}),
-    #
+
+    # 验证码
+    url(r'^Login/$', views.Login),
+    url(r'^checkcode/$', views.CheckCode),
+
 ]

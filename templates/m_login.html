@@ -23,7 +23,7 @@
 <body>
 
     <div class="m_header">
-        <img src="/static/login/img/login.jpg" alt="登录">
+        <a href="/"><img src="/static/login/img/login.jpg" alt="登录"></a>
     </div>
     <div class="m_body">
         <div class="back_content">
@@ -32,6 +32,10 @@
                 <p>{{ obj_form.number.label }}{{ obj_form.number }}{{ obj_form.errors.number }}</p>
                 <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}{{ obj_form.errors.pwd.0 }}</p>
                 <p>{{ obj_form.types.label }}{{ obj_form.types }}{{ obj_form.errors.types.0 }}</p>
+
+                <p>验证码：<input type="text" name='checkcode'/> <img onclick='ChangeCode();' id='imgCode' src='/checkcode/'
+                                                                  title='点击更新'/></p>
+
                 <p style="color: red">{{ obj_form.error_class }}</p>
                 <p style="color: red">{{ error_ver }}</p>
                 <p>
@@ -47,10 +51,13 @@
     <script src="/static/plugin/jquery-3.1.1.js"></script>
     <script>
         $('#register').click(function () {
-            window.open('/register/')
+            window.open('/m_register/')
         });
 
-
+        function ChangeCode() {
+            var code = document.getElementById('imgCode');
+            code.src += '?';
+        }
     </script>
 </body>
 </html>

@@ -1,16 +1,21 @@
-﻿.banner, #playBox, .body {
-    width: 353px;
+﻿#playBox {
+    width: 265px;
+    /*height: 600px;*/
     margin: 0px auto;
     float: right;
+    /*border: 1px solid red;*/
+    /*margin-bottom: 30px;*/
 }
 
 #playBox .oUlplay li img {
     width: 353px;
+    /*border: 1px solid red;*/
+
 }
 
 .banner, .banner img, #playBox {
-    height: 250px;
-    width: 353px;
+    height: 265px;
+    width: 265px;
 }
 
 .banner {
