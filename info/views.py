@@ -501,7 +501,9 @@ def m_login(request):
         if obj_form.is_valid():
             # 用户提交的数据
             c_number = obj_form.cleaned_data['number']
-            c_pwd = obj_form.cleaned_data['pwd']
+            c_pwds = obj_form.cleaned_data['pwd']
+            c_pwd = hashlib.md5(c_pwds.encode(encoding='UTF-8')).hexdigest()
+            print(c_pwd)
             c_ret = models.Conpanys.objects.filter(c_number=c_number,c_pwd=c_pwd).count()
             check_code = request.POST.get('checkcode')
             # 从session中获取验证码
@@ -541,6 +543,9 @@ def m_login(request):
             return render(request, 'm_login.html', {'obj_form': obj_form})
 
 # 注册
+# e10adc3949ba59abbe56e057f20f883e
+
+import hashlib
 def m_register(request):
     if request.method == 'GET':
         return render(request, 'm_register.html')
@@ -548,7 +553,8 @@ def m_register(request):
         info = {'status': True, 'mession': None}
         c_name = request.POST.get('username')
         c_number = request.POST.get('number')
-        c_pwd = request.POST.get('password')
+        c_pwds = request.POST.get('password')
+        c_pwd = hashlib.md5(c_pwds.encode(encoding='UTF-8')).hexdigest()
         c_linkman = request.POST.get('c_linkman')
         c_phone = request.POST.get('phone')
         c_nature = request.POST.get('c_nature')
