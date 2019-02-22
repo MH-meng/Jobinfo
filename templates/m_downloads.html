@@ -22,15 +22,22 @@
         <div class="mn z view view2 infoB" id="mn">
             <div class="xTit mTit">资料下载</div>
             <div class="newsBox">
-                {% for row in article %}
-                    {% if row.tags_id == 11 %}
+                {% for row in date_obj %}
+                    {#                    {% if row.tags_id == 11 %}#}
                         <ul class="newsList">
                             <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
                             <li class="span1"><a href="/m_download_content?news_id={{ row.nid }}"
                                                  target="_blank">{{ row.title }}</a></li>
                         </ul>
-                    {% endif %}
+                    {#                    {% endif %}#}
                 {% endfor %}
+                <div class="foot_pages">
+                    <div>
+                        <ul class="pagination pagination-sm">
+                            {{ page_obj.page_str|safe }}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

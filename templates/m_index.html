@@ -71,6 +71,11 @@
             height: 267px;
             width: 265px;
         }
+
+        .blogroll-title-title {
+            float: left;
+            margin: auto 10px;
+        }
     </style>
 {% endblock %}
 
@@ -159,8 +164,8 @@
                                     <a href="/news_detail?id={{ row.id }}" title="{{ row.title }}">
                                         <img class="responsive" src="{{ row.image_url }}" width="265" height="265">
                                     </a>
-
                                 </li>
+
                             {% endfor %}
                         </ul>
                         <ul class="controls">
@@ -408,10 +413,10 @@
     {#    友情链接#}
     <div class="blogroll">
         <div class="blogroll-title">
-            <span>
-                <img src="/static/login/img/timg.jpg" height="30" alt="">
-            </span>
-            <span class="blogroll-title-title">友情链接</span>
+            <div style="float: left">
+                <img src="/static/login/img/timg.jpg" height="29" alt="">
+            </div>
+            <div class="blogroll-title-title">友情链接</div>
         </div>
         <div class="blogroll-link">
             {% for row in blogroll %}

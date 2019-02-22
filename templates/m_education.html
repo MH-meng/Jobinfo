@@ -7,7 +7,7 @@
 <div id="nav">
     <div class="container css-common-subnav">
         <ul class="subNav" style="clear: both;">
-{#            <li><a href="/m_guide/">创业指导</a></li>#}
+            <li><a href="/m_guide/">创业指导</a></li>
             <li class='curr'><a href="/m_education/">创业教育</a></li>
             <li><a href="/m_practice/">创业实践</a></li>
             <li><a href="/m_elegant/">创业风采</a></li>
@@ -25,16 +25,22 @@
     <div class="mn z view view2 infoB" id="mn">
         <div class="xTit mTit">创业教育</div>
         <div class="newsBox">
-            {% for row in article %}
-
-                {% if row.tags_id == 8 %}
+            {% for row in date_obj %}
+                {#                {% if row.tags_id == 8 %}#}
                         <ul class="newsList">
                             <li class="span2 y">{{ row.create_time|date:'Y-m-d' }}</li>
                             <li class="span1"><a href="/m_education_content?news_id={{ row.nid }}"
                                                  target="_blank">{{ row.title }}</a></li>
                         </ul>
-                    {% endif %}
+                {#                    {% endif %}#}
                 {% endfor %}
+            <div class="foot_pages">
+                <div>
+                    <ul class="pagination pagination-sm">
+                        {{ page_obj.page_str|safe }}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

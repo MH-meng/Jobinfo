@@ -30,18 +30,21 @@
                 </ul>
 
                 <ul class="infoList">
-                    {% for row in company_teachin %}
-                        {% for z in zhaopin_teachin %}
-                            {% if row.id == z.z_company_id %}
-                                <li class="span7" style="width:280px"><a href="/m_campus_content?pid={{ row.id }}"
-                                                                         target="_blank">{{ row.c_name }}</a>
-                                </li>
-                                <li class="span2" style="width:240px">{{ z.z_position }}</li>
-                                <li class="span1" style="width:240px">{{ row.c_city }}</li>
-                                <li class="span4" style="width:100px">{{ z.z_data|date:'Y-m-d h:d' }}</li>
-                            {% endif %}
-                        {% endfor %}
+                    {% for row in date_obj %}
+                        <li class="span7" style="width:280px"><a href="/m_campus_content?pid={{ row.id }}"
+                                                                 target="_blank">{{ row.c_name }}</a>
+                        </li>
+                        <li class="span2" style="width:240px">{{ row.z_position }}</li>
+                        <li class="span1" style="width:240px">{{ row.c_city }}</li>
+                        <li class="span4" style="width:100px">{{ row.z_data|date:'Y-m-d h:d' }}</li>
                     {% endfor %}
+                    <div class="foot_pages">
+                        <div>
+                            <ul class="pagination pagination-sm">
+                                {{ page_obj.page_str|safe }}
+                            </ul>
+                        </div>
+                    </div>
                 </ul>
             </div>
         </div>

@@ -49,50 +49,50 @@
                 <div class="tabs vTab">
                     <ul class="tabTitle">
                         <li><a href="#vTab1">详情</a></li>
-                        <li><a href="#vTab2">参展的企业</a></li>
+                        {#                        <li><a href="#vTab2">参展的企业</a></li>#}
                     </ul>
                     <div id="vTab1" class="vContent" style="display: block;">
                         <p>{{ row.i_content|safe }}</p>
                     </div>
-                    <ul id="vTab2" class="xInfo" style="display: none; width: 910px">
-                        <table class="table table-bordered table-hover">
-                            <tr>
-                                <td class="active">单位名</td>
-                                <td class="warning">单位行业</td>
-                                <td class="danger">招聘职位</td>
-                                <td class="info">月薪</td>
-                                <td class="active">招聘类型</td>
-                                <td class="info">操作</td>
-                            </tr>
-                            {% for i in company_invite %}
-                                {% for z in zhaopin_invite %}
-                                    {% if i.id == z.z_company_id %}
-                                        {% if z.z_nature == "0" %}
-                                            <tr>
-                                                <td class="active">{{ i.c_name }}</td>
-                                                <td class="warning">{{ i.c_industry }}</td>
-                                                <td class="danger">{{ z.z_position }}</td>
-                                                <td class="info">{{ z.z_salary }}</td>
-                                                <td class="active">校园招聘</td>
-                                                <td class="info"><a href="/m_campus_content/?pid={{ i.id }}">查看更多</a>
-                                                </td>
-                                            </tr>
-                                        {% elif z.z_nature == "1" %}
-                                            <tr>
-                                                <td class="active">{{ i.c_name }}</td>
-                                                <td class="warning">{{ i.c_industry }}</td>
-                                                <td class="danger">{{ z.z_position }}</td>
-                                                <td class="info">{{ z.z_salary }}</td>
-                                                <td class="active">社会招聘</td>
-                                                <td class="info"><a href="/m_campus_content/?pid={{ i.id }}">查看更多</a>
-                                                </td>
-                                            </tr>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </table>
-                    </ul>
+                    {#                    <ul id="vTab2" class="xInfo" style="display: none; width: 910px">#}
+                    {#                        <table class="table table-bordered table-hover">#}
+                    {#                            <tr>#}
+                    {#                                <td class="active">单位名</td>#}
+                    {#                                <td class="warning">单位行业</td>#}
+                    {#                                <td class="danger">招聘职位</td>#}
+                    {#                                <td class="info">月薪</td>#}
+                    {#                                <td class="active">招聘类型</td>#}
+                    {#                                <td class="info">操作</td>#}
+                    {#                            </tr>#}
+                    {#                            {% for i in company_invite %}#}
+                    {#                                {% for z in zhaopin_invite %}#}
+                    {#                                    {% if i.id == z.z_company_id %}#}
+                    {#                                        {% if z.z_nature == "0" %}#}
+                    {#                                            <tr>#}
+                    {#                                                <td class="active">{{ i.c_name }}</td>#}
+                    {#                                                <td class="warning">{{ i.c_industry }}</td>#}
+                    {#                                                <td class="danger">{{ z.z_position }}</td>#}
+                    {#                                                <td class="info">{{ z.z_salary }}</td>#}
+                    {#                                                <td class="active">校园招聘</td>#}
+                    {#                                                <td class="info"><a href="/m_campus_content/?pid={{ i.id }}">查看更多</a>#}
+                    {#                                                </td>#}
+                    {#                                            </tr>#}
+                    {#                                        {% elif z.z_nature == "1" %}#}
+                    {#                                            <tr>#}
+                    {#                                                <td class="active">{{ i.c_name }}</td>#}
+                    {#                                                <td class="warning">{{ i.c_industry }}</td>#}
+                    {#                                                <td class="danger">{{ z.z_position }}</td>#}
+                    {#                                                <td class="info">{{ z.z_salary }}</td>#}
+                    {#                                                <td class="active">社会招聘</td>#}
+                    {#                                                <td class="info"><a href="/m_campus_content/?pid={{ i.id }}">查看更多</a>#}
+                    {#                                                </td>#}
+                    {#                                            </tr>#}
+                    {#                                        {% endif %}#}
+                    {#                                    {% endif %}#}
+                    {#                                {% endfor %}#}
+                    {#                            {% endfor %}#}
+                    {#                        </table>#}
+                    {#                    </ul>#}
                 </div>
             {% endfor %}
         </div>

@@ -26,24 +26,25 @@
                     <li class="span1">公司名称</li>
                     <li class="span2">城市</li>
                     <li class="span5">学校</li>
-{#                    <li class="span5">举办时间</li>#}
+                    <li class="span5">举办时间</li>
                 </ul>
                 <ul class="infoList teachinList">
-                    {% for row in company_teachin %}
-                        {% for t in teachin_teachin %}
-                            {% if t.x_status == '1' %}
-                                {% if row.id == t.x_company_id %}
-                                    <li class="span1">
-                                        <a href="/m_teachin_content?pid={{ t.id }}" title="{{ row.c_name }}"
-                                           target="_blank">{{ row.c_name }}</a>
-                                    </li>
-                                    <li class="span2">{{ t.x_city }}</li>
-                                    <li class="span5">{{ t.x_school }}</li>
-                                    <li class="span5">{{ t.x_time|date:'Y-m-d' }}</li>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
+                    {% for row in date_obj %}
+                        <li class="span1">
+                            <a href="/m_teachin_content?pid={{ row.x_id }}" title="{{ row.c_name }}"
+                               target="_blank">{{ row.c_name }}</a>
+                        </li>
+                        <li class="span2">{{ row.x_city }}</li>
+                        <li class="span5">{{ row.x_school }}</li>
+                        <li class="span5">{{ row.x_time|date:'Y-m-d' }}</li>
                     {% endfor %}
+                    <div class="foot_pages">
+                        <div>
+                            <ul class="pagination pagination-sm">
+                                {{ page_obj.page_str|safe }}
+                            </ul>
+                        </div>
+                    </div>
                 </ul>
             </div>
         </div>

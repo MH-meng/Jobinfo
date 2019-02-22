@@ -2,44 +2,43 @@
 {% block title %}招聘会 - 淮北师范大学{% endblock title %}
 
 {% block content %}
-
-        <div class="container css-common-subnav">
-                <ul class="subNav">
-                    <li><a href="/m_campus/">招聘公告</a></li>
-                    <li class="curr"><a href="/m_jobfair/">招聘会</a></li>
-                    <li ><a href="/m_teachin/">宣讲会</a></li>
-                    <li><a href="/m_station/">岗位</a></li>
-                    <li><a href="/m_invite/">招考公告</a></li>
-                    <li><a href="/m_download/">资料下载</a></li>
+    <div class="container css-common-subnav">
+        <ul class="subNav">
+            <li><a href="/m_campus/">招聘公告</a></li>
+            <li class="curr"><a href="/m_jobfair/">招聘会</a></li>
+            <li><a href="/m_teachin/">宣讲会</a></li>
+            <li><a href="/m_station/">岗位</a></li>
+            <li><a href="/m_invite/">招考公告</a></li>
+            <li><a href="/m_download/">资料下载</a></li>
+        </ul>
+        <!-- 快捷菜单 -->
+        <!-- 快捷菜单 -->
+        <div class="quickMenu" id="quickMenu">
+        </div>
+        <!-- 快捷菜单完 -->
+        <!-- 快捷菜单完 -->
+    </div>
+    <div class="container cl">
+        <div class="mn z view view2" id="mn">
+            <div class="infoBox mt10 b" id="mCon">
+                <ul class="infoTit jobfairList">
+                    <li class="span" style="width: 300px;margin-left: 10px">招聘会名称</li>
+                    <li class="span2">举办城市</li>
+                    <li class="span3">主办方</li>
+                    <li class="span4">招聘会类型</li>
+                    <li class="span5">举办时间</li>
                 </ul>
-                <!-- 快捷菜单 -->
-                <!-- 快捷菜单 -->
-                <div class="quickMenu" id="quickMenu">
-                </div>
-                <!-- 快捷菜单完 -->
-                <!-- 快捷菜单完 -->
-            </div>
-        <div class="container cl">
-            <div class="mn z view view2" id="mn">
-                <div class="infoBox mt10 b" id="mCon">
-                    <ul class="infoTit jobfairList">
-                        <li class="span" style="width: 300px;margin-left: 10px">招聘会名称</li>
-                        <li class="span2">举办城市</li>
-                        <li class="span3">主办方</li>
-                        <li class="span4">招聘会类型</li>
-                        <li class="span5">举办时间</li>
-                    </ul>
 
-                    <ul class="infoList jobfairList">
-                        {% for row in preach_infor %}
-                            <li class="span" style="width: 300px;margin-left: 10px">
+                <ul class="infoList jobfairList">
+                    {% for row in date_obj %}
+                        <li class="span" style="width: 300px;margin-left: 10px">
                             <a href="/m_jobfair_content?zid={{ row.id }}"
                                title="{{ row.i_name }}" target="_blank">{{ row.i_name }}</a>
                         </li>
                         <li class="span2">{{ row.i_city }}</li>
                         <li class="span3">{{ row.i_sponsor }}</li>
                         <li class="span4">
-                            {% if row.i_type == True %}
+                            {% if row.i_type == "0" %}
                                 校园招聘
                             {% else %}
                                 社会招聘
@@ -48,42 +47,52 @@
                         <li class="span5">
                             {{ row.i_data|date:'Y-m-d h:d' }}
                         </li>
-                        {% endfor %}
-                    </ul>
+                    {% endfor %}
+                    <div class="foot_pages">
+                        {#                    nihao#}
+                        <div>
+                            {#                        <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.css">#}
+                            <ul class="pagination pagination-sm">
+                                {{ page_obj.page_str|safe }}
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
 
-                </div>
             </div>
         </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#schRange').MySelector({
-                    js: ["\u5168\u90e8", "\u6821\u5185\u53d1\u5e03", "\u6821\u5916\u53d1\u5e03"],
-                    Max: 1,
-                    title: '范围'
-                });
-                $('#schTime').MySelector({
-                    js: {
-                        "1": "\u5168\u90e8",
-                        "7": "\u8fd1\u4e00\u5468",
-                        "30": "\u8fd1\u4e00\u4e2a\u6708",
-                        "365": "\u8fd1\u4e00\u5e74"
-                    },
-                    Max: 1,
-                    title: '举办时间'
-                });
-                $('#schType').MySelector({
-                    js: ["\u5168\u90e8", "\u793e\u4f1a\u62db\u8058\u4f1a", "\u6821\u56ed\u62db\u8058\u4f1a", "\u7f51\u7edc\u62db\u8058\u4f1a", "\u7f51\u7edc\u62db\u8058\u4f1a"],
-                    Max: 1,
-                    title: '招聘会类型'
-                });
-                $('#schCity').MySelector({
-                    js: 'DataDistrict',
-                    Max: 5,
-                    type: 2,
-                    title: '举办城市'
-                });
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#schRange').MySelector({
+                js: ["\u5168\u90e8", "\u6821\u5185\u53d1\u5e03", "\u6821\u5916\u53d1\u5e03"],
+                Max: 1,
+                title: '范围'
             });
-        </script>
-        <div style="clear:both;"></div>
+            $('#schTime').MySelector({
+                js: {
+                    "1": "\u5168\u90e8",
+                    "7": "\u8fd1\u4e00\u5468",
+                    "30": "\u8fd1\u4e00\u4e2a\u6708",
+                    "365": "\u8fd1\u4e00\u5e74"
+                },
+                Max: 1,
+                title: '举办时间'
+            });
+            $('#schType').MySelector({
+                js: ["\u5168\u90e8", "\u793e\u4f1a\u62db\u8058\u4f1a", "\u6821\u56ed\u62db\u8058\u4f1a", "\u7f51\u7edc\u62db\u8058\u4f1a", "\u7f51\u7edc\u62db\u8058\u4f1a"],
+                Max: 1,
+                title: '招聘会类型'
+            });
+            $('#schCity').MySelector({
+                js: 'DataDistrict',
+                Max: 5,
+                type: 2,
+                title: '举办城市'
+            });
+        });
+    </script>
+    <div style="clear:both;"></div>
+
 {% endblock content %}
 

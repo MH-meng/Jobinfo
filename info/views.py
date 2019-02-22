@@ -3,8 +3,7 @@ from django.http import JsonResponse
 from django.contrib import auth
 from info import models
 from info.form.login import StudentForm
-from info.form.register import StudentRegisterForm
-from django.db.models import Count
+from info.pager import Pagination, PaginationG
 import json
 import uuid
 
@@ -59,7 +58,7 @@ def logout(request):
 #首页
 def index(request):
     # print(request.user.is_authenticated())
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return render(request, 'index.html')
     else:
         return redirect('/login/')
@@ -453,6 +452,7 @@ def m_index(request):
         blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
         float = models.Float.objects.filter(status='1').values().order_by('-create_time')[:2]
         news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
+        # news_count = models.NewsArticle.objects.filter(status='1').values().count()
         return render(request, 'm_index.html', {
             'number': number,
             'name': name,
@@ -465,6 +465,7 @@ def m_index(request):
             'float': float,
             'blogroll': blogroll,
             'news_list': news_list,
+            # 'news_count': news_count,
         })
     else:
         infor['status'] = False
@@ -624,27 +625,17 @@ def m_register(request):
 def success(request):
     return render(request,'succes.html')
 
-# 学生
-def m_student_link(request):
-    return render(request,'m_student_link.html')
-# 单位
-def m_danwei_link(request):
-    return render(request,'m_danwei_link.html')
-# 教师
-def m_teacher_link(request):
-    return render(request,'m_teacher_link.html')
-# 创业指导
-def m_news_cyzd(request):
-    article = models.Article.objects.filter().values()
-    return render(request,'m_news_cyzd.html',locals())
-# 关于我们
 def m_news_gywm(request):
-    return render(request,'m_news_gywm.html')
+    return render(request, 'm_news_gywm.html')
 
 # 通知公告
 def m_news_tzgg(request):
-    article = models.Article.objects.filter().values()
-    return render(request,'m_news_tzgg.html',{'article':article})
+    t = models.Article.objects.filter(tags_id=1).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_news_tzgg/')
+    article = models.Article.objects.filter(tags_id=1).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_news_tzgg.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 通知公告文章
 def m_news_tzgg_article(request):
     if request.method == 'GET':
@@ -655,8 +646,12 @@ def m_news_tzgg_article(request):
         return render(request,'m_news_tzgg_article.html',{'article_infor':article_infor})
 # 新闻快递
 def m_news_xwkd(request):
-    article = models.Article.objects.filter().values()
-    return render(request,'m_news_xwkd.html',{'article':article})
+    t = models.Article.objects.filter(tags_id=2).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_news_xwkd/')
+    article = models.Article.objects.filter(tags_id=2).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_news_xwkd.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 新闻快递文章
 def m_news_xwkd_article(request):
     if request.method == 'GET':
@@ -667,8 +662,12 @@ def m_news_xwkd_article(request):
         return render(request,'m_news_xwkd_article.html',{'article_infor':article_infor})
 # 校园公示
 def m_news_xygs(request):
-    article = models.Article.objects.filter().values()
-    return render(request,'m_news_xygs.html',{'article':article})
+    t = models.Article.objects.filter(tags_id=3).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_news_xygs/')
+    article = models.Article.objects.filter(tags_id=3).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_news_xygs.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 校园公示文章
 def m_news_xygs_article(request):
     if request.method == 'GET':
@@ -678,9 +677,33 @@ def m_news_xygs_article(request):
 
 # 宣讲会
 def m_teachin(request):
-    company_teachin = models.Conpanys.objects.filter().all()
-    teachin_teachin = models.Teachin.objects.filter().all()
-    return render(request,'m_teachin.html',locals())
+    # company_teachin = models.Conpanys.objects.filter().all()
+    datas = []
+    t = models.Teachin.objects.filter(x_status='1').all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_teachin/')
+    teachin_teachin = models.Teachin.objects.filter(x_status='1').values().order_by('-id')
+    for teachin in teachin_teachin:
+        data = {}
+        id = teachin['x_company_id']
+        x_id = teachin['id']
+        x_time = teachin['x_time']
+        x_city = teachin['x_city']
+        x_school = teachin['x_school']
+        x_company_id = teachin['x_company_id']
+        data['x_id'] = x_id
+        data['x_time'] = x_time
+        data['x_city'] = x_city
+        data['x_school'] = x_school
+        company_teachin = models.Conpanys.objects.filter(id=id).values()
+        for company in company_teachin:
+            c_name = company['c_name']
+            data['c_name'] = c_name
+
+        datas.append(data)
+
+    date_obj = datas[page_obj.start():page_obj.end()]
+    return render(request, 'm_teachin.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 宣讲会-内容
 def m_teachin_content(request):
     if request.method == "GET":
@@ -716,10 +739,31 @@ def m_teachin_content(request):
         return render(request, 'm_teachin_content.html', {'teachins':teachins})
 # 招聘公告
 def m_campus(request):
-    company_teachin = models.Conpanys.objects.filter().all()
-    zhaopin_teachin = models.Zhaopin.objects.filter().all()
-    return render(request,'m_campus.html',
-                  {'company_teachin':company_teachin,'zhaopin_teachin':zhaopin_teachin})
+    z_infos = []
+    t = models.Zhaopin.objects.all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_campus/')
+    zhaopin_teachin = models.Zhaopin.objects.filter().values().order_by('-id')
+    for zhaopin in zhaopin_teachin:
+        z_info = {}
+        z_id = zhaopin['z_company_id']
+        z_position = zhaopin['z_position']
+        z_data = zhaopin['z_data']
+        z_info['z_position'] = z_position
+        z_info['z_data'] = z_data
+        companys = models.Conpanys.objects.filter(id=z_id).values()
+        for company in companys:
+            id = company['id']
+            c_name = company['c_name']
+            c_city = company['c_city']
+            z_info['id'] = id
+            z_info['c_name'] = c_name
+            z_info['c_city'] = c_city
+        z_infos.append(z_info)
+
+    date_obj = z_infos[page_obj.start():page_obj.end()]
+    return render(request, 'm_campus.html', {"date_obj": date_obj, "page_obj": page_obj})
+
 # 招聘公告-内容
 def m_campus_content(request):
     if request.method == "GET":
@@ -762,8 +806,13 @@ def m_campus_content(request):
         return render(request,'m_campus_content.html',{'companys':companys})
 # 招聘会
 def m_jobfair(request):
-    preach_infor = models.Invite.objects.filter().all()
-    return render(request,'m_jobfair.html',{'preach_infor':preach_infor})
+    t = models.Invite.objects.all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_jobfair/')
+    preach_infor = models.Invite.objects.all().values().order_by('-id')
+    date_obj = preach_infor[page_obj.start():page_obj.end()]
+    return render(request, 'm_jobfair.html', {"date_obj": date_obj, "page_obj": page_obj})
+
 # 招聘会-内容
 def m_jobfair_content(request):
     if request.method == "GET":
@@ -779,12 +828,32 @@ def m_jobfair_content(request):
         })
 # 岗位
 def m_station(request):
-    company_station = models.Conpanys.objects.filter().all()
-    zhaopin_station = models.Zhaopin.objects.filter().all()
-    return render(request,'m_station.html',{
-        'company_station':company_station,
-        'zhaopin_station':zhaopin_station
-    })
+    z_infos = []
+    t = models.Zhaopin.objects.all().count()
+    current_page = request.GET.get('p')
+    page_obj = PaginationG(t, current_page, '/m_station/')
+    zhaopin_teachin = models.Zhaopin.objects.filter().values().order_by('-id')
+    for zhaopin in zhaopin_teachin:
+        z_info = {}
+        z_id = zhaopin['z_company_id']
+        z_position = zhaopin['z_position']
+        z_data = zhaopin['z_data']
+        z_info['z_position'] = z_position
+        z_info['z_data'] = z_data
+        companys = models.Conpanys.objects.filter(id=z_id).values()
+        for company in companys:
+            id = company['id']
+            c_name = company['c_name']
+            c_city = company['c_city']
+            c_industry = company['c_industry']
+            z_info['id'] = id
+            z_info['c_name'] = c_name
+            z_info['c_city'] = c_city
+            z_info['c_industry'] = c_industry
+        z_infos.append(z_info)
+
+    date_obj = z_infos[page_obj.start():page_obj.end()]
+    return render(request, 'm_station.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 岗位-内容
 def m_station_content(request):
     if request.method == "GET":
@@ -793,7 +862,11 @@ def m_station_content(request):
         return render(request,'m_station_content.html',{'company_infor':company_infor})
 # 招考公告
 def m_invite(request):
-    article = models.Article.objects.filter().values()
+    t = models.Article.objects.filter(tags_id=4).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_invite/')
+    article = models.Article.objects.filter(tags_id=4).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
     return render(request,'m_invite.html',locals())
 # 招考公告-内容
 def m_invite_content(request):
@@ -804,8 +877,12 @@ def m_invite_content(request):
 
 # 政策法规
 def m_policy(request):
-    article = models.Article.objects.filter().values()
-    return render(request,'m_policy.html',locals())
+    t = models.Article.objects.filter(tags_id=5).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_policy/')
+    article = models.Article.objects.filter(tags_id=5).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_policy.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 政策法规-内容
 def m_policy_content(request):
     if request.method == 'GET':
@@ -814,8 +891,12 @@ def m_policy_content(request):
         return render(request,'m_policy_content.html',locals())
 # 就业指导
 def m_obtain(request):
-    article = models.Article.objects.filter().values()
-    return render(request,'m_obtain.html',locals())
+    t = models.Article.objects.filter(tags_id=6).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_obtain/')
+    article = models.Article.objects.filter(tags_id=6).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_obtain.html', {"date_obj": date_obj, "page_obj": page_obj})
 # 就业指导-内容
 def m_obtain_content(request):
     if request.method == 'GET':
@@ -824,7 +905,11 @@ def m_obtain_content(request):
         return render(request,'m_obtain_content.html',locals())
 # # 创业指导
 def m_guide(request):
-    article = models.Article.objects.filter().values()
+    t = models.Article.objects.filter(tags_id=7).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_guide/')
+    article = models.Article.objects.filter(tags_id=7).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
     return render(request, 'm_guide.html', locals())
 
 # 创业指导-内容
@@ -835,9 +920,12 @@ def m_guide_content(request):
         return render(request,'m_guide_content.html',locals())
 # 创业教育
 def m_education(request):
-    article = models.Article.objects.filter().values()
-    print(article)
-    return render(request, 'm_education.html', {'article': article})
+    t = models.Article.objects.filter(tags_id=8).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_education/')
+    article = models.Article.objects.filter(tags_id=8).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_education.html', locals())
 # 创业教育-内容
 def m_education_content(request):
     if request.method == 'GET':
@@ -846,7 +934,11 @@ def m_education_content(request):
         return render(request,'m_education_content.html',locals())
 # 创业实践
 def m_practice(request):
-    article = models.Article.objects.filter().values()
+    t = models.Article.objects.filter(tags_id=9).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_practice/')
+    article = models.Article.objects.filter(tags_id=9).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
     return render(request,'m_practice.html',locals())
 # 创业实践-内容
 def m_practice_content(request):
@@ -856,7 +948,11 @@ def m_practice_content(request):
         return render(request,'m_practice_content.html',locals())
 # 创业风采
 def m_elegant(request):
-    article = models.Article.objects.filter().values()
+    t = models.Article.objects.filter(tags_id=10).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_elegant/')
+    article = models.Article.objects.filter(tags_id=10).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
     return render(request,'m_elegant.html',locals())
 # 创业风采-内容
 def m_elegant_content(request):
@@ -868,7 +964,11 @@ def m_elegant_content(request):
 
 # 资料下载
 def m_download(request):
-    article = models.Article.objects.filter().values()
+    t = models.Article.objects.filter(tags_id=11).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_download/')
+    article = models.Article.objects.filter(tags_id=11).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
     return render(request, 'm_downloads.html', locals())
 
 
@@ -882,8 +982,12 @@ def m_download_content(request):
 
 # 生源状况
 def m_enroliment(request):
-    article = models.Article.objects.filter().values()
-    return render(request, 'm_enroliment.html', locals())
+    t = models.Article.objects.filter(tags_id=12).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_enroliment/')
+    article = models.Article.objects.filter(tags_id=12).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_enroliment.html', {"date_obj": date_obj, "page_obj": page_obj})
 
 
 # 生源状况详情
@@ -895,8 +999,12 @@ def m_enroliment_content(request):
 
 # 就业质量报告
 def m_quality(request):
-    article = models.Article.objects.filter().values()
-    return render(request, 'm_quality.html', locals())
+    t = models.Article.objects.filter(tags_id=13).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_quality/')
+    article = models.Article.objects.filter(tags_id=13).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_quality.html', {"date_obj": date_obj, "page_obj": page_obj})
 
 
 def m_quality_content(request):
@@ -907,8 +1015,12 @@ def m_quality_content(request):
 
 # 实习就业
 def m_intership(request):
-    article = models.Article.objects.filter().values()
-    return render(request, 'm_intership.html', locals())
+    t = models.Article.objects.filter(tags_id=14).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_intership/')
+    article = models.Article.objects.filter(tags_id=14).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_intership.html', {"date_obj": date_obj, "page_obj": page_obj})
 
 
 # 实习就业详情
@@ -920,8 +1032,12 @@ def m_intership_content(request):
 
 # 调查统计
 def m_survey(request):
-    article = models.Article.objects.filter().values()
-    return render(request, 'm_survey.html', locals())
+    t = models.Article.objects.filter(tags_id=15).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_survey/')
+    article = models.Article.objects.filter(tags_id=15).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_survey.html', {"date_obj": date_obj, "page_obj": page_obj})
 
 
 # 调查统计详情
@@ -933,8 +1049,12 @@ def m_survey_content(request):
 
 # 校友风采
 def m_alumnus(request):
-    article = models.Article.objects.filter().values()
-    return render(request, 'm_alumnus.html', locals())
+    t = models.Article.objects.filter(tags_id=16).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_alumnus/')
+    article = models.Article.objects.filter(tags_id=16).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_alumnus.html', {"date_obj": date_obj, "page_obj": page_obj})
 
 
 # 校友风采详情
@@ -946,8 +1066,12 @@ def m_alumnus_content(request):
 
 # 创业服务
 def m_incubation(request):
-    article = models.Article.objects.filter().values()
-    return render(request, 'm_incubation.html', locals())
+    t = models.Article.objects.filter(tags_id=17).all().count()
+    current_page = request.GET.get('p')
+    page_obj = Pagination(t, current_page, '/m_incubation/')
+    article = models.Article.objects.filter(tags_id=17).values().order_by('-nid')
+    date_obj = article[page_obj.start():page_obj.end()]
+    return render(request, 'm_incubation.html', {"date_obj": date_obj, "page_obj": page_obj})
 
 
 # 创业服务详情

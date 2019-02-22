@@ -103,22 +103,24 @@
                         <li class="span3">行业类别</li>
                         <li class="span4">发布日期</li>
                     </ul>
-                    {% for row in company_station %}
-                        {% for z in zhaopin_station %}
-                            {% if row.id == z.z_company_id %}
-                                <ul class="infoList">
-                                    <li class="span1"><a href="/m_station_content?pid={{ row.id }}" title="{{ z.z_position }}"
-                                                         target="_blank">{{ z.z_position }}</a></li>
-                                    <li class="span2"><a href="/m_station_content?pid={{ row.id }}">{{ row.c_name }}</a>
-                                    </li>
-                                    <li class="span3">{{ row.c_city }}</li>
-                                    <li class="span3">{{ row.c_industry }}</li>
-                                    <li class="span4">{{ row.c_create_time|date:'Y-m-d h:d' }}</li>
-                                </ul>
-                            {% endif %}
-                        {% endfor %}
+                    {% for row in date_obj %}
+                        <ul class="infoList">
+                            <li class="span1"><a href="/m_station_content?pid={{ row.id }}" title="{{ row.z_position }}"
+                                                 target="_blank">{{ row.z_position }}</a></li>
+                            <li class="span2"><a href="/m_station_content?pid={{ row.id }}">{{ row.c_name }}</a>
+                            </li>
+                            <li class="span3">{{ row.c_city }}</li>
+                            <li class="span3">{{ row.c_industry }}</li>
+                            <li class="span4">{{ row.z_data|date:'Y-m-d h:d' }}</li>
+                        </ul>
                     {% endfor %}
-
+                    <div class="foot_pages">
+                        <div>
+                            <ul class="pagination pagination-sm">
+                                {{ page_obj.page_str|safe }}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

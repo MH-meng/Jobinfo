@@ -61,10 +61,6 @@ urlpatterns = [
     url(r'^m_register/$', views.m_register),
     url(r'^success/$', views.success),
     url(r'^company/', include('companyadmin.urls')),
-    url(r'^m_student_link/$',views.m_student_link),
-    url(r'^m_danwei_link/$',views.m_danwei_link),
-    url(r'^m_teacher_link/$',views.m_teacher_link),
-    url(r'^m_news_cyzd/$',views.m_news_cyzd),
     url(r'^m_news_gywm/$',views.m_news_gywm),
 
     url(r'^m_enroliment/$', views.m_enroliment),
