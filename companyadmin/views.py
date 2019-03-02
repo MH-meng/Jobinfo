@@ -393,13 +393,15 @@ def upload(request):
     else:
         path = os.path.join(settings.MEDIA_ROOT, 'add_company_img', avatar_img_name)
 
+    print('path', path)
+
     with open(path, "wb") as f:
         for line in obj:
             f.write(line)
 
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + avatar_img_name
     }
-
+    print('res', res)
     return HttpResponse(json.dumps(res))

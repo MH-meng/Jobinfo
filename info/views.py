@@ -1182,11 +1182,13 @@ def teachin_upload(request):
         for line in obj:
             f.write(line)
 
+    print('path', path)
+
     res = {
         "error": 0,
         "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
     }
-
+    print('res', res)
     return HttpResponse(json.dumps(res))
 
 
@@ -1243,6 +1245,7 @@ def upload_img(request):
         ret['img_id'] = avatar_uid
         if avatar_img:
             avatar_img_name = avatar_uid + "." + avatar_img.name.split(".")[1]
+            print('avatar_img_name', avatar_img_name)
             path = os.path.join(settings.MEDIA_ROOT, 'slideshow', avatar_img_name)
             with open(path, "wb") as f:
                 for line in avatar_img:
