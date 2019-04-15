@@ -1,0 +1,25 @@
+url(r'^upload/$', views.upload),
+
+
+
+def upload(request):
+    obj = request.FILES.get("upload_img")
+    flag = ".doc" in obj.name
+    if flag:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_company_file', obj.name)
+    else:
+        path = os.path.join(settings.MEDIA_ROOT, 'add_company_img', obj.name)
+
+    with open(path,"wb") as f:
+        for line in obj:
+            f.write(line)
+
+    res ={
+        "error":0,
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + obj.name
+    }
+
+    return HttpResponse(json.dumps(res))
+
+
+uploadJson: "/company/upload/",
