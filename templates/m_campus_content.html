@@ -6,6 +6,29 @@
     .vContent.cl a {
         color: #379BE9;
     }
+
+    .excahngbtn {
+        height: 40px;
+        width: 80px;
+    }
+
+    .info_box {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        margin: 10px 23px;
+        text-align: center;
+        border-radius: 50%;
+    }
+
+    .info_box img {
+        border-radius: 50%;
+    }
+
+    info_box li {
+        float: left;
+    }
+
 </style>
 <div class="container cl">
     <div class="mn z view view2 css-common-view" id="mn">
@@ -36,29 +59,64 @@
         <div class="tabs vTab">
             <ul class="tabTitle">
                 <li><a href="#vTab2">详情</a></li>
+                <li><a href="#vTab1">请求交流</a></li>
             </ul>
             <div id="vTab2" class="vContent" style="display: block;">
                 <p>{{ row.z_detail|safe }}</p>
             </div>
+            <div id="vTab1" class="vContent" style="display: block;">
+                <div class="infocontainer">
+                    <p style="display: none;" id="companyid">{{ row.c_id }}</p>
+                    <p style="display: none;" id="excahngp">{{ studentId }}</p>
+                    <button type="button" class="excahngbtn" id="clickexcahnge">点击添加联系</button>
+                    <hr>
+                    <div class="studentinfo" id="studentinfo">
+                        {% for relation in relations %}
+                            <ul class="info_box">
+                                <li id="infoli">
+                                    <a id="infoa" href="/checkrelation?studentid={{ relation.student_id }}"
+                                       title="查看学生信息"><img src="/static/media/user.jpg" width="80" height="80"
+                                                           alt=""></a>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+                </hr>
         </div>
         {% endfor %}
     </div>
 </div>
+    <div class="infomation">{% csrf_token %}</div>
 <script type="text/javascript">
     $(function () {
-        $('.apply_job').click(function () {
-            var jobid = $(this).attr('data-id');
+        $('#clickexcahnge').click(function () {
+            var excahngep = $('#excahngp').html();
+            var companyid = $('#companyid').html();
+            console.log(excahngep);
+            console.log(companyid);
             $.ajax({
                 type: 'post',
-                url: '/job/operate',
-                data: {'jobid': jobid, type: 'apply'},
-                dataType: "jsonp",
-                jsonpCallback: 'showDialog',
-                success: function (data, status) {
+                url: '/exchange/',
+                data: {
+                    'excahngep': excahngep,
+                    'companyid': companyid,
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                },
+                success: function (arg) {
+                    ret = JSON.parse(arg);
+                    if (!ret.status) {
+                        alert(ret.mession)
+                    } else {
+                        alert(ret.mession)
+                    }
                 }
+
             });
-        });
+        })
     });
+
+
 </script>
 <div style="clear:both;"></div>
 

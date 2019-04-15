@@ -1,0 +1,173 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+
+    <title>修改教育经验</title>
+</head>
+<body>
+<article class="page-container">
+    <form action="" class="form form-horizontal" id="xfm" method="POST">
+        {% for row in education %}
+            {% csrf_token %}
+            <div class="row cl" style="display: none;">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>ID：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{{ row.id }}" placeholder="" name="id">
+                </div>
+            </div>
+            <div class="row cl" style="display: none;">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>StudentID：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{{ row.estudentid_id }}" placeholder=""
+                           name="estudentid_id">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>学校名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{{ row.eschool }}" placeholder="请输入学校名称" id="eschool"
+                           name="eschool">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">入学时间：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="date" class="input-text Wdate" value="{{ row.estarttime|date:'Y-m-d' }}" placeholder=""
+                           id="estarttime"
+                           name="estarttime">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">毕业时间：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="date" class="input-text Wdate" value="{{ row.eendtime|date:'Y-m-d' }}" placeholder=""
+                           id="eendtime" name="eendtime">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">专业：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" id="emajor" value="{{ row.emajor }}" name="emajor" class="input-text"
+                           placeholder="请输入专业">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>学历：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span class="select-box">
+                    <select name="ebackground" class="select" na="{{ row.ebackground }}" id="ebackground">
+                        <option>请选择</option>
+                        <option value="0">初中及以下</option>
+                        <option value="1">高中</option>
+                        <option value="2">中专</option>
+                        <option value="3">大专</option>
+                        <option value="4">本科</option>
+                        <option value="5">硕士</option>
+                        <option value="6">MBA</option>
+                        <option value="7">博士</option>
+                    </select>
+                    </span>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <span class="btn btn-primary radius" id="xbtn"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</span>
+                    <span onClick="removeIframe();" class="btn btn-default radius">&nbsp;&nbsp;取消&nbsp;&nbsp;</span>
+                </div>
+            </div>
+        {% endfor %}
+    </form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/company/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/company/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/company/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/company/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/company/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/company/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/company/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/company/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/company/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/static/company/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        bindpreachConfirm();
+        selectchoice();
+    });
+
+    function bindpreachConfirm() {
+        $('#xbtn').click(function () {
+            var portData = {};
+            $('#xfm').find('input,textarea, select').each(function () {
+                var v = $(this).val();
+                var n = $(this).attr('name');
+                portData[n] = v;
+
+            });
+            $.ajax({
+                url: '/students/educationexperienceupd/',
+                type: 'POST',
+                dataType: 'JSON',
+                data: portData,
+                success: function (arg) {
+                    if (arg.status) {
+                        layer.msg(arg.mession, {icon: 6, time: 2000});
+                        setTimeout(function () {
+                            location.href = arg.link;
+                        }, 2000);
+                    } else {
+                        layer.msg(arg.mession, {icon: 5, time: 2000});
+                    }
+                }
+            });
+
+
+        })
+
+    }
+
+    function selectchoice() {
+        var ebackground = $('#ebackground').attr('na');
+        $("#ebackground >option").each(function () {
+            if ($(this).attr("value") == ebackground) {
+                $(this).attr("selected", 'selected')
+            }
+        });
+    };
+
+</script>
+
+
+</body>
+</html>

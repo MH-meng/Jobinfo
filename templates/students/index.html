@@ -21,20 +21,20 @@
     <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>企业.admin v1.1.1</title>
+    <title>学生.admin v1.1.1</title>
 </head>
 <body>
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
-        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">企业.admin</a>
-            <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="#">企业</a>
+        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">学生.admin</a>
+            <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="#">学生</a>
             <span class="logo navbar-slogan f-l mr-10 hidden-xs">v1.1.1</span>
             <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
                     <li class="dropDown dropDown_hover">
-                        {% for row in company_name %}
-                            <a href="#" class="dropDown_A">{{ row.c_name }} <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        {% for row in student %}
+                            <a href="#" class="dropDown_A">{{ row.sname }} <i class="Hui-iconfont">&#xe6d5;</i></a>
                         {% endfor %}
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="/">返回首页</a></li>
@@ -60,37 +60,48 @@
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
         <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe616;</i> 基本信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/company/c_teachin?cid={{ cid }}" data-title="宣讲会管理" href="javascript:void(0)">宣讲会管理</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li><a data-href="/company/c_zhaopin?cid={{ cid }}" data-title="招聘管理"
-                           href="javascript:void(0)">招聘管理</a></li>
-                </ul>
-            </dd>
-        </dl>
-        <dl id="menu-picture">
-            <dt><i class="Hui-iconfont">&#xe613;</i> 完善信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
-                <ul>
-                    <li><a data-href="/company/c_perfect?cid={{ cid }}" data-title="完善信息"
-                           href="javascript:void(0)">完善信息</a></li>
-                </ul>
-                <ul>
-                    <li><a data-href="/company/c_password?cid={{ cid }}" data-title="修改密码" href="javascript:void(0)">修改密码</a>
+                    <li><a data-href="/students/supdateinfo?sid={{ sid }}" data-title="修改信息" href="javascript:void(0)">修改信息</a>
                     </li>
                 </ul>
             </dd>
         </dl>
         <dl id="menu-picture">
-            <dt><i class="Hui-iconfont">&#xe613;</i> 拜访者管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe613;</i> 工作经验<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/company/relationshiplist?cid={{ cid }}" data-title="拜访信息"
-                           href="javascript:void(0)">拜访信息</a></li>
+                    <li><a data-href="/students/workexperiencelist?sid={{ sid }}" data-title="工作经验"
+                           href="javascript:void(0)">工作经验</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="Hui-iconfont">&#xe616;</i> 教育经历<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/students/educationexperiencelist?sid={{ sid }}" data-title="教育经历"
+                           href="javascript:void(0)">教育经历</a>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="Hui-iconfont">&#xe613;</i> 求职意见<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/students/jobintensionlist?sid={{ sid }}" data-title="求职意见"
+                           href="javascript:void(0)">求职意见</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="Hui-iconfont">&#xe613;</i> 项目经验<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/students/projectexperiencelist?sid={{ sid }}" data-title="项目经验"
+                           href="javascript:void(0)">项目经验</a></li>
                 </ul>
             </dd>
         </dl>
@@ -103,7 +114,7 @@
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
                 <li class="active">
-                    <span title="我的桌面" data-href="/company/c_welcome/">我的桌面</span>
+                    <span title="我的桌面" data-href="/students/welcome/">我的桌面</span>
                     <em></em></li>
             </ul>
         </div>
@@ -115,7 +126,7 @@
     <div id="iframe_box" class="Hui-article">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe scrolling="yes" frameborder="0" src="/company/c_welcome?cid={{ cid }}"></iframe>
+            <iframe scrolling="yes" frameborder="0" src="/students/welcome?sid={{ sid }}"></iframe>
         </div>
     </div>
 </section>

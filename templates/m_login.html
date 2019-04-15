@@ -29,6 +29,7 @@
         <div class="back_content">
             <form action="/m_login/" method="POST" novalidate>
                 {% csrf_token %}
+                <div style="color: rgb(98, 128, 245); margin-bottom: 20px;font-size: 40px">这里是企业登陆界面</div>
                 <p>{{ obj_form.number.label }}{{ obj_form.number }} <span
                         style="color: red;font-size: 12px">{{ obj_form.errors.number }}</span></p>
                 <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}<span
@@ -42,7 +43,8 @@
                 <p style="color: red;font-size: 12px">{{ obj_form.error_class }}</p>
                 <p style="color: red;font-size: 12px">{{ error_ver }}</p>
                 <p>
-                    <input type="submit" class="btn btn-default" id="login" value="登录"></input>
+                    <input type="submit" class="btn btn-default" id="login" value="登录"
+                           style="background-color: #93a1a1"></input>
                     <input type="submit" class="btn btn-default" id="register" value="注册"></input>
                 </p>
             </form>

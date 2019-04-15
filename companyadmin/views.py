@@ -405,3 +405,26 @@ def upload(request):
     }
     print('res', res)
     return HttpResponse(json.dumps(res))
+
+
+# 拜访者
+def relationshiplist(request):
+    if request.method == "GET":
+        cid = request.GET.get('cid')
+        student = models.StudentInfo.objects.filter(relationship__company__id=cid).values()
+        count = student.count
+        return render(request, 'company/relationshiplist.html', {'count': count, 'student': student})
+
+
+def relationshipcheck(request):
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        student = models.StudentInfo.objects.filter(id=id).values()
+        education = models.EducationExperience.objects.filter(estudentid_id=id).values()
+        job = models.JobIntension.objects.filter(jstudentid_id=id).values()
+        return render(request, 'company/relationshipcheck.html',
+                      {
+                          'student': student,
+                          'education': education,
+                          'job': job,
+                      })

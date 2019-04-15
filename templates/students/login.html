@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/bitbug_favicon.ico"/>
+    <title>淮北师范大学就业创业信息网</title>
+    <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/static/plugin/css/login.css" type="text/css">
+
+    <style>
+        .back_content {
+            height: 300px;
+            width: 400px;
+        {#margin-top: 50px;#} margin: 0 auto;
+            font-size: 20px;
+            padding-top: 100px;
+        {#border: 1px solid red;#}
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="m_header">
+    <a href="/"><img src="/static/login/img/login.jpg" alt="登录"></a>
+</div>
+<div class="m_body">
+    <div class="back_content">
+        <form action="/students/login/" method="POST" novalidate>
+            {% csrf_token %}
+            <div style="color: rgb(98, 128, 245); margin-bottom: 20px;font-size: 40px">这里是学生登陆界面</div>
+            <p>{{ obj_form.number.label }}{{ obj_form.number }} <span
+                    style="color: red;font-size: 12px">{{ obj_form.errors.number }}</span></p>
+            <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}<span
+                    style="color: red;font-size: 12px">{{ obj_form.errors.pwd.0 }}</span></p>
+            <p>{{ obj_form.types.label }}{{ obj_form.types }}<span
+                    style="color: red;font-size: 12px">{{ obj_form.errors.types.0 }}</span></p>
+
+            <p>验证码：<input type="text" name='checkcode'/> <img onclick='ChangeCode();' id='imgCode' src='/checkcode/'
+                                                              title='点击更新'/></p>
+
+            <p style="color: red;font-size: 12px">{{ obj_form.error_class }}</p>
+            <p style="color: red;font-size: 12px">{{ error_ver }}</p>
+            <p>
+                <input type="submit" class="btn btn-default" id="login" value="登录"
+                       style="background-color: #93a1a1"></input>
+                <input type="submit" class="btn btn-default" id="register" value="注册"></input>
+            </p>
+        </form>
+    </div>
+</div>
+
+
+<script src="/static/plugin/jquery-3.1.1.js"></script>
+<script>
+    $('#register').click(function () {
+        window.open('/students/register/')
+    });
+
+    function ChangeCode() {
+        var code = document.getElementById('imgCode');
+        code.src += '?';
+    }
+</script>
+</body>
+</html>
+

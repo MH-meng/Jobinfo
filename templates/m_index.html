@@ -76,21 +76,51 @@
             float: left;
             margin: auto 10px;
         }
+
+        .dropdown-menu {
+            background-color: rgb(20, 183, 238);
+            text-align: center;
+        }
+
+        .dropdown-menu li a:hover {
+            color: red;
+        }
+
     </style>
 {% endblock %}
 
 {% block login %}
-    {% if infor.status == True %}
+    {% if info.status == 'company' %}
         {% for row in name %}
             <span class="login">
                 <a href="/company/c_index/?cid={{ row.id }}">{{ row.c_name }}</a>&nbsp;&nbsp;|&nbsp;
 &nbsp;                <a href="/m_logout/">退出</a>
             </span>
         {% endfor %}
-
+    {% elif info.status == 'students' %}
+        {% for row in sname %}
+            <span class="login">
+{#                <a href="/students/c_index/?sid={{ row.id }}">{{ row.sname }}</a>&nbsp;&nbsp;|&nbsp;#}
+                <a href="/students/index?sid={{ row.id }}">{{ row.sname }}</a>&nbsp;&nbsp;|&nbsp;
+&nbsp;                <a href="/students/logout/">退出</a>
+            </span>
+        {% endfor %}
     {% else %}
-        <div class="login">
-            <a href="/m_login/">登录</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/m_register/">注册</a>
+        <div>
+            <div class="dropdown">
+                <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    登陆
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li>
+                        <a href="/m_login/">企业用户</a>
+                    </li>
+                    <li>
+                        <a href="/students/login/">学生用户</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     {% endif %}
 
@@ -254,7 +284,7 @@
                             {% if row.z_position %}
                                 <li><span class="pubdate">{{ row.z_data|date:'Y-m-d' }}</span>
                                     <a title="{{ row.z_position }}"
-                                       href="/m_campus_content?pid={{ row.z_company_id }}">{{ row.z_position }}</a>
+                                       href="/m_campus_content?pid={{ row.z_company_id }}&studentsID={{ studentID }}">{{ row.z_position }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -520,8 +550,7 @@
                 // {yPos = yPos + step;}
                 {
                     $(imgAd).attr('yPos', $(imgAd).attr('yPos') - -($(imgAd).attr('step')))
-                }
-                else
+                } else
                 // {yPos = yPos - step;}
                 {
                     $(imgAd).attr('yPos', $(imgAd).attr('yPos') - $(imgAd).attr('step'))
@@ -540,8 +569,7 @@
                 }
                 if ($(imgAd).attr('xon') == 1) {
                     $(imgAd).attr('xPos', $(imgAd).attr('xPos') - -($(imgAd).attr('step')))
-                }
-                else {
+                } else {
                     $(imgAd).attr('xPos', $(imgAd).attr('xPos') - $(imgAd).attr('step'))
                 }
                 if ($(imgAd).attr('xPos') < 1) {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/bitbug_favicon.ico"/>
+    <title>注册就业信息网</title>
+    <link rel="stylesheet" href="/static/plugin/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/static/plugin/css/login.css" type="text/css">
+
+</head>
+<body>
+<div class="m_header">
+    <img src="/static/login/img/register.jpg" alt="注册">
+</div>
+
+<div class="m_body">
+    <div class="back_content">
+        <form id="fm" action="/students/register/" method="POST" novalidate>
+            {% csrf_token %}
+            <p>{{ obj_form.name.label }}{{ obj_form.name }}{{ obj_form.name.errors }}</p>
+            <p>{{ obj_form.number.label }}{{ obj_form.number }}{{ obj_form.number.errors }}</p>
+            <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}{{ obj_form.pwd.errors }}</p>
+            <p style="color: red">{{ info.status }}</p>
+            <p>
+                <a class="btn btn-default" href="/students/login/">登录</a>
+                <input type="submit" class="btn btn-default" id="regi" value="注册"
+                       style="background-color: #93a1a1"></input>
+            </p>
+        </form>
+    </div>
+</div>
+<script src="/static/plugin/jquery-3.1.1.js"></script>
+<script>
+</script>
+</body>
+</html>

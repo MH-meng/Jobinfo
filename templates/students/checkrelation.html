@@ -1,0 +1,111 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/company/static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+    <title>查看学生信息</title>
+
+    <style>
+        .brief {
+            background-color: #5bc0de;
+            width: 80px;
+            height: 30px;
+            margin-top: 20px;
+            line-height: 30px;
+            border-radius: 5px;
+            color: black;
+            text-align: center;
+        }
+
+        .brief_content {
+            box-shadow: 0 0 5px lightgrey;
+            text-indent: 2em;
+            padding: 3px 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <p class="f-20 text-success"><a href="/">返回</a> <span class="f-14"></span></p>
+    {% for row in student %}
+        <p class="f-20 text-success">{{ row.sname }}的微简历 <span class="f-14"></span></p>
+
+        <table class="table table-border table-bordered table-bg mt-20">
+            <thead>
+            <tr>
+                <th colspan="2" scope="col">基本信息</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th width="30%">姓名</th>
+                <td><span id="lbServerName">{{ row.sname }}</span></td>
+            </tr>
+            <tr>
+                <td>性别</td>
+                {% if row.sgender == '1' %}
+                    <td>男</td>
+                {% else %}
+                    <td>女</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>出生日期</td>
+                <td>{{ row.sborthday|date:'Y-m-d' }}</td>
+            </tr>
+            <tr>
+                <td>手机号码</td>
+                <td>{{ row.sphone }}</td>
+            </tr>
+            <tr>
+                <td>居住地</td>
+                <td>{{ row.sarea }}</td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td>{{ row.semail }}</td>
+            </tr>
+            <tr>
+                <td>求职状态</td>
+                {% if row.sstatus == '1' %}
+                    <td>目前正在找工作</td>
+                {% elif row.sstatus == '2' %}
+                    <td>观望有好机会会考虑</td>
+                {% else %}
+                    <td>目前不想找工作</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>开始工作时间</td>
+                <td>{{ row.startwork|date:'Y-m-d' }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    {% endfor %}
+</div>
+<footer class="footer mt-20">
+
+</footer>
+<script type="text/javascript" src="/static/company/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/company/static/h-ui/js/H-ui.min.js"></script>
+
+</body>
+</html>

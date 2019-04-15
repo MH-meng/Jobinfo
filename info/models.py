@@ -183,3 +183,83 @@ class BlogrollImage(models.Model):
     f_parse_url = models.CharField(max_length=255, null=True, blank=True)
     f_create_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     f_code_img = models.CharField(max_length=120, null=True, blank=True)
+
+
+class StudentInfo(models.Model):
+    """基本信息表"""
+    snumber = models.CharField(verbose_name='账号', max_length=11)
+    spwd = models.CharField(max_length=64, verbose_name='密码')
+    sname = models.CharField(max_length=11)
+    sgender = models.CharField(max_length=2, blank=True, null=True)
+    sborthday = models.DateTimeField(blank=True, null=True)
+    sphone = models.CharField(verbose_name='电话', max_length=11, blank=True, null=True)
+    sstatus = models.CharField(max_length=3, default='0')
+    startwork = models.DateTimeField(blank=True, null=True)
+    sarea = models.CharField(max_length=24, blank=True, null=True)
+    semail = models.EmailField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = '基本信息表'
+
+    def __str__(self):
+        return self.sname
+
+
+class WorkExperience(models.Model):
+    """
+    工作经历表
+    """
+    wstartwork = models.DateTimeField()
+    wendwork = models.DateTimeField()
+    wcompanyname = models.CharField(max_length=64)
+    wpost = models.CharField(max_length=24)
+    wjobdesc = models.TextField()
+    windustry = models.CharField(max_length=24)
+    wbranch = models.CharField(max_length=24)
+    wcompanyscale = models.CharField(max_length=24)
+    wcompanyquality = models.CharField(max_length=3)
+    wstudentid = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
+
+
+class EducationExperience(models.Model):
+    """
+    教育经历表
+    """
+    estarttime = models.DateTimeField()
+    eendtime = models.DateTimeField()
+    eschool = models.CharField(max_length=30)
+    ebackground = models.CharField(max_length=9)
+    emajor = models.CharField(max_length=30)
+    estudentid = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
+
+
+class ProjectExperience(models.Model):
+    """
+    项目经历表
+    """
+    pstarttime = models.DateTimeField()
+    pendtime = models.DateTimeField()
+    pprojectname = models.CharField(max_length=30)
+    pprojectdesc = models.TextField()
+    pstudentid = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
+
+
+class JobIntension(models.Model):
+    """
+    求职意向表
+    """
+    jarea = models.CharField(max_length=10)
+    jpost = models.CharField(max_length=24)
+    jjobtype = models.CharField(max_length=4)
+    jsalary = models.CharField(max_length=16)
+    jstudentid = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
+
+
+class Relationship(models.Model):
+    """"
+        关系表
+    """
+    time = models.DateTimeField(auto_now_add=True)
+    student = models.ForeignKey(StudentInfo, on_delete=models.DO_NOTHING)
+    company = models.ForeignKey(Conpanys, on_delete=models.DO_NOTHING)
+    remake = models.CharField(max_length=244, blank=True, null=True)

@@ -439,36 +439,70 @@ def teachin_del(request):
 # 孟浩
 # 首页
 def m_index(request):
-    infor = {'status':True}
+    info = {'status': ''}
     if request.session.get('is_login1', None):
-        infor['status'] = True
-        number = request.session.get('number', None)
-        name = models.Conpanys.objects.filter(c_number=number).values()
-        preach = models.Invite.objects.filter().all().order_by('-id')
-        company = models.Conpanys.objects.filter().all().order_by('-id')
-        teachin = models.Teachin.objects.filter().all().order_by('-id')
-        zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')
-        article = models.Article.objects.filter().all().order_by('-nid')
-        blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
-        float = models.Float.objects.filter(status='1').values().order_by('-create_time')[:2]
-        news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
-        # news_count = models.NewsArticle.objects.filter(status='1').values().count()
-        return render(request, 'm_index.html', {
-            'number': number,
-            'name': name,
-            'infor': infor,
-            'company': company,
-            'preach_infor': preach,
-            'teachin': teachin,
-            'zhaopin': zhaopin,
-            'article': article,
-            'float': float,
-            'blogroll': blogroll,
-            'news_list': news_list,
-            # 'news_count': news_count,
-        })
+        infor = request.session.get('status', None)
+        if infor == 'company':
+            info['status'] = 'company'
+            number = request.session.get('number', None)
+            studentID = '001'
+            name = models.Conpanys.objects.filter(c_number=number).values()
+            preach = models.Invite.objects.filter().all().order_by('-id')
+            company = models.Conpanys.objects.filter().all().order_by('-id')
+            teachin = models.Teachin.objects.filter().all().order_by('-id')
+            zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')
+            article = models.Article.objects.filter().all().order_by('-nid')
+            blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
+            float = models.Float.objects.filter(status='1').values().order_by('-create_time')[:2]
+            news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
+            # news_count = models.NewsArticle.objects.filter(status='1').values().count()
+            return render(request, 'm_index.html', {
+                'number': number,
+                'name': name,
+                'studentID': studentID,
+                'info': info,
+                'company': company,
+                'preach_infor': preach,
+                'teachin': teachin,
+                'zhaopin': zhaopin,
+                'article': article,
+                'float': float,
+                'blogroll': blogroll,
+                'news_list': news_list,
+                # 'news_count': news_count,
+            })
+        elif infor == 'students':
+            info['status'] = 'students'
+            snumber = request.session.get('snumber', None)
+            sname = models.StudentInfo.objects.filter(snumber=snumber).values()
+            studentID = models.StudentInfo.objects.filter(snumber=snumber).values_list('id')[0][0]
+            preach = models.Invite.objects.filter().all().order_by('-id')
+            company = models.Conpanys.objects.filter().all().order_by('-id')
+            teachin = models.Teachin.objects.filter().all().order_by('-id')
+            zhaopin = models.Zhaopin.objects.filter().all().order_by('-id')
+            article = models.Article.objects.filter().all().order_by('-nid')
+            blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
+            float = models.Float.objects.filter(status='1').values().order_by('-create_time')[:2]
+            news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
+            # news_count = models.NewsArticle.objects.filter(status='1').values().count()
+            return render(request, 'm_index.html', {
+                'snumber': snumber,
+                'sname': sname,
+                'studentID': studentID,
+                'info': info,
+                'company': company,
+                'preach_infor': preach,
+                'teachin': teachin,
+                'zhaopin': zhaopin,
+                'article': article,
+                'float': float,
+                'blogroll': blogroll,
+                'news_list': news_list,
+                # 'news_count': news_count,
+            })
     else:
-        infor['status'] = False
+        info['status'] = 'false'
+        studentID = '001'
         preach = models.Invite.objects.filter().all().order_by('-id')
         company = models.Conpanys.objects.filter().all().order_by('-id')
         teachin = models.Teachin.objects.filter().all().order_by('-id')
@@ -478,7 +512,8 @@ def m_index(request):
         blogroll = models.BlogrollImage.objects.filter().all().order_by('-f_create_time')[:10]
         news_list = models.NewsArticle.objects.filter(status='1').values().order_by('-create_time')[:5]
         return render(request, 'm_index.html', {
-            'infor':infor,
+            'info': info,
+            'studentID': studentID,
             'company':company,
             'preach_infor':preach,
             'teachin':teachin,
@@ -496,7 +531,7 @@ def m_login(request):
         obj_form = StudentForm()
         return render(request, 'm_login.html', locals())
     else:
-        infor = {'status':True}
+        # infor = {'status': 'company'}
         obj_form = StudentForm(request.POST)
         # 是否全部验证成功
         if obj_form.is_valid():
@@ -504,42 +539,25 @@ def m_login(request):
             c_number = obj_form.cleaned_data['number']
             c_pwds = obj_form.cleaned_data['pwd']
             c_pwd = hashlib.md5(c_pwds.encode(encoding='UTF-8')).hexdigest()
-            print(c_pwd)
+            # print(c_pwd)
             c_ret = models.Conpanys.objects.filter(c_number=c_number,c_pwd=c_pwd).count()
             check_code = request.POST.get('checkcode')
             # 从session中获取验证码
             session_code = request.session["CheckCode"]
 
             if c_ret == 0:
-                infor['status'] = False
+                # infor['status'] = 'company'
                 obj_form.error_class = "用户账号或密码错误，请重新输入。。。。"
                 return render(request, 'm_login.html', {'obj_form': obj_form})
             elif check_code.strip().lower() != session_code.lower():
-                infor['status'] = False
+                # infor['status'] = 'false'
                 error_ver = "验证码错误，请重新输入。。。。"
                 return render(request, 'm_login.html', {'obj_form': obj_form, 'error_ver': error_ver})
             else:
                 request.session['is_login1'] = True
                 request.session['number'] = c_number
-                infor['status'] = True
+                request.session['status'] = 'company'
                 return redirect('/')
-
-            # if c_ret:
-            #     request.session['is_login1'] = True
-            #     request.session['number'] = c_number
-            #     check_code = request.POST.get('checkcode')
-            #     # 从session中获取验证码
-            #     session_code = request.session["CheckCode"]
-            #     if check_code.strip().lower() != session_code.lower():
-            #         infor['status'] = False
-            #         error_ver = "验证码错误，请重新输入。。。。"
-            #         return render(request, 'm_login.html', {'obj_form': obj_form, 'error_ver': error_ver})
-            #     else:
-            #         return redirect('/')
-            # else:
-            #     infor['status'] = False
-            #     obj_form.error_class = "用户账号或密码错误，请重新输入。。。。"
-            #     return render(request, 'm_login.html', {'obj_form': obj_form})
         else:
             return render(request, 'm_login.html', {'obj_form': obj_form})
 
@@ -586,40 +604,6 @@ def m_register(request):
             info['status'] = False
             info['mession'] = '请填写完整的信息！'
         return JsonResponse(info)
-
-
-# def register(request):
-#     if request.method == "GET":
-#         # 创建一个HTML
-#         obj_form = StudentRegisterForm()
-#         return render(request, 'register.html', {'obj_form':obj_form})
-#     else:
-#         obj_form = StudentRegisterForm(request.POST)
-#         info = {'status': None}
-#         # 是否全部验证成功
-#         if obj_form.is_valid():
-#             # 用户提交的数据
-#             c_name = obj_form.cleaned_data['name']
-#             c_number = obj_form.cleaned_data['number']
-#             c_pwd = obj_form.cleaned_data['pwd']
-#
-#             times = time.localtime()
-#             c_create_time = time.strftime('%Y-%m-%d',times)
-#             count = models.Conpanys.objects.filter(c_number=c_number).count()
-#             if count == 0:
-#                 models.Conpanys.objects.create(
-#                     c_name=c_name,
-#                     c_number=c_number,
-#                     c_pwd=c_pwd,
-#                     c_create_time=c_create_time
-#                 )
-#                 return redirect('/success/')
-#             else:
-#                 info['status'] = '账号已存在，无需重新注册，请返回登录界面！'
-#                 return render(request, 'register.html', {'obj_form': obj_form, 'info': info})
-#         else:
-#             return render(request, 'register.html', {'obj_form': obj_form})
-
 
 # 注册成功
 def success(request):
@@ -768,6 +752,10 @@ def m_campus(request):
 def m_campus_content(request):
     if request.method == "GET":
         pid = request.GET.get('pid')
+        studentId = request.GET.get('studentsID')
+        relationcount = models.Relationship.objects.filter(company_id=pid).values().count()
+        if relationcount:
+            relations = models.Relationship.objects.filter(company_id=pid).values()
         company_infor = models.Conpanys.objects.filter(id=pid).values()
         companys=[]
         for company in company_infor:
@@ -779,6 +767,7 @@ def m_campus_content(request):
             c_scale = company['c_scale']
             c_brief = company['c_brief']
             c_city = company['c_city']
+            cop['c_id'] = c_id
             cop['c_name'] = c_name
             cop['c_nature'] = c_nature
             cop['c_industry'] = c_industry
@@ -801,9 +790,13 @@ def m_campus_content(request):
                 cop['z_data'] = z_data
                 cop['z_email'] = z_email
                 cop['z_detail'] = z_detail
+
             companys.append(cop)
 
-        return render(request,'m_campus_content.html',{'companys':companys})
+            print(companys)
+
+        return render(request, 'm_campus_content.html',
+                      {'companys': companys, 'studentId': studentId, 'relations': relations})
 # 招聘会
 def m_jobfair(request):
     t = models.Invite.objects.all().count()
@@ -812,6 +805,39 @@ def m_jobfair(request):
     preach_infor = models.Invite.objects.all().values().order_by('-id')
     date_obj = preach_infor[page_obj.start():page_obj.end()]
     return render(request, 'm_jobfair.html', {"date_obj": date_obj, "page_obj": page_obj})
+
+
+def exchange(request):
+    if request.method == "POST":
+        info = {'status': True, 'mession': None}
+        studentid = request.POST.get('excahngep')
+        companyid = request.POST.get('companyid')
+        if studentid != '001' and companyid:
+            count = models.Relationship.objects.filter(student_id=studentid, company_id=companyid).values().count()
+            if count:
+                info['status'] = False
+                info['mession'] = '您已添加联系，无需重复添加！'
+            else:
+                models.Relationship.objects.filter().create(
+                    student_id=studentid,
+                    company_id=companyid,
+                )
+                info['status'] = True
+                info['mession'] = '添加成功'
+        else:
+            info['status'] = False
+            info['mession'] = '您没有权限，请登录'
+        ret = json.dumps(info)
+        return HttpResponse(ret)
+
+
+def checkrelation(request):
+    if request.method == 'GET':
+        studentid = request.GET.get('studentid')
+        print('studentid', studentid)
+        student = models.StudentInfo.objects.filter(id=studentid).values()
+        print('student', student)
+        return render(request, 'students/checkrelation.html', {'student': student})
 
 # 招聘会-内容
 def m_jobfair_content(request):

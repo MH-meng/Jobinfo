@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from info import views
 from django.views.static import serve
-from django.conf import  settings
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -61,6 +61,10 @@ urlpatterns = [
     url(r'^m_register/$', views.m_register),
     url(r'^success/$', views.success),
     url(r'^company/', include('companyadmin.urls')),
+
+    url(r'^students/', include('Students.urls')),
+
+
     url(r'^m_news_gywm/$',views.m_news_gywm),
 
     url(r'^m_enroliment/$', views.m_enroliment),
@@ -146,5 +150,9 @@ urlpatterns = [
 
     # 验证码
     url(r'^checkcode/$', views.CheckCode),
+
+    # 学生请求交流
+    url(r'^exchange/$', views.exchange),
+    url(r'^checkrelation/$', views.checkrelation),
 
 ]

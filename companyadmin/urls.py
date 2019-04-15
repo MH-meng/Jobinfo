@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^confirm_center/$', views.confirm_center),
     url(r'^c_password/$', views.c_password),
     url(r'^upload/$', views.upload),
+
+    url(r'^relationshiplist/$', views.relationshiplist),
+    url(r'^relationshipcheck/$', views.relationshipcheck),
 ]

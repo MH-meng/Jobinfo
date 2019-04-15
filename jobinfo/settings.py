@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'info.apps.InfoConfig',
     'companyadmin',
+    'Students',
 ]
 
 MIDDLEWARE = [
@@ -76,13 +77,28 @@ WSGI_APPLICATION = 'jobinfo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#      'default': {
+#         'ENGINE': 'django.db.backends.mysql',   # 数据库引擎
+#         'NAME': 'hbnujobinfo',       # 你要存储数据的库名，事先要创建之
+#         'USER': 'root',         # 数据库用户名
+#          'PASSWORD': '123',  # 密码
+#          'HOST': '115.159.33.73',  # 主机
+#          # 'HOST': "localhost",    # 主机
+#         'PORT': '3306',         # 数据库使用的端口
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },  # mysql使用严格模式，不指定会有警告信息
+#     },
+# }
+
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.mysql',   # 数据库引擎
-        'NAME': 'hbnujobinfo',       # 你要存储数据的库名，事先要创建之
+         'NAME': 'jobinfo',  # 你要存储数据的库名，事先要创建之
         'USER': 'root',         # 数据库用户名
-         'PASSWORD': '123',  # 密码
-         'HOST': '115.159.33.73',  # 主机
+         'PASSWORD': '735589481',  # 密码
+         'HOST': '101.132.147.80',  # 主机
          # 'HOST': "localhost",    # 主机
         'PORT': '3306',         # 数据库使用的端口
         'OPTIONS': {
@@ -90,7 +106,6 @@ DATABASES = {
         },  # mysql使用严格模式，不指定会有警告信息
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

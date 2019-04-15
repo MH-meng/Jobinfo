@@ -176,7 +176,8 @@
                 <label class="form-label col-xs-4 col-sm-2">企业规模（人）：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     {% if  row.c_scale %}
-                        <input type="text" class="input-text" value="{{ row.c_scale }}" placeholder="" id=""
+                        <input type="text" class="input-text" value="{{ row.c_scale }}" placeholder="单位（人），请填写具体数字"
+                               id=""
                                name="c_scale">
                     {% else %}
                         <input type="text" class="input-text" value="" placeholder="" id="" name="c_scale">
