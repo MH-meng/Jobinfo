@@ -142,7 +142,6 @@
                 dataType: 'JSON',
                 data: portData,
                 success: function (arg) {
-                    console.log(arg);
                     if (arg.status) {
                         {#alert(arg.inf);#}
                         layer.msg(arg.inf, {icon: 6, time: 2000});

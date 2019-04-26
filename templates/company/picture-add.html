@@ -294,7 +294,6 @@
                 dataType: 'JSON',
                 data: formData,
                 success: function (arg) {
-                    console.log(arg);
                     if (arg.status) {
                         {#alert(arg.msg)#}
                         layer.msg(arg.msg, {icon: 6, time: 2000});
@@ -335,7 +334,6 @@
                 if (n == 'c_brief') {
                     var acontent = $(document.getElementsByTagName("iframe")[0].contentWindow.document.body).html();
                     portData[n] = acontent;
-                    console.log(acontent)
                 } else {
                     portData[n] = v;
                 }

@@ -109,7 +109,7 @@
         <div>
             <div class="dropdown">
                 <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    登陆
+                    登录
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
@@ -284,7 +284,7 @@
                             {% if row.z_position %}
                                 <li><span class="pubdate">{{ row.z_data|date:'Y-m-d' }}</span>
                                     <a title="{{ row.z_position }}"
-                                       href="/m_campus_content?pid={{ row.z_company_id }}&studentsID={{ studentID }}">{{ row.z_position }}</a>
+                                       href="/m_campus_content?pid={{ row.z_company_id }}&zid={{ row.id }}&studentsID={{ studentID }}">{{ row.z_position }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}

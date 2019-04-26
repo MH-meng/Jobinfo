@@ -67,6 +67,7 @@
             <div id="vTab1" class="vContent" style="display: block;">
                 <div class="infocontainer">
                     <p style="display: none;" id="companyid">{{ row.c_id }}</p>
+                    <p style="display: none;" id="zid">{{ row.zid }}</p>
                     <p style="display: none;" id="excahngp">{{ studentId }}</p>
                     <button type="button" class="excahngbtn" id="clickexcahnge">点击添加联系</button>
                     <hr>
@@ -93,6 +94,7 @@
         $('#clickexcahnge').click(function () {
             var excahngep = $('#excahngp').html();
             var companyid = $('#companyid').html();
+            var zid = $('#zid').html();
             console.log(excahngep);
             console.log(companyid);
             $.ajax({
@@ -101,6 +103,7 @@
                 data: {
                     'excahngep': excahngep,
                     'companyid': companyid,
+                    'zid': zid,
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
                 },
                 success: function (arg) {

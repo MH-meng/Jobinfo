@@ -31,8 +31,9 @@
 
                 <ul class="infoList">
                     {% for row in date_obj %}
-                        <li class="span7" style="width:280px"><a href="/m_campus_content?pid={{ row.id }}"
-                                                                 target="_blank">{{ row.c_name }}</a>
+                        <li class="span7" style="width:280px"><a
+                                href="/m_campus_content?pid={{ row.id }}&zid={{ row.zid }}&studentsID={{ row.studentID }}"
+                                target="_blank">{{ row.c_name }}</a>
                         </li>
                         <li class="span2" style="width:240px">{{ row.z_position }}</li>
                         <li class="span1" style="width:240px">{{ row.c_city }}</li>

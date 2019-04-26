@@ -29,7 +29,7 @@
         <div class="back_content">
             <form action="/m_login/" method="POST" novalidate>
                 {% csrf_token %}
-                <div style="color: rgb(98, 128, 245); margin-bottom: 20px;font-size: 40px">这里是企业登陆界面</div>
+                <div style="color: rgb(98, 128, 245); margin-bottom: 20px;font-size: 40px">这里是企业登录界面</div>
                 <p>{{ obj_form.number.label }}{{ obj_form.number }} <span
                         style="color: red;font-size: 12px">{{ obj_form.errors.number }}</span></p>
                 <p>{{ obj_form.pwd.label }}{{ obj_form.pwd }}<span

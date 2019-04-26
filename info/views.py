@@ -722,6 +722,7 @@ def m_teachin_content(request):
             teachins.append(te)
         return render(request, 'm_teachin_content.html', {'teachins':teachins})
 # 招聘公告
+
 def m_campus(request):
     z_infos = []
     t = models.Zhaopin.objects.all().count()
@@ -730,9 +731,11 @@ def m_campus(request):
     zhaopin_teachin = models.Zhaopin.objects.filter().values().order_by('-id')
     for zhaopin in zhaopin_teachin:
         z_info = {}
+        zid = zhaopin['id']
         z_id = zhaopin['z_company_id']
         z_position = zhaopin['z_position']
         z_data = zhaopin['z_data']
+        z_info['zid'] = zid
         z_info['z_position'] = z_position
         z_info['z_data'] = z_data
         companys = models.Conpanys.objects.filter(id=z_id).values()
@@ -743,8 +746,12 @@ def m_campus(request):
             z_info['id'] = id
             z_info['c_name'] = c_name
             z_info['c_city'] = c_city
+            students = models.Relationship.objects.filter(company_id=id, remake=zid).values()
+            if students:
+                for student in students:
+                    z_info['studentID'] = student['id']
+            z_info['studentID'] = '001'
         z_infos.append(z_info)
-
     date_obj = z_infos[page_obj.start():page_obj.end()]
     return render(request, 'm_campus.html', {"date_obj": date_obj, "page_obj": page_obj})
 
@@ -752,10 +759,15 @@ def m_campus(request):
 def m_campus_content(request):
     if request.method == "GET":
         pid = request.GET.get('pid')
+        zid = request.GET.get('zid')
+        print('zid', zid)
         studentId = request.GET.get('studentsID')
-        relationcount = models.Relationship.objects.filter(company_id=pid).values().count()
+        if studentId == '001':
+            relations = []
+
+        relationcount = models.Relationship.objects.filter(company_id=pid, remake=zid).values().count()
         if relationcount:
-            relations = models.Relationship.objects.filter(company_id=pid).values()
+            relations = models.Relationship.objects.filter(company_id=pid, remake=zid).values()
         company_infor = models.Conpanys.objects.filter(id=pid).values()
         companys=[]
         for company in company_infor:
@@ -776,6 +788,7 @@ def m_campus_content(request):
             cop['c_city'] = c_city
             zhaopin_infor = models.Zhaopin.objects.filter(z_company_id=c_id).values()
             for zhaopin in zhaopin_infor:
+                zid = zhaopin['id']
                 z_position = zhaopin['z_position']
                 z_number = zhaopin['z_number']
                 z_salary = zhaopin['z_salary']
@@ -783,6 +796,7 @@ def m_campus_content(request):
                 z_city = zhaopin['z_city']
                 z_email = zhaopin['z_email']
                 z_detail = zhaopin['z_detail']
+                cop['zid'] = zid
                 cop['z_position'] = z_position
                 cop['z_number'] = z_number
                 cop['z_salary'] = z_salary
@@ -793,7 +807,6 @@ def m_campus_content(request):
 
             companys.append(cop)
 
-            print(companys)
 
         return render(request, 'm_campus_content.html',
                       {'companys': companys, 'studentId': studentId, 'relations': relations})
@@ -812,6 +825,7 @@ def exchange(request):
         info = {'status': True, 'mession': None}
         studentid = request.POST.get('excahngep')
         companyid = request.POST.get('companyid')
+        zid = request.POST.get('zid')
         if studentid != '001' and companyid:
             count = models.Relationship.objects.filter(student_id=studentid, company_id=companyid).values().count()
             if count:
@@ -821,6 +835,7 @@ def exchange(request):
                 models.Relationship.objects.filter().create(
                     student_id=studentid,
                     company_id=companyid,
+                    remake=zid,
                 )
                 info['status'] = True
                 info['mession'] = '添加成功'
@@ -1140,7 +1155,8 @@ def ariticle_upload(request):
     print()
     res ={
         "error":0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        # "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
@@ -1164,7 +1180,8 @@ def float_upload(request):
     print()
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        # "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
@@ -1187,7 +1204,8 @@ def invite_upload(request):
 
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        # "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
@@ -1212,7 +1230,8 @@ def teachin_upload(request):
 
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        # "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + avatar_img_name
     }
     print('res', res)
     return HttpResponse(json.dumps(res))
@@ -1410,7 +1429,8 @@ def news_upload(request):
     print()
     res = {
         "error": 0,
-        "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        # "url": "/" + path.split("\\")[3] + "/" + path.split("\\")[4] + "/" + avatar_img_name
+        "url": "/" + path.split("\\")[4] + "/" + path.split("\\")[5] + "/" + avatar_img_name
     }
 
     return HttpResponse(json.dumps(res))
