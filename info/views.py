@@ -24,7 +24,6 @@ def create_uuid():
 #登陆
 def login(request):
     if request.method == "POST":
-
         ret = {"status": 0, "msg": ""}
         # 从提交过来的数据中 取到用户名和密码
         username = request.POST.get("account")
@@ -40,7 +39,6 @@ def login(request):
             # 用户名密码错误
             ret["status"] = 0
             ret["msg"] = "用户名或密码错误,请重新输入！"
-
         return JsonResponse(ret)
     return render(request, "login.html")
 
@@ -762,12 +760,17 @@ def m_campus_content(request):
         zid = request.GET.get('zid')
         print('zid', zid)
         studentId = request.GET.get('studentsID')
+        relations = []
         if studentId == '001':
             relations = []
 
-        relationcount = models.Relationship.objects.filter(company_id=pid, remake=zid).values().count()
-        if relationcount:
-            relations = models.Relationship.objects.filter(company_id=pid, remake=zid).values()
+        # relationcount = models.Relationship.objects.filter(company_id=pid, remake=zid).values().count()
+        # if relationcount:
+        relations = models.Relationship.objects.filter(company_id=pid, remake=zid).values()
+
+        # relationcount = models.Relationship.objects.filter(company_id=pid, remake=zid).values().count()
+        # if relationcount:
+        #     relations = models.Relationship.objects.filter(company_id=pid, remake=zid).values()
         company_infor = models.Conpanys.objects.filter(id=pid).values()
         companys=[]
         for company in company_infor:
@@ -827,7 +830,8 @@ def exchange(request):
         companyid = request.POST.get('companyid')
         zid = request.POST.get('zid')
         if studentid != '001' and companyid:
-            count = models.Relationship.objects.filter(student_id=studentid, company_id=companyid).values().count()
+            count = models.Relationship.objects.filter(student_id=studentid, company_id=companyid,
+                                                       remake=zid).values().count()
             if count:
                 info['status'] = False
                 info['mession'] = '您已添加联系，无需重复添加！'
